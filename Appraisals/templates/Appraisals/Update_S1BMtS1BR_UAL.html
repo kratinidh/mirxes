@@ -1,0 +1,42 @@
+<!--Inherit HTML from parent class 'sidenav'-->
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Reject User Appraisal{%endblock%}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    {%block content%}
+    <!--HTML form, action on current page, use 'POST' method (secure)-->
+    <div class = "container col-6">
+        <br>
+        <div class = "card card-body">
+            <form action= "" method = "POST">
+                <div class="form-group">
+                    <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+                    {%csrf_token%}
+                    
+                    <!--Generate form organised in paragraphs based on query on CreateCompetencies in GnC/views.py-->
+                    <h5>Reject Mid-Year Review?</h5>
+                    {{form.as_p}}
+                    <div class = "row justify-content-end m-0">
+                        <a href = "{% url 'user_homepage'%}" class = "btn btn-danger mr-2" type = "button">Cancel</a>
+                        <input class = "btn btn-primary" type = 'submit' value = "Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {%endblock%}
+</body>
+</html>

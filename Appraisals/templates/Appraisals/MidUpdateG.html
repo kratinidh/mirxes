@@ -1,0 +1,85 @@
+<!--Inherit HTML from parent class 'sidenav'-->
+{%extends 'homepage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%} 
+{% load crispy_forms_tags %}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->  
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Mid-Year Review{%endblock%}</title>
+
+    {%block script1%}
+    <link rel = "stylesheet" type="text/css" href = "{% static 'Appraisals/HuNet_UpdateGCS.css' %}">
+
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <!--font--> 
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+    
+    {%endblock%}
+</head>
+
+<body>
+    {%block content%}
+
+    <div class = "container col-8">
+        <br>
+        <div class = "card">
+            <div class = "card-header">
+                <h2> Mid-Year Review </h2>
+            </div>
+
+            <div class = "card-body">
+                <!--<div class = "row button-row"  style = "margin: 0">
+                    <a href="{% url 'Appraisals:Update_AppraisalG' employee_appraisal.id %}"><button type = "button" class = "btn activebtn">1</button></a>
+                    <a href="{% url 'Appraisals:Update_AppraisalC' employee_appraisal.id %}"><button type = "button" class = "btn">2</button></a>
+                    <a href="{% url 'Appraisals:Update_AppraisalS' employee_appraisal.id %}"><button type = "button" class = "btn">3</button></a>
+                    <a href="{% url 'Appraisals:Update_Appraisal' employee_appraisal.id %}"><button type = "button" class = "btn">4</button></a>
+                </div>-->
+                
+                <br>
+
+                <!--HTML form, action on current page, use 'POST' method (secure)-->
+                <form action='' method = "POST" enctype= "multipart/form-data">
+                    <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+                    
+                    {%csrf_token%}
+                    
+                    {{ goals_formset.management_form }}
+                        
+                        {% for form in goals_formset %}
+         
+                        <div class = "card card-body form-card"> 
+                            {{form|crispy}}
+                        </div>
+         
+                        
+                        <br><br>
+                        {%endfor%}
+ 
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class = "row m-0 justify-content-end">
+                        <a href = "{% url 'user_homepage'%}" class = "btn btn-danger mr-2" type = "button" value = "Cancel">Cancel</a>
+                        <input class = "btn btn-primary" type = 'submit' value = "Next" name= 'send'>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {%endblock%}
+</body>
+</html>

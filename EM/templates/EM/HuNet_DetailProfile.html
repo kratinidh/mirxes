@@ -1,0 +1,71 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'utilitypage.html'%}
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    {%block title%}Employee Profile{%endblock%}
+</head>
+<body>
+    {%block content%}
+    <!--**Dynamic routing to 'EM:Create_Profile' template (Create and Update share same html)-->
+    <a href="{%url 'EM:Update_Profile' object.id%}">Update Profile</a>
+    <!--**Dynamic routing to 'EM/DeleteProfile.html' template -->
+    <a href="{%url 'EM:Delete_Profile' object.id%}">Delete Profile</a>
+
+    <!--Things within double braces are object instances within a queryset, so in this case I am accessing object's employee name-->
+    <h3>Personal Particulars</h3>    
+    <!--Profile name-->
+    <p> name: {{object.name}}</p>
+    <!--Profile Employee ID-->
+    <p> ID: {{object.Employee_ID}}</p>
+    <!--Profile email-->
+    <p> email: {{object.email}}</p>
+    <!--Profile Gender-->
+    <p> gender: {{object.gender}}</p>
+    <!--Profile Contact-->
+    <p> contact: {{object.phone}}</p>
+
+    <h3>Work-related</h3>
+    <!--Profile Employment type-->
+    <p>Position: {{object.employment_Type}} {{object.job_Title}}</p>
+    <!--Profile departments-->
+    {% for departments in object.department.all%}
+    <p>Department: {{departments.name}}</p>
+    {%endfor%}
+    <!--Profile Manager1-->
+    <p>1st Reporting Manager: {{object.first_Reporting_Manager}}</p>
+    <!--Profile Manager2-->
+    <p>2nd Reporting Manager: {{object.second_Reporting_Manager}}</p>
+    <!--Profile Division Centre-->
+    <p>Division Centre: {{object.division_Centre}}</p>
+    <!--Profile Date of hire-->
+    <p>Date-Of-Hire: {{object.date_Of_Hire}}</p>
+
+
+    <h3>Secondary information</h3>
+    <!--Profile address1-->
+    <p>Address 1: {{object.address_1}}</p>
+    <!--Profile address2-->
+    <p>Address 2: {{object.address_2}}</p>
+    <!--Profile Marital Status-->
+    <p>Marital Status: {{object.marital_status}}</p>
+    <!--Profile Passport expiry-->
+    <p>Date of Passport Expiry: {{object.date_Of_Passport_Expiry}}</p>
+    <!--Profile Citizenry-->
+    <p>Citizenship Status: {{object.citizenship_Status}}</p>
+    
+    
+    <h3>Skills</h3>
+    <!--Profile Qualifications-->
+    <p>Qualifications: {% for qualifications in object.qualification_Attained.all%}{{qualifications.name}},{%endfor%}</p>
+    <!--Profile Skills-->
+    <p>Skills: {% for skills in object.skills.all%}{{object.skills.all}},{%endfor%}</p>
+    
+    <h3>User</h3>
+    <!--Profile user username-->
+    <p>Username: {{object.user.username}}</p>
+    <!--Profile user password-->
+    <p>Password: {{object.user.password}}</p>
+    <!--Profile user email-->
+    <p>Email: {{object.user.email}}</p>
+    {%endblock%}
+</body>

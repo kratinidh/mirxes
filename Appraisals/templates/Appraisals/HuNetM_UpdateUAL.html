@@ -1,0 +1,202 @@
+{%extends 'Appraisals/HuNet_UpdateUAL.html'%}
+{%load static%}
+
+{%block bubbleurl%}
+    <div id="line"></div>
+    <div class = "row button-row"  style = "margin: 0">
+    <a href="{% url 'Appraisals:Update_AppraisalG_M' user_app.id %}"><button type = "button" class = "btn">1</button></a>
+    <a href="{% url 'Appraisals:Update_AppraisalC_M' user_app.id %}"><button type = "button" class = "btn">2</button></a>
+    <a href="{% url 'Appraisals:Update_AppraisalS_M' user_app.id %}"><button type = "button" class = "btn">3</button></a>
+    <a href="{% url 'Appraisals:Update_AppraisalCareer_M' user_app.id %}"><button type = "button" class = "btn">4</button></a>
+    <a href="{% url 'Appraisals:Update_Appraisal_M' user_app.id %}"><button type = "button" class = "btn activebtn">5</button></a>
+    </div> 
+    <div class = "row button-name-row justify-content-between m-0">
+        <span>Goals Rating</span>
+        <span>Core Values Competencies Rating</span>
+        <span>Skills Rating</span>
+        <span>Career Discussion</span>
+        <span>Summary</span>
+    </div>
+{%endblock%}
+
+{%block table %}
+{% if user_app.goals_set.count > 0 %}
+<table class = "table table-bordered text-center fixed">
+    <thead class = "thead-light">
+        <th style = "border-bottom: none"></th>
+        <th colspan = "2">Self</th>    
+        <th colspan = "2">Supervisor/Manager</th>
+    </thead>
+    <thead class = "thead-light">
+        <th style = "border-top: none">Goals</th>
+        <th>Rating</th>    
+        <th>Comments</th>
+        <th>Rating</th>    
+        <th>Comments</th>                
+    </thead>
+
+    <tbody>
+        {% for goal in user_app.goals_set.all %}
+        <tr>
+            <td>{{goal.summary}}</td>
+            <td>{{goal.user_rating}}</td>
+            <td>{{goal.user_comments}}</td>
+            <td>{{goal.manager_rating}}</td>
+            <td>{{goal.manager_comments}}</td>
+        </tr>
+        {%endfor%}
+        <tr>
+            <td colspan="5">Manager/Supervisor's Rating: {{goals_score}}<p>{{goals_weightage}}</p></td>
+        </tr>
+    </tbody>
+</table>
+{%endif%}
+
+<br>
+{% if user_app.competencies_set.count > 0 %}
+<table class = "table table-bordered text-center fixed">
+    <thead class = "thead-light">
+        <th style = "border-bottom: none"></th>
+        <th colspan = "2">Self</th>    
+        <th colspan = "2">Supervisor/Manager</th>
+    </thead>
+    <thead class = "thead-light">
+        <th style = "border-top: none">Competencies</th>
+        <th>Rating</th>    
+        <th>Comments</th>
+        <th>Rating</th>    
+        <th>Comments</th>                
+    </thead>
+    <tbody>
+        {% for competency in user_app.competencies_set.all %}
+        <tr>
+            <td>{{competency.summary}}</td>
+            <td>{{competency.user_rating}}</td>
+            <td>{{competency.user_comments}}</td>
+            <td>{{competency.manager_rating}}</td>
+            <td>{{competency.manager_comments}}</td>
+        </tr>
+        {%endfor%}
+        <tr>
+            <td colspan="5">Manager/Supervisor's Rating: {{competencies_score}}<p>{{competencies_weightage}}</p></td>
+        </tr>
+    </tbody>
+</table>
+{%endif%}
+                        
+<br>
+{% if user_app.skills_set.count > 0 %}
+<table class = "table table-bordered text-center fixed">
+    <thead class = "thead-light">
+        <th style = "border-bottom: none"></th>
+        <th colspan = "2">Self</th>    
+        <th colspan = "2">Supervisor/Manager</th>
+    </thead>
+    <thead class = "thead-light">
+        <th style = "border-top: none">Skills</th>
+        <th>Rating</th>    
+        <th>Comments</th>
+        <th>Rating</th>    
+        <th>Comments</th>                
+    </thead>
+    <tbody>
+        {% for skills in user_app.skills_set.all %}
+        <tr>
+            <td>{{skills.description}}</td>
+            <td>{{skills.user_rating}}</td>
+            <td>{{skills.user_comments}}</td>
+            <td>{{skills.manager_rating}}</td>
+            <td>{{skills.manager_comments}}</td>
+        </tr>
+        {%endfor%}
+        <tr>
+            <td colspan="5">Manager/Supervisor's Rating: {{skills_score}}<p>{{skills_weightage}}</td>
+        </tr>
+    </tbody>
+</table>
+{%endif%}
+
+<table class = "table table-bordered text-center fixed">
+    <thead class = "thead-light">
+        <th style = "border-bottom: none"></th>
+        <th style = "border-bottom: none"></th>  
+        <th class = "leftborder" style = "width: 70%"colspan = "2">Answer</th>
+    </thead>
+    <thead class = "thead-light">
+        <th rowspan="2" style = "border-top: none;">Peer</th>
+        <th rowspan="2" style = "border-top: none;">Questions</th>    
+        <th class = "leftborder">Strength</th>
+        <th class = "leftborder">Weakness/AOD</th>                   
+    </thead>
+
+    <tbody>
+        {% if user_app.peerappraisal_set.count == 0%}
+        <tr>
+            <td colspan = "4">There has been no peer appraisal done</td>
+        </tr>
+        {%else%}
+        {% for peerApps in user_app.peerappraisal_set.all %}
+        <tr>
+            <td>{{peerApps.title1}}</td>
+            <td class = "leftborder">{{peerApps.strength1}}</td>
+            <td class = "leftborder">{{peerApps.weaknessdevelopment1}}</td>
+        </tr>
+        {%if peerApps.title2 != 'NIL'%}
+        <tr>
+            <td>{{peerApps.title2}}</td>
+            <td class = "leftborder">{{peerApps.strength2}}</td>
+            <td class = "leftborder">{{peerApps.weaknessdevelopment2}}</td>
+        </tr>
+        {%endif%}
+        {%if peerApps.title3 != 'NIL'%}
+        <tr>
+            <td>{{peerApps.title3}}</td>
+            <td class = "leftborder">{{peerApps.strength3}}</td>
+            <td class = "leftborder">{{peerApps.weaknessdevelopment3}}</td>
+        </tr>
+        {%endif%}
+        {%endfor%}
+        {%endif%}
+    </tbody>
+</table>
+
+<br><br>
+
+<div class = "row m-0">
+
+    <div class = "card score-card shadow-sm pt-0 mt-0 mr-5" style = "min-width: 200px">
+        <div class = "card-body">
+            <p>Average Score</p> 
+            <i class="fa fa-line-chart" aria-hidden="true" style = "float: left; font-size: 36px"></i>
+            <h3 style = "float: right">{{total_score}}</h3>
+            <!-- {{total_weightage}} -->
+        </div>
+    </div>
+
+
+    <div class = "card score-card shadow-sm pt-0 mt-0" style = "min-width: 200px">
+        <div class = "card-body">
+            <p>Average Grade</p> 
+            <i class="fa fa-line-chart" aria-hidden="true" style = "float: left; font-size: 36px"></i>
+            <h5 style = "float: right">{{user_app.get_final_grade_user}}</h5>
+            <!-- {{total_weightage}} -->
+        </div>
+    </div>
+
+</div>
+<br>
+{%endblock%}
+
+{%block form_organisation%}
+    <h5>Recommedations: </h5><hr>
+    Increment Recommendation (%):
+    {{form.incrementRecommendation}}<br>
+
+    Bonus Recommendation (Fixed): 
+    {{form.bonusRecommendation}}
+
+    {%if user_app.recommendationComments != 'NIL' %}
+    Board Comments: <br>
+    {{user_app.recommendationComments}}
+    {%endif%}
+{%endblock%}

@@ -1,0 +1,116 @@
+.container {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+}
+ 
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Hind', sans-serif !important;
+}
+
+
+ 
+/*information cards*/
+.f-left {
+    float: left;
+}
+
+.f-right {
+    float: right;
+}
+
+.bg-c-blue, .bg-c-green, .bg-c-yellow, .bg-c-pink{
+    /*background: linear-gradient(45deg,#4099ff,#73b4ff);*/
+    /* background: linear-gradient(45deg,#BEDBFF,#E5F6FF); */
+    /* background: linear-gradient(90deg,#ffb027,#F69640); */
+    /* background: linear-gradient(315deg,#7fa0d6,#7fa0d6); #4A6CA4 */
+    /* background: linear-gradient(0deg,#5d7dbe,#2952A4); */
+    border-left: 3.5px solid #2952A4 !important;
+    color: #555;
+
+}
+
+.overview-card-row .card {
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    border: none;
+    margin-bottom: 30px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    padding-bottom: 0;
+}
+
+.overview-card-row i {
+    font-size: 30px;
+
+}
+
+/*tables within card*/
+.card-table .card-header {
+    background-color: #56556d;
+    color: white;
+}
+
+.card table {
+    text-align:center;
+}
+/*accordion table*/
+#seeMore {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    outline: none;
+    border: none;
+}
+
+.hiddenRow .accordian-body {
+    background-color: white !important;
+}
+
+.accordian-body, .hiddenRow {
+    padding: 0px !important;
+}
+
+.accordian-body p {
+    font-size: 14px;
+    display: inline-block;
+    margin: 12px;
+}
+
+/*kpi table*/
+.KPItable {
+    width: 90% !important ;
+    margin: auto;
+}
+
+.KPItable thead th {
+    background-color: whitesmoke;
+    border-bottom: 4px solid white;
+    border-top: 1px solid white;
+}
+
+.KPItable tbody td {
+    border-bottom: 4px solid white;
+    background-color: whitesmoke;
+    padding-bottom: 0;
+}
+
+/*comments cards*/
+.commentsCards {
+    width: 90% !important ;
+    margin: auto;
+}
+
+/*REPORT*/
+/*table outline on left-side of rating col*/
+.leftborder {
+    border-left: 1.5px solid #eee;
+    text-align: center;
+}
+
+.commentsCell {
+    width: 20%;
+    max-width: 20%;
+    max-height: 80px;
+    overflow: auto;
+}

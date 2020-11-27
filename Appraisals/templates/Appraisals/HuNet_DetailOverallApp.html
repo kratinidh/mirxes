@@ -1,0 +1,58 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'utilitypage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+      <!--Meta to improve SEO-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Appraisal Details{%endblock%}</title>
+</head>
+<body>
+    <!--HTML inheritance: overriding parent class content block(Django exclusive)-->
+    {%block content%}
+
+    <p>Appraisal: {{object.appraisal_category.name}}: {{object.name}}</p>
+
+    <p>Employees: <ul>{%with employees=object.employee_list.all%}{%for employee in employees%}<li>{{employee.name}}</li>{%endfor%}{%endwith%}</ul></p>
+
+    <p>Start Date: {{object.start_date}} -- {{object.end_date}}</p>
+
+    <p>Appraisals Status: </p>
+
+    <a href="{%url 'Appraisals:Create_User_Appraisal_List' object.id%}">Create User Appraisals</a>
+
+    <!--Accessing Competencies' summary-->
+    <table>
+      <thead>
+          <tr>
+              <th scope="col">Employee</th>
+              <th scope="col">Manager/Supervisor</th>
+              <th scope="col">Self-Appraisal count</th>
+              <th scope="col">Peer-Appraisal count</th>
+              <th scope="col">Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          {%for user in object.user_appraisal_list_set.all%}
+          <tr>
+              <td>{{user.employee.name}}</td>
+              <td>{{user.manager.name}}</td>
+              <td>{%with counter=user.Appraisal_set.all%}{{counter.count}}{%endwith%}</td>
+              <td>{%with counter=user.peerAppraisal_set.all%}{{counter.count}}{%endwith%}</td>
+              <td><a href="{%url 'Appraisals:Delete_User_Appraisal' user.id %}">Delete</a></td>
+              <td><a href="{%url 'Appraisals:Detail_User_Appraisal' object.id user.id%}">Detail</a></td>
+          </tr>   
+          {%endfor%}
+      </tbody>
+  </table>
+
+  {%endblock%}

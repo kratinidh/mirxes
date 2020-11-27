@@ -1,0 +1,107 @@
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{% load static %}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+  <!--Meta to improve SEO-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--**Linking html to CSS from static folder in GnC(Dynamic style)-->
+    <link href="{% static 'GnC/Modals.css' %}" rel="stylesheet" type="text/css" >
+
+    <!--**Linking html to jquery css online-->
+    <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+
+    <!--linking css stylesheet-->
+    <link href="{% static 'GnC/sidenav.css'%}" rel="stylesheet" type="text/css">
+
+    <!--**Linking html to jquery js online-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!--**Linking html to javascript from static folder in GnC folder(Dynamic style)-->
+    <script src="{% static 'GnC/script.js' %}"></script>
+    
+    <!--HTML inheritance for future child scripts/css(Django exclusive)-->
+    {%block script1%} {%endblock%}
+    <!--HTML inheritance for future grandchild scripts/css(Django exclusive)-->
+    {%block script2%} {%endblock%}
+    <!--HTML inheritance for future greatgrandchild scripts/css(Django exclusive)-->
+    {%block script3%} {%endblock%} 
+
+    <!--Js script for accordian table on jquery(Copied from online)-->
+    <script>
+        $( function() {
+          $( "#accordion" ).accordion({
+            heightStyle: "content"
+          });
+        } );
+
+        function openChat() {
+            var x = document.getElementById("chatBot");
+            if (x.style.display == "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <!--HTML inheritance for future child title(Django exclusive)-->
+    <title>{%block title%}{%endblock%}</title>
+
+    <!--style-->
+    <style>
+
+    </style>
+
+</head><!--End of header-->
+
+<body>
+    <!--HTML inheritance for future child wrapper(Django exclusive)-->
+    {%block wrapper%}
+    <div class = "wrapper">
+        <header> <!--Dashboard header-->
+
+            <!--top navigation bar-->
+            <div class = "icons shadow-sm">
+                {%block home_icons%}
+                {%endblock%}
+            </div>
+        
+        </header> 
+ 
+        <!--HTML inheritance for future child content(Django exclusive)-->
+        <div class = "content">
+            {%block content%}
+                {%block table%}
+                {%endblock%}
+            {%endblock%}
+        </div>
+    </div>
+    {%endblock%}
+
+    <!--HTML inheritance for future child notification(Django exclusive)-->
+    <div class = "container notifications">
+        {%block notification%}
+        {%endblock%}
+    </div>
+    
+    <!--Footer section-->
+    <footer class = "container">
+        <p>&copy;2020 HuNet Pte.Ltd         <span style = "color: rgb(253, 253, 253); float: right">site created by benny, ricky, hope &nbsp;</span></p>
+
+    </footer>
+    {%block custom_js%}{%endblock%}
+</body>
+
+<!--**Linking html to CSS from static folder in GnC(Dynamic style) - Just tryingout
+<script src="{% static 'GnC/CreateModal.js' %}"></script>-->
+</html>

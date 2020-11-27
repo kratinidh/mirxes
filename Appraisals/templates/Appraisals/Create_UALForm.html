@@ -1,0 +1,48 @@
+<!--Inherit HTML from parent class 'sidenav'-->
+
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+{% load crispy_forms_tags %}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Create User Appraisal Form{%endblock%}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    {%block content%}
+    <!--HTML form, action on current page, use 'POST' method (secure)-->
+    <div class = "container col-6">
+        <h2>Add User to Appraisal</h2>
+        <form action= "" method = "POST">
+            <ul>
+            {% for profile in profile_list %}
+                <li><input type="checkbox" name="profile_list" id="{{profile.id}}" value="{{profile.id}}" />
+                <label for="{{profile.id}}">{{profile.id}}{{profile.name}}</label></li>
+            {%endfor%}
+            </ul>
+
+            <div class="form-group">
+                <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+                {%csrf_token%}
+                {{formset.management_form}}
+                {% for form in formset%}
+                    <p>{{form|crispy}}</p><hr>
+                {%endfor%}
+                <div class = "row justify-content-end m-0">
+                    <a href = "{%url 'user_homepage'%}" class = "btn btn-danger mr-1" type = "button">Cancel</a>
+                    <input class = "btn btn-primary ml-1" type = 'submit' value = "Submit">
+                </div>
+            </div>
+        </form>
+    </div>
+    {%endblock%}
+</body>
+</html>

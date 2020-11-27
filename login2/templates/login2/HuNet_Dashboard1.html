@@ -1,0 +1,953 @@
+{%extends 'homepage.html'%}
+{% load static %}  
+ 
+<head> 
+    <title>{%block title%}Dashboard{%endblock%}</title>
+
+    {%block script1%} 
+    <!--css-->
+    <link rel = "stylesheet" type="text/css" href = "{% static 'login2/HuNet_DashboardV1.css' %}">
+ 
+    <!--jquery-->
+    <script src="js/jquery-3.4.1.min.js"></script> 
+    <script src="js/custom.js"></script>
+    
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <!--django bootstrap modals-->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}">
+
+    <!--font--> 
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+    
+    <script> 
+        /*tabs*/
+        function openCity(evt, cityName, classOfTabContent, classOfTabLink) {
+            var i, x, tablinks,count;
+
+            x = document.getElementsByClassName(classOfTabContent);
+            for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName(classOfTabLink);
+            for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", " ");
+            }
+
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+        }
+
+        /*accordion table*/
+        $('.accordion-toggle').click(function(){
+            $('.hiddenRow').hide();
+            $(this).next('tr').find('.hiddenRow').show();
+        }); 
+
+
+        /*tooltips*/
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        /*dropdown menu*/
+        $(document).ready(function(){
+            $(".dropdown-toggle").dropdown();
+        });
+
+    </script>
+    {%endblock%}
+</head>
+
+<body>
+    {%block content%} 
+    <div class = "container wrapper">
+            <br>
+            <p style = "font-size: 18px">Welcome, <strong style = "text-transform: uppercase;">{{request.user.profile}}</strong></p>
+             
+            <div class = "card-deck overview-card-row">
+
+                <div class = "card card-body bg-c-blue">
+                    <p class="m-b-20">Appraisals in Goals Launching</p>
+                    <h2 class="text-right"><i class="fa fa-rocket f-left"></i><span>{{rubic1}}</span></h2>
+                    <!--<p class="m-b-0">Completed Orders<span class="f-right">351</span></p>-->
+                </div>
+
+                <div class = "card card-body bg-c-green">
+                    <p class="m-b-20">Appraisals in Mid-Year Review</p>
+                    <h2 class="text-right"><i class="fa fa-calendar f-left"></i><span>{{rubic2}}</span></h2>
+                </div>
+
+                <div class = "card card-body bg-c-yellow">
+                    <p class="m-b-20">Appraisals in End-Year Review</p>
+                    <h2 class="text-right"><i class="fa fa-calendar f-left"></i><span>{{rubic3}}</span></h2>
+                </div>
+
+                <div class = "card card-body bg-c-pink">
+                    <p class="m-b-20">Pending Peer Reviews</p>
+                    <h2 class="text-right"><i class="fa fa-list-alt f-left"></i><span>0</span></h2>
+                </div>
+
+            </div>
+
+            <br><br>
+            <div class = "tab_dashboard"> 
+                <button class="tablinks2 active" onclick="openCity(event, 'user', 'dashboardcontent', 'tablinks2')">{{request.user.profile.name}}</button>
+                <button class="tablinks2" onclick="openCity(event, 'peer', 'dashboardcontent', 'tablinks2')">Peer</button>
+                <button class="tablinks2" onclick="openCity(event, 'records', 'dashboardcontent', 'tablinks2')">Records</button>
+            </div>
+
+            <br><br><br>
+
+            <section class='dashboardcontent shadow-sm' id='user'>
+
+                {%if user_appraisal_list.count == 0 %}
+                
+                <section class="appraisalcontent" id="appraisalnone">
+                    There are no ongoing appraisals
+                </section>
+
+                {%else%}
+
+                {% for appraisal in user_appraisal_list %}
+                <section class = "appraisalcontent" id="appraisal{{forloop.counter}}" style = "margin-top: 0 !important">
+                    <div>
+                        <br>
+                        <div class = "choose-appraisal row justify-content-start p-4 align-items-center shadow"  style = "background: linear-gradient(45deg, #2952A4, #83a1c9); border-radius: 5px; color: white">
+                            
+                            <div class="tab_appraisal">
+                                <button id = "appraisal-button" type="button" data-toggle="dropdown" class="btn dropdown-toggle">Choose Appraisal</button>
+                                <div class = "dropdown-menu">
+                                    {% if user_appraisal_list.count == 0 %}
+                                    <a class="tablinks1 dropdown-item" onclick="openCity(event, 'appraisalnone', 'appraisalcontent', 'tablinks1')">Appraisal: None</a>
+                                    {%else%}
+                        
+                                    {%for appraisal in user_appraisal_list%}
+                                    <a class="tablinks1 dropdown-item" onclick="openCity(event, 'appraisal{{forloop.counter}}', 'appraisalcontent', 'tablinks1')">Appraisal {{appraisal.overall_appraisal.name}}</a>
+                                    {%endfor%}
+                                    {%endif%}
+                                </div>
+                            </div> 
+                            <h3 style = "font-size: 24px; font-weight: 600;"class = "my-auto ml-3">{{appraisal.overall_appraisal.name}} - {{appraisal.overall_appraisal.appraisal_category.name}}</h3>
+
+                            <p class = "m-0 p-0 ml-auto">
+                                {%if appraisal.overall_appraisal.status == 'Stage 1'%}<span class = "badge badge-pill badge-info">Goals Setting Stage</span>
+                                {%elif appraisal.overall_appraisal.status == 'Stage 1B'%}<span class = "badge badge-pill badge-info">Mid Year Assessment: Pending Manager/Supervisor</span>
+                                {%elif appraisal.overall_appraisal.status == 'Stage 2' and appraisal.status == 'S2Employee'%}<span class = "badge badge-pill badge-info">End Year Assessment: My Rating Stage</span>
+                                {%elif appraisal.overall_appraisal.status == 'Stage 2' and appraisal.status == 'S2Manager'%}<span class = "badge badge-pill badge-info">End Year Assessment: Manager/Supervisor Rating Stage</span>
+                                {%elif appraisal.overall_appraisal.status == 'Stage 2' and appraisal.status == 'Approved'%}<span class = "badge badge-pill badge-info">End Year Assessment: Board Rating Stage</span>
+                                {%elif appraisal.overall_appraisal.status == 'Stage 3'%}<span class = "badge badge-pill badge-info">End Year Assessment: Reports Stage</span>
+                                {%elif appraisal.overall_appraisal.status == 'Stage 4'%}<span class = "badge badge-pill badge-info">End Year Assessment: Calibration Stage</span>{%endif%}
+                            </p>
+                        </div>
+                    </div>
+                
+                    <br><br>
+                    <div class="innertab">
+                        <button id="slide-item-1" class="tablinks active" onclick="openCity(event, 'goals{{forloop.counter}}', 'tabcontent{{forloop.counter}}', 'tablinks')">Goals</button>
+                        <button id="slide-item-2" class="tablinks" onclick="openCity(event, 'competencies{{forloop.counter}}', 'tabcontent{{forloop.counter}}', 'tablinks')">Core Values</button>
+                        <button id="slide-item-3" class="tablinks" onclick="openCity(event, 'skills{{forloop.counter}}', 'tabcontent{{forloop.counter}}', 'tablinks')">Skills</button>
+                        <button id="slide-item-4" class="tablinks" onclick="openCity(event, 'self_rating{{forloop.counter}}', 'tabcontent{{forloop.counter}}', 'tablinks')">Ratings</button>
+                        
+                        <div class="slider">
+                            <div class="bar"></div>
+                        </div> 
+                    </div>
+
+                    <br>
+                    {%if appraisal.overall_appraisal.status == 'Stage 1' and appraisal.status == 'Employee' and appraisal.goals_settingM_rejection != 'NIL'%}
+                    <div class = "alert alert-warning pb-0">
+                        Goals, Core Values Competencies and Skills have been <strong>rejected</strong>. <p>Please refer to the comments below to adjust your Goals Setting.</p>
+                    </div>
+
+                    {%elif appraisal.overall_appraisal.status == 'Stage 1B' and appraisal.status == 'S1BReview'%}
+                    <div class = "alert alert-warning pb-0">
+                        Mid-Year Review has been <strong>rejected</strong>. <p>Please refer to the comments in the Mid-Year Review page and make the necessary amendments.</p>
+                    </div>
+                    {%endif%}
+
+                    <div class = "row justify-content-end" style = "margin: 0;">
+                         {%if appraisal.overall_appraisal.status == 'Stage 1' and appraisal.status == 'Employee' %}
+                        <a href="{%url 'Appraisals:EtM_Appraisal' appraisal.id%}"><button class = "sendAppraisal btn mr-2">Submit</button></a>
+
+                        {%elif appraisal.overall_appraisal.status == 'Stage 1B' and appraisal.status == 'S1BEmployee'%}
+                        <a href="{%url 'Appraisals:S1BEtS1BM_Appraisal' appraisal.id%}"><button class = "sendAppraisal btn mr-2" >Submit</button></a>
+                      
+
+                        {%elif appraisal.overall_appraisal.status == 'Stage 1B' and appraisal.status == 'S1BReview'%}
+                        <a href="{%url 'Appraisals:S1BRtS1BM_Appraisal' appraisal.id%}"><button class = "sendAppraisal btn mr-2" >Submit</button></a>
+
+                        {%elif appraisal.overall_appraisal.status == 'Stage 2' and appraisal.status == 'S2Employee' and appraisal.completion == 'ECompleted' %}
+                        <a href="{%url 'Appraisals:S2EtS2M_Appraisal' appraisal.id%}"><button class = "sendAppraisal btn mr-2" >Submit</button></a>
+                        {%endif%}
+
+
+                        {% if appraisal.overall_appraisal.status == 'Stage 1' and appraisal.status == 'Employee' %}
+                        <div class="btn-group dropdown">
+                            <button type= "button" class= "addButton btn dropdown-toggle" data-toggle="dropdown">
+                                <span>Add </span><i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{%url 'GnC:Create_User_Goals' appraisal.id %}">Add Goals</a>
+                            <a class="dropdown-item" href="{% url 'GnC:Create_User_Competencies' appraisal.id %}">Add Core Values Competencies</a>
+                            <a class="dropdown-item" href="{%url 'Trainings:Create_User_Skills' appraisal.id %}">Add Skills</a>
+                            <a class="dropdown-item disabled" href="">Add Mid-Year Review</a>
+                            <a class="dropdown-item disabled" href = "">Add Employee's Ratings</a>
+
+                        </div>
+                        </div>
+                        
+                        {%elif appraisal.overall_appraisal.status == 'Stage 1B' and appraisal.status == 'S1BEmployee' or appraisal.overall_appraisal.status == 'Stage 1B' and appraisal.status == 'S1BReview' %}
+                        <div class="btn-group dropdown">
+                            <button type= "button" class= "addButton btn dropdown-toggle" data-toggle="dropdown">
+                                <span>Add </span><i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item disabled" href="">Add Goals</a>
+                            <a class="dropdown-item disabled" href="">Add Core Values Competencies</a>
+                            <a class="dropdown-item disabled" href="">Add Skills</a>
+                            <a class="dropdown-item" href = "{%url 'Appraisals:Update_MIDAppraisalG' appraisal.id%}">Add Mid-Year Review</a>
+                            <a class="dropdown-item disabled" href = "">Add Employee's Ratings</a>
+                            </div>
+                        </div>
+
+                        {%elif appraisal.overall_appraisal.status == 'Stage 2' and appraisal.status == 'S2Employee' and appraisal.completion == 'null' %}
+                        <div class="btn-group dropdown">
+                            <button type= "button" class= "addButton btn dropdown-toggle" data-toggle="dropdown">
+                                <span>Add </span><i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item disabled" href="">Add Goals</a>
+                            <a class="dropdown-item disabled" href="">Add Core Values Competencies</a>
+                            <a class="dropdown-item disabled" href="">Add Skills</a>
+                            <a class="dropdown-item disabled" href="">Add Mid-Year Review</a>
+                            <a class="dropdown-item" href = "{%url 'Appraisals:Update_AppraisalG' appraisal.id%}">Add Employee's Ratings</a>
+                            </div>
+                        </div>
+                        
+                        {%else%}
+                        <div class="btn-group dropdown">
+                            <button type= "button" class= "addButton btn dropdown-toggle" data-toggle="dropdown">
+                                <span>Add </span><i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item disabled" href = "">Add Goals</a>
+                                <a class="dropdown-item disabled" href = "">Add Core Values Competencies</a>
+                                <a class="dropdown-item disabled" href = "">Add Skills</a>
+                                <a class="dropdown-item disabled" href = "">Add Mid-Year Review</a>
+                                <a class="dropdown-item disabled" href = "">Add Employee's Ratings</a>
+                            </div>
+                        </div>
+                        {%endif%}
+                                              
+                    </div>
+                    <br> 
+
+                    <!--<div class="tab-pane fade show active" id="goals{{forloop.counter}}" role="tabpanel" aria-labelledby="nav-goals-tab">-->
+                    <div id="goals{{forloop.counter}}" class="tabcontent{{forloop.counter}}" style = "display:block;">
+                        <div class = "card card-table shadow-sm">
+                            <div class = "card-header">
+                                <h5 class = "mb-0">Departmental Goals</h5>
+                            </div>
+
+                            <div class = "card-body p-0">
+                                <table class = "table pb-0 mb-0">
+                                    <thead class = "thead-light">
+                                        <tr>
+                                            <th style = "width: 15%;">Department</th>
+                                            <th style = "width: 20%;">Category</th>
+                                            <th style = "width: 35%">Goal Title</th>
+                                            <th style = "width: 15%;">Due</th>
+                                            <th style = "width: 15%;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        {% if appraisal.overall_appraisal.departmental_goals_set.all.count == False %}
+                                        <td colspan="5">Request your manager/supervisor to add Departmental Goals</td>
+                                        {%else%}
+                                        {% for goals in appraisal.overall_appraisal.departmental_goals_set.all%}
+                                        {% if goals.manager == req_user_manager %}
+                                        <tr>
+                                            <td>{{goals.department}}</td>
+                                            <td>{{goals.goal_category.name}}</td>
+                                            <td>{{goals.summary}}</td>
+                                            <td>{{goals.due}}</td>
+                                            <td><a href="{%url 'GnC:Detail_Departmental_Goals' goals.id %}" title = "See More Details"><i class="fa fa-ellipsis-h"></i></a></td>
+                                        </tr>  
+                                        {%endif%}
+                                        {%endfor%}
+                                        {%endif%}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <br><br>
+
+                        <div class = "card card-table shadow-sm">
+                            <div class = "card-header">
+                                <h5 class = "mb-0">{{request.user.profile.name}}'s Goals</h5>
+                            </div>
+
+                            <div class = "card-body p-0">
+                                <table class = "table mb-0 pb-0">
+                                    <thead class = "thead-light">
+                                        <tr>
+                                            <th style = "width: 15%;">Category</th>
+                                            <th style = "width: 25%">Goal Title</th>
+                                            <th style = "width: 5%"></th>
+                                            <th style = "width: 15%;">Due</th>
+                                            <th style = "width: 10%">Weightage</th>
+                                            <th style = "width: 15%">Progress</th>
+                                            <th colspan=4 style = "width: 15%;">Actions</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if appraisal.goals_set.all.count == False %}
+                                        <tr>
+                                            <td colspan="10">Fill in your personal Goals</td>
+                                        </tr>
+                                        {%else%}
+                                        {% for goals in appraisal.goals_set.all %}
+                                        <tr>
+                                            <td>{{goals.goal_category.name}}</td>
+                                            <td>{{goals.summary}}</td>
+                                            <td><button id = "seeMore" data-toggle="collapse" data-target="#collapse{{goals.id}}" class="accordion-toggle" type="button" alt = "See More"><i class="fa fa-chevron-down"></i></button></td>
+                                            <td>{{goals.due}}</td>
+                                            <td>{{goals.weightage}}%</td>
+                                            <td>
+                                            {%if goals.get_kpi_percentage < 0 %}
+                                            NIL
+                                            {%elif goals.get_kpi_percentage <= 99 %}
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: {{goals.get_kpi_percentage}}%;" aria-valuenow="{{goals.get_kpi_filtered_completed.count}}" aria-valuemin="0" aria-valuemax="{{goals.kpi_set.count}}">{{goals.get_kpi_percentage}}%</div>
+                                            </div>
+                                            {%else%}
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{goals.get_kpi_percentage}}%;" aria-valuenow="{{goals.get_kpi_filtered_completed.count}}" aria-valuemin="0" aria-valuemax="{{goals.kpi_set.count}}">{{goals.get_kpi_percentage}}%</div>
+                                            </div>
+                                            {%endif%}</td>
+                                            {%if appraisal.status == 'Employee'%}
+                                            <td><a href="{%url 'GnC:Create_User_KPIs' goals.id %}"><i class="fa fa-plus-square-o" title = "Add KPIs"></i></a></td>
+                                            <td><a href="{% url 'GnC:Update_User_Goals' appraisal.id goals.id %}"><i class="fa fa-pencil-square-o" title = "Edit"></i></a></td>
+                                            <td><a href="{% url 'GnC:Delete_User_Goals' goals.id %}"><i class="fa fa-trash-o" title = "Delete"></i></a></td>
+                                            {%else%}
+                                            <td class = "disabled-icon"><i class="fa fa-plus-square-o" title = "Add KPIs"></i></td>
+                                            <td class = "disabled-icon"><i class="fa fa-pencil-square-o" title = "Edit"></i></td>
+                                            <td class = "disabled-icon"><i class="fa fa-trash-o" title = "Delete"></i></td>
+                                            {%endif%}
+                                            <td><a title = "See More Details" href = "{%url 'GnC:Detail_Goals' goals.id %}"><i class="fa fa-ellipsis-h"></i></a></td>
+                                        </tr>
+                                        
+                                        <tr class="p">
+                                            <td colspan="10" class="hiddenRow">
+                                                <div class="accordian-body collapse" id="collapse{{goals.id}}">
+                                                    <br>
+                                                    <div style = "float: right; margin-right: 5%;">
+                                                        <span style = "font-size:14px">Tracking Source/Documents: <strong>{{goals.metrics_Used}} &nbsp;</strong>
+
+                                                            {%if goals.metrics_evidence%}
+                                                            <a class = "mr-2" href="{% url 'GnC:Goals_Image' goals.id%}" title = "View Evidence"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                            <a href="{% url 'GnC:Goals_ImageUpload' goals.id%}" title = "Upload Evidence"><i class="fa fa-upload" aria-hidden="true"></i></a>
+                                                            {%else%}
+
+                                                            <a href="{% url 'GnC:Goals_ImageUpload' goals.id%}" title = "Upload Evidence"><i class="fa fa-upload" aria-hidden="true"></i></a>
+                                                            {%endif%}
+
+                                                        </span> 
+                                                    </div>
+
+                                                    <br><br>
+                                                    
+                                                    <table class = "KPItable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style = "width: 40%;">KPI Description</th>
+                                                                <th style = "width: 15%;">Date Created</th>
+                                                                <th style = "width: 15%;">Due</th>
+                                                                <th style = "width: 15%;">Progress</th>
+                                                                <th colspan="3" style = "width: 15%;">Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {%if goals.kpi_set.count == False%}
+                                                            <td colspan = "7"> Please add KPIs</td>
+                                                            {%else%}
+                                                            {%for kpi in goals.kpi_set.all%}
+                                                            <tr>
+                                                                <td>{{kpi.description}}</td>
+                                                                <td>{{kpi.date_created}}</td>
+                                                                <td>{{kpi.due}}</td>
+                                                                <td><form class="range-field my-4 w-50">
+                                                                <input id="number" type="range" min="0" max="100" onclick="getcube()"/>
+                                                                </form></td>
+                                                                <!--<td class="editable" data-id="{{kpi.id}}" data-type="progress">{{kpi.progress}}</td>-->
+                                                                
+                                                                {%if appraisal.overall_appraisal.status == 'Stage 1' and kpi.progress == 'Working' or appraisal.overall_appraisal.status == 'Stage 1B' and kpi.progress == 'Working' %}
+                                                                <td><a href="{% url 'GnC:Update_KPI_POST1' kpi.id%}" title = "Approve KPI"><i class="fa fa-check-circle" aria-hidden="true"></i></a></td>
+                                                                {%elif appraisal.overall_appraisal.status == 'Stage 1' and kpi.progress == 'Completed' or appraisal.overall_appraisal.status == 'Stage 1B' and kpi.progress == 'Completed' %}
+                                                                <td><a href="{% url 'GnC:Update_KPI_POST2' kpi.id%}" title = "Approve KPI"><i class="fa fa-check-circle" aria-hidden="true"></i></a></td>
+                                                                {%else%}
+                                                                <td class = "disabled-icon"><i class="fa fa-pencil-square-o" title="Update"></i></td>
+                                                                {%endif%}
+
+                                                                {%if appraisal.status == 'Employee'%}
+                                                                <td><a href="{% url 'GnC:Update_KPI' kpi.id%}" title="Update"><i class="fa fa-pencil-square-o"></i></a></td>
+                                                                <td><a href="{%url 'GnC:Delete_User_KPI' kpi.id%}" title="Delete"><i class="fa fa-trash-o"></i></a></td>
+                                                                {%else%}
+                                                                <td class = "disabled-icon"><i class="fa fa-pencil-square-o" title="Update"></i></td>
+                                                                <td class = "disabled-icon"><i class="fa fa-trash-o" title="Delete"></i></td>
+                                                                {%endif%}
+                                                            </tr>
+                                                            {%endfor%}
+                                                            {%endif%}
+                                                        </tbody>
+                                                    </table>
+                                                    <br>
+                                                </div> 
+                                            </td> 
+                                        </tr>
+                                        {%endfor%}
+                                        {%endif%}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br><br>
+                        {%if appraisal.overall_appraisal.status == 'Stage 1' and appraisal.status == 'Employee' and appraisal.goals_settingM_rejection != 'NIL'%}
+                        <div class = "card comment-card card-body col-5 shadow-sm">
+                            <h6>Manager/Supervisor Comments: </h6>
+                            {{appraisal.goals_settingM_rejection}}
+                        </div>
+
+                        {%elif appraisal.overall_appraisal.status == 'Stage 1B' and appraisal.status == 'S1BReview' and appraisal.mid_yearM_rejection != 'NIL'%}
+                        <div class = "card comment-card card-body col-5 shadow-sm">
+                            <h6>Manager/Supervisor Comments: </h6>
+                            {{appraisal.mid_yearM_rejection}}
+                        </div>
+                        {%else%}
+                        {%endif%}
+                        <br>
+                    </div>
+
+                    
+                    
+                    <!--<div class="tab-pane fade" id="competencies{{forloop.counter}}" role="tabpanel" aria-labelledby="nav-competencies-tab">-->
+                    <div id="competencies{{forloop.counter}}" class="tabcontent{{forloop.counter}}" style ="display:none;">
+                        <div class = "card card-table shadow-sm">
+                            <div class = "card-header">
+                                <h5 class = "mb-0">Departmental Core Values Competencies</h5>
+                            </div>
+
+                            <div class = "card-body p-0">
+                                <table class = "table mb-0 pb-0">
+                                    <thead class = "thead-light">
+                                        <tr> 
+                                            <th style = "width: 15%;">Department</th>
+                                            <th style = "width: 25%;">Category</th>
+                                            <th style = "width: 30%;">Core Values Competency</th>
+                                            <th style = "width: 25%;">Description</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        {% if appraisal.overall_appraisal.departmental_competencies_set.count == 0 %}
+                                        <td colspan="4">Request your manager/supervisor to add Departmental Core Values Competencies</td>
+                                        {%else%}
+                                        {% for competencies in appraisal.overall_appraisal.departmental_competencies_set.all%}
+                                        {% if competencies.manager == req_user_manager %}
+                                        <tr>
+                                            <td>{{competencies.department}}</td>
+                                            <td>{{competencies.competency_category.name}}</td>
+                                            <td>{{competencies.summary}}</td>
+                                            <td>{{competencies.description}}</td>
+                                        </tr>
+                                        {%endif%}
+                                        {%endfor%}
+                                        {%endif%}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <br><br>
+
+                        <div class = "card card-table shadow-sm">
+                            <div class = "card-header">
+                                <h5 class = "mb-0">{{request.user.profile.name}}'s Core Values Competencies</h5>
+                            </div>
+
+                            <div class = "card-body p-0">
+                                <table class = "table mb-0 pb-0">
+                                    <thead class = "thead-light">
+                                        <tr>
+                                            <th style = "width: 20%;">Category</th>
+                                            <th style = "width: 25%;">Core Values Competency</th>
+                                            <th style = "width: 30%;">Description</th>
+                                            <th style = "width: 10%;">Weightage</th>
+                                            <th colspan=3 style = "width: 15%;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if appraisal.competencies_set.all.count == False %}
+                                        <td colspan="7">Please fill in your personal Core Values Competencies</td>
+                                        {%else%}
+                                        {% for competencies in appraisal.competencies_set.all %}
+                                        <tr>
+                                            <td>{{competencies.competency_category.name}}</td>
+                                            <td>{{competencies.summary}}</td>
+                                            <td>{{competencies.description}}</td>
+                                            <td>{{competencies.weightage}}% </td>
+                                            {%if appraisal.status == 'Employee'%}
+                                            <td><a href="{% url 'GnC:Update_User_Competencies' competencies.id %}"><i class="fa fa-pencil-square-o" title="Edit"></i></a></td>
+                                            <td><a href = "{%url 'GnC:Delete_User_Competencies' competencies.id %}"><i class="fa fa-trash-o" title="Delete"></i></a></td>
+                                            {%else%}
+                                            <td class = "disabled-icon"><i class="fa fa-pencil-square-o" title="Edit"></i></td>
+                                            <td class = "disabled-icon"><i class="fa fa-trash-o" title="Delete"></i></td>
+                                            {%endif%}
+                                            <td><a href = "{%url 'GnC:Detail_Competencies' competencies.id %}"  title = "See More Details"><i class="fa fa-ellipsis-h"></i></a></td>
+                                        </tr>
+                                        {%endfor%}
+                                        {%endif%}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br><br>
+                        {%if appraisal.overall_appraisal.status == 'Stage 1' and appraisal.status == 'Employee' and appraisal.goals_settingM_rejection != 'NIL'%}
+                        <div class = "card comment-card card-body col-5 shadow-sm">
+                            <h6>Manager/Supervisor Comments: </h6>
+                            {{appraisal.goals_settingM_rejection}}
+                        </div>
+
+                        {%elif appraisal.overall_appraisal.status == 'Stage 1B' and appraisal.status == 'S1BReview' and appraisal.mid_yearM_rejection != 'NIL'%}
+                        <div class = "card comment-card card-body col-5 shadow-sm">
+                            <h6>Manager/Supervisor Comments: </h6>
+                            {{appraisal.mid_yearM_rejection}}
+                        </div>
+                        {%else%}
+                        {%endif%}
+                        <br>
+                    </div>
+                    
+                    
+
+                    <!--<div class="tab-pane fade" id="skills{{forloop.counter}}" role="tabpanel" aria-labelledby="nav-skills-tab">-->
+                    <div id="skills{{forloop.counter}}" class="tabcontent{{forloop.counter}}" style ="display:none;">
+                        
+                        <div class = "card card-table shadow-sm">
+                            <div class = "card-header">
+                                <h5 class = "mb-0">{{request.user.profile.name}}'s Skills</h5>
+                            </div>
+
+                            <div class = "card-body p-0">
+                                <table class = "table mb-0 pb-0">
+                                    <thead class = "thead-light">
+                                        <th style = "width: 25%;">Skill</th> 
+                                        <th style = "width: 50%;">Description</th>
+                                        <th style = "width: 10%;">Weightage</th>
+                                        <th colspan="3" style = "width: 15%;">Actions</th>
+                                    </thead>
+                                    {%if appraisal.skills_set.count == 0%}
+                                    <td colspan="5">Fill in your personal Skills</td>
+                                    {%else%}
+                                    {%for skills in appraisal.skills_set.all%}
+                                    <tr>
+                                        <td>{{skills.skill_category.name}}</td>
+                                        <td>{{skills.description}}</td>
+                                        <td>{{skills.weightage}}%</td>
+                                        <td><a href=""><i class="fa fa-cogs" title = "Apply Trainings"></i></a></td>
+                                        <td><a href="{% url 'Trainings:Update_User_Skills' skills.id%}"><i class="fa fa-pencil-square-o" title="Update"></a></td>
+                                        <td><a href="{%url 'Trainings:Delete_User_Skills' skills.id %}"><i class="fa fa-trash-o" title = "Delete"></i></a></td>
+                                    </tr>
+                                    {%endfor%}
+                                    {%endif%}
+                                </table>
+                            </div>
+                        </div>
+                        <br><br>
+                        {%if appraisal.overall_appraisal.status == 'Stage 1' and appraisal.status == 'Employee' and appraisal.goals_settingM_rejection != 'NIL'%}
+                        <div class = "card comment-card card-body col-5 shadow-sm">
+                            <h6>Manager/Supervisor Comments: </h6>
+                            {{appraisal.goals_settingM_rejection}}
+                        </div>
+
+                        {%elif appraisal.overall_appraisal.status == 'Stage 1B' and appraisal.status == 'S1BReview' and appraisal.mid_yearM_rejection != 'NIL'%}
+                        <div class = "card comment-card card-body col-5 shadow-sm">
+                            <h6>Manager/Supervisor Comments: </h6>
+                            {{appraisal.mid_yearM_rejection}}
+                        </div>
+                        {%else%}
+                        {%endif%}
+                    </div>
+
+                    
+
+                    <!--<div class="tab-pane fade" id="ratings{{forloop.counter}}" role="tabpanel" aria-labelledby="nav-ratings-tab">-->
+                    <div id="self_rating{{forloop.counter}}" class="tabcontent{{forloop.counter}}" style ="display:none;">
+                        <div class = "card card-table shadow-sm">
+                            <div class = "card-header">
+                                <h5 class = "mb-0">Goals</h5>
+                            </div>  
+    
+                            <div class = "card-body p-0">
+                                <table class ="table fixed pb-0 mb-0">
+                                    <thead class = "thead-light">
+                                        <th style = "border-bottom:none; width: 25%;"></th>
+                                        <th style = "border-bottom:none; width: 5%;"></th>
+                                        <th colspan = "2" class = "leftborder" style = "width: 35% !important">Self</th>
+                                        <th colspan = "2" class = "leftborder" style = "width: 35% !important">Manager/Supervisor</th>
+
+                                    </thead>
+
+
+                                    <thead class = "thead-light">
+                                        <th style = "border-top: none">Goal Title</th>
+                                        <th style = "border-top: none"></th>
+                                        <th class = "leftborder">Rating</th>
+                                        <th>Comments</th>
+                                        <th class = "leftborder" style = "width: 100px;">Rating</th>
+                                        <th>Comments</th>
+                                    </thead>
+
+
+                                    <tbody>
+                                        {% if appraisal.goals_set.all.count == False%}
+                                        <td colspan="6">Please fill in your Goals</td>
+                                        {%else%}
+                                        {%for goals in appraisal.goals_set.all%}
+                                        <tr>
+                                            <td>{{goals.summary}}</td>
+                                            <td><button id = "seeMore" data-toggle="collapse" data-target="#collapse1{{goals.id}}" class="accordion-toggle" type="button" alt = "See More"><i class="fa fa-chevron-down"></i></button></td>
+                                            {%if appraisal.completion == 'null'%}
+                                            <td class = "leftborder">Pending</td>
+                                            <td>Pending</td>
+                                            {%else%}
+                                            <td class = "leftborder">{{goals.user_rating}}</td>
+                                            <td>{{goals.user_comments}}</td>
+                                            {%endif%}
+                                            {%if appraisal.completion == 'null' or appraisal.completion == 'ECompleted'%}
+                                            <td class = "leftborder">Pending</td>
+                                            <td>Pending</td>
+                                            {%elif appraisal.completion == 'Review'%}
+                                            <td class = "leftborder">Undergoing Review</td>
+                                            <td>Undergoing Review</td>
+                                            {%else%}
+                                            <td class = "leftborder">Completed</td>
+                                            <td>Completed</td>
+                                            {%endif%}
+                                        </tr>
+
+                                    <tr class="p">
+                                    <td colspan="10" class="hiddenRow">
+                                        <div class="accordian-body collapse" id="collapse1{{goals.id}}">
+                                            <br>
+                                            <span style = "margin-right: 5%; float: right; font-size:14px">Tracking Source/Documents: <strong>{{goals.metrics_Used}}</strong></span>
+                                            <br><br>
+                                            <table class = "KPItable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>KPI Description</th>
+                                                        <th>Date Created</th>
+                                                        <th>Due</th>
+                                                        <th>Progress</th>
+                                                        <th colspan="2">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {%if goals.kpi_set.all.count == False%}
+                                                    <td colspan="6">Please add KPIs</td>
+                                                    {%else%}
+                                                    {%for kpi in goals.kpi_set.all%}
+                                                    <tr>
+                                                        <td>{{kpi.description}}</td>
+                                                        <td>{{kpi.date_created}}</td>
+                                                        <td>{{kpi.due}}</td>
+                                                        <td><form class="range-field my-4 w-50">
+                                                        <input type="range" min="0" max="100" />
+                                                        </form></td>
+                                                        <!--<td class="editable" data-id="{{kpi.id}}" data-type="progress">{{kpi.progress}}</td>-->
+                                                        {%if appraisal.status == 'Employee'%}
+                                                        <td><a href="{% url 'GnC:Update_KPI_POST' kpi.id%}" title="Update"><i class="fa fa-pencil-square-o"></i></a></td>
+                                                        <td><a href="{%url 'GnC:Delete_User_KPI' kpi.id%}" title="Delete"><i class="fa fa-trash-o"></i></a></td>
+                                                        {%else%}
+                                                        <td class = "disabled-icon"><i class="fa fa-pencil-square-o"></i></td>
+                                                        <td class = "disabled-icon"><i class="fa fa-trash-o"></i></td>
+                                                        {%endif%}
+                                                    </tr>
+                                                    {%endfor%}
+                                                    {%endif%}
+                                                </tbody>
+                                            </table>
+                                            <br>
+                                        </div> 
+                                    </td> 
+                                </tr>
+                                {%endfor%}
+                                {%endif%}
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <br><br>
+
+                        <!--testing card table-->
+                        <div class = "card card-table shadow-sm">
+                            <div class = "card-header">
+                                <h5 class = "mb-0">Core Values Competencies</h5>
+                            </div>
+
+                            <div class = "card-body p-0">
+                                <table class = "table fixed pb-0 mb-0">
+                                    <thead class = "thead-light">
+                                        <th style = "border-bottom:none; width: 30%"></th>
+                                        <th colspan = "2" class = "leftborder" style = "width: 35%">Self</th>
+                                        <th colspan = "2" class = "leftborder" style = "width: 35%">Manager/Supervisor</th>
+
+                                    </thead>
+
+
+                                    <thead class = "thead-light">
+                                        <th style = "border-top: none">Core Values Competency</th>
+                                        <th class = "leftborder">Rating</th>
+                                        <th>Comments</th>
+                                        <th class = "leftborder">Rating</th>
+                                        <th>Comments</th>
+                                    </thead>
+
+                                    <tbody>
+                                        {%if appraisal.competencies_set.all.count == False%}
+                                        <td colspan="5">Please fill in your Core Values Competencies</td>
+                                        {%else%}
+                                        {%for competencies in appraisal.competencies_set.all%}
+                                        <tr>
+                                            <td>{{competencies.summary}}</td>
+                                            {%if appraisal.completion == 'null'%}
+                                            <td class = "leftborder">Pending</td>
+                                            <td>Pending</td>
+                                            {%else%}
+                                            <td class = "leftborder">{{competencies.user_rating}}</td>
+                                            <td>{{competencies.user_comments}}</td>
+                                            {%endif%}
+                                            {%if appraisal.completion == 'null' or appraisal.completion == 'ECompleted'%}
+                                            <td class = "leftborder">Pending</td>
+                                            <td>Pending</td>
+                                            {%elif appraisal.completion == 'Review'%}
+                                            <td class = "leftborder">Undergoing Review</td>
+                                            <td>Undergoing Review</td>
+                                            {%else%}
+                                            <td class = "leftborder">{{competencies.manager_rating}}</td>
+                                            <td>{{competencies.manager_comments}}</td>
+                                            {%endif%}
+                                        </tr>
+                                        {%endfor%}
+                                        {%endif%}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--end of testing card table-->
+                        
+                        <br><br>
+
+                        <div class = "card card-table shadow-sm">
+                            <div class = "card-header">
+                                <h5 class = "mb-0">Skills</h5>
+                            </div>
+
+                            <div class = "card-body p-0">
+                                <table class = "table fixed pb-0 m-0">
+                                    <thead class = "thead-light">
+                                        <th style = "border-bottom:none; width: 30%;"></th>
+                                        <th colspan = "2" class = "leftborder" style = "width: 35%">Self</th>
+                                        <th colspan = "2" class = "leftborder" style = "width: 35%">Manager/Supervisor</th>
+                                    </thead>
+
+
+                                    <thead class = "thead-light">
+                                        <th style = "border-top: none">Skills</th>
+                                        <th class = "leftborder">Rating</th>
+                                        <th>Comments</th>
+                                        <th class = "leftborder">Rating</th>
+                                        <th>Comments</th>
+                                    </thead>
+                                    <tbody>
+                                        {% if appraisal.skills_set.count == False %}
+                                    <td colspan="5">Please fill in your Skills</td>
+                                    {%else%}
+                                    {% for skills in appraisal.skills_set.all%}
+                                    <tr>
+                                        <td>{{skills.description}}</td>
+                                        {%if appraisal.completion == 'null'%}
+                                        <td class = "leftborder">Pending</td>
+                                        <td>Pending</td>
+                                        {%else%}
+                                        <td class = "leftborder">{{skills.user_rating}}</td>
+                                        <td>{{skills.user_comments}}</td>
+                                        {%endif%}
+                                        {%if appraisal.completion == 'null' or appraisal.completion == 'ECompleted'%}
+                                        <td class = "leftborder">Pending</td>
+                                        <td>Pending</td>
+                                        {%elif appraisal.completion == 'Review'%}
+                                        <td class = "leftborder">Undergoing Review</td>
+                                        <td>Undergoing Review</td>
+                                        {%else%}
+                                        <td class = "leftborder">{{skills.manager_rating}}</td>
+                                        <td>{{skills.manager_comments}}</td>
+                                        {%endif%}
+                                    </tr>
+                                    {%endfor%}
+                                    {%endif%}
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br>
+                        
+                        {% if appraisal.completion != 'null' %}
+                        <div class = "row justify-content-center m-0">
+                            <div class = "col-4">
+                                <div class = "card grade-card shadow-sm">
+                                    <div class = "card-header">
+
+                                        <div class = "row justify-content-around mb-0 pb-0">
+                                            <span class = "text-left my-auto">Final Appraisal Rating</span>
+                                            <i class="fa fa-line-chart" style = "font-size: 30px;"aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class = "card-body">
+                                        <div class = "row justify-content-between m-0">
+                                            <span>Ratings</span>
+                                            <strong style = "font-size: 16px">{{appraisal.get_final_score_user}}</strong>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class = "row justify-content-between m-0">
+                                            <span>Grade</span>
+                                            <strong style = "font-size: 16px">{{appraisal.get_final_grade_user}}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {%endif%}
+                    </div>
+                    
+                </section>
+                {%endfor%}
+                {%endif%}
+            </section>
+            
+            <section class='dashboardcontent' id="peer" style = "display: none;">    
+                <table class = "table table-condensed">
+                    <thead class = "thead-light">
+                        <th style = "width: 25%;">Appraisal Name</th>
+                        <th style = "width: 30%;">Employee Name</th>
+                        <th style = "width: 15%;">Status</th>
+                        <th style = "width: 15%;">Due</th>
+                        <th style = "width: 15%;">Actions</th>
+                    </thead>
+                    <tbody>
+                        {%if peer_appraisal_database.count == False %}
+                        <td colspan="5">There are no ongoing peer appraisals </td>
+                        {%else%}
+                        {%for peerapps in peer_appraisal_database%}
+                        <tr>
+                            <td>{{peerapps.appraisal.overall_appraisal.name}}</td>
+                            <td>{{peerapps}}</td>
+
+                            {%if peerapps.completion == 'Completed'%}
+                            <td>Completed</td>
+                            {%else%}
+                            <td>Uncompleted</td>
+                            {%endif%}
+
+                            <td>{{peerapps.appraisal.overall_appraisal.appraisal_end_date}}</td>
+                            {%if peerapps.completion == 'Uncompleted'%}
+                            <td><a href = "{%url 'Appraisals:Update_Peer_Appraisal' peerapps.id %}"><i class="fa fa-plus-square-o" title="Create Peer Appraisal"></i></a></td>
+                            {%else%}
+                            <td></td>
+                            {%endif%}
+                        </tr>
+                        {%endfor%}
+                        {%endif%}
+                    </tbody>
+                </table>
+
+            </section>
+        
+
+            <section class="dashboardcontent" id="records" style  = "display: none;">
+                <table class = "table table-condensed">
+                    <thead class = "thead-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Term</th>
+                            <th>Completed</th>
+                            <th style = "width: 15%;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if records_UAL_database.count == 0 %}
+                        <tr>
+                            <td colspan = "4">There are no appraisal records</td>
+                        </tr>
+                        {%else%}
+                        {%for appraisal in records_UAL_database%}
+                        <tr>
+                            <td>{{appraisal.overall_appraisal.name}}</td>
+                            <td>{{appraisal.overall_appraisal.appraisal_category.name}}</td>
+                            <td>{{appraisal.overall_appraisal.calibration_end_date}}</td>
+                            <td><a title = "See More Details" href="{%url 'Appraisals:Detail_PersonalRecord_OverallApp' appraisal.overall_appraisal.id appraisal.id appraisal.employee.id%}"><i class="fa fa-ellipsis-h"></i></a></td>
+                        </tr>
+                        {%endfor%}
+                        {%endif%}
+                    </tbody>
+                </table>
+            </section>
+        </div>
+        <script type="text/javascript">  
+        function getcube(){  
+        var number=document.getElementById("number").value; 
+        var number2=document.getElementById("number2").value;  
+        if (number == 100){
+            document.getElementById("approve").innerHTML = "Paragraph changed0!";
+            }
+        else if (number == 0){
+            document.getElementById("approve").innerHTML = "Paragraph changed1!";
+        }
+        else{
+            document.getElementById("approve").innerHTML = "Paragraph changed2!";
+        }
+        alert(number2+number2)
+        }  
+        </script> 
+
+        <!--jquery & bootstrap-->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>   
+
+       <!--django bootstrap modals-->
+       <script src="{% static 'assets/js/bootstrap.js' %}"></script>
+       <script src="{% static 'assets/js/jquery.js' %}"></script>
+       <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+    
+    {%endblock%}
+</body>

@@ -1,0 +1,16 @@
+{%extends 'homepage.html'%}
+<head>
+    <title>{%block title%}User Update{%endblock%}</title>
+</head>
+<body>
+    {%block content%}
+    <form action= "" method = "POST">
+        {%csrf_token%}
+        {{form.as_p}}
+
+        <a class = "btn btn-danger mr-2" type = "button">Cancel</a>
+        <input type = 'submit' value = "Update">
+    </form>
+    {%endblock%}
+</body>
+</html>

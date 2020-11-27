@@ -1,0 +1,31 @@
+<!--Inherit HTML from parent class 'sidenav'-->
+{%extends 'sidenav.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Competencies Creation {%endblock%}</title>
+</head>
+<body>
+    {%block content%}
+    <!--HTML form, action on current page, use 'POST' method (secure)-->
+
+    <form action= "" method = "POST">
+        <div class="form-group">
+            <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+            {%csrf_token%}
+            
+            <!--Generate form organised in paragraphs based on query on CreateCompetencies in GnC/views.py-->
+            {{form.as_p}}
+            <input type = 'submit' value = "Submit">
+        </div>
+    </form>
+    {%endblock%}
+</body>
+</html>

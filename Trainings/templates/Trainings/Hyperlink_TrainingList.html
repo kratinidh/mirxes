@@ -1,0 +1,68 @@
+<head>
+
+    <title>Trainings</title>
+
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+    <!--font--> 
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+    
+    <style>
+        .container {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Hind', sans-serif !important;
+        }
+
+    </style>
+</head>
+
+
+<body>
+    <div class = "container">
+        <br>
+        <div class = "card card-body">
+            <h2 class = "text-center">Trainings</h2>
+
+            <ol>
+                <div class="card card-body pb-0">
+                <strong>Instructions:</strong>
+                <li>Search for suitable recommended trainings</li>
+                <li>Input name of trainings within 'Recommended Training' field of Rating</li><br>
+                </div>
+            </ol>
+
+            <form method="GET" action="{% url 'Trainings:hyperlink_training_list' %}"> 
+                <input type="text" name="search" placeholder="Search Skill" />
+                <input type="submit">
+            </form> 
+
+
+            <table class = "table">
+                <thead class = "thead-light">
+                    <tr>
+                        <th>Training Name</th>
+                        <th>Skills</th>
+                        <th>Provider<th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trainings in training_course_list %}
+                    <tr>
+                        <td>{{trainings.name}}</td>
+                        <td>{{trainings.skill_category.name}}</td>
+                        <td>{{trainings.provider}}</td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>

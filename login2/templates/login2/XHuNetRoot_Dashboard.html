@@ -1,0 +1,340 @@
+{%extends 'homepage.html'%}
+{%load static%}
+
+<head> 
+    {%block script1%}
+    <!--bootstrap and jquery-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/custom.js"></script>
+
+    <!--font-->
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+
+    <!--css-->
+    <link href="{% static 'login2/HuNetRoot_Dashboard.css' %}" rel="stylesheet" type="text/css">
+
+    <script>
+        /*tabs*/
+        function openCity(evt, cityName, classOfTabContent, classOfTabLink) {
+            var i, x, tablinks;
+
+            x = document.getElementsByClassName(classOfTabContent);
+            for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName(classOfTabLink);
+            for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", " ");
+            }
+
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        /*accordion table*/
+        $('.accordion-toggle').click(function(){
+            $('.hiddenRow').hide();
+            $(this).next('tr').find('.hiddenRow').show();
+        }); 
+
+        /*tooltips*/
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+    </script>
+    {%endblock%}
+
+    <title>{%block title%}Dashboard{%endblock%}</title>
+</head>
+
+<body>
+    <!--Page wrapper bg-->
+    <div class="wrapper">
+        {%block content%}
+        <!--Welcome user-->
+        <h1>Welcome {{request.user}}!</h1>
+
+        <!--Timeline-->
+        <section class="timeline">
+            <h2>Timeline feature: Coming soon</h2>
+        </section>
+
+        <!--Primary navigation tab for HR-->
+        <!--shortcuts may not be needed
+        <section class = "shortcut">
+                <div id="line"></div>
+                <a href = ''><button class = "btn btn1" data-toggle = "tooltip" data-placement = "bottom" title = "Add Departmental Goals"><i class="fa fa-users" aria-hidden="true"></i></button></a>                                  
+                    
+                <a href = ''><button class = "btn btn2" data-toggle = "tooltip" data-placement = "bottom" title = "Add User Competencies"><i class="fa fa-bullseye" aria-hidden="true"></i></button></a>                  
+
+                <a href = ''><button class = "btn btn3" data-toggle = "tooltip" data-placement = "bottom" title = "Apply Training"><i class="fa fa-line-chart" aria-hidden="true"></i></button></a>                                    
+
+                <a href = ''><button class = "btn btn4" data-toggle = "tooltip" data-placement = "bottom" title = "View User Appraisals"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>                              
+    
+                <a href = ''><button class = "btn btn5" data-toggle = "tooltip" data-placement = "bottom" title = "View Training Metrics"><i class="fa fa-bar-chart" aria-hidden="true"></i></button></a>             
+        </section> 
+        -->
+        
+        <br> 
+
+        <!--Goals and Competencies mini view-->
+        <section class = "GnC_miniview">
+            <div class="tab">
+                <button class="tablinks active" onclick="openCity(event, 'GnC_User', 'tabcontent_GnCmini', 'tablinks')">User</button>
+                <button class="tablinks" onclick="openCity(event, 'GnC_Company', 'tabcontent_GnCmini', 'tablinks')">Company</button>
+            </div>
+                <br><br>
+            
+                <div id="GnC_User" class="tabcontent_GnCmini" style ="display:block">
+                    <br>
+                    <div class="innertab">
+                        <button id="slide-item-1" class="tablinks1 active" onclick="openCity(event, 'goals', 'tabcontent', 'tablinks1')">Goals</button>
+                        <button id="slide-item-2" class="tablinks1" onclick="openCity(event, 'competencies', 'tabcontent', 'tablinks1')">Competencies</button>
+                     
+                        <div class="slider">
+                            <div class="bar"></div>
+                        </div> 
+
+                    </div>
+                    <br>
+                    
+                    <div id="goals" class="tabcontent">  
+
+                        <h3>Departmental Goals</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Due date</th>
+                                    <th scope="col">Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Grow customers</td>
+                                    <td>Business and Financial</td>
+                                    <td>2024-04-29</td>
+                                    <td>50%</td>
+                                </tr>
+                            </tbody>
+                            
+                        </table>
+                        <br>
+                
+                        <table>
+                            <h3>User Goals</h3>
+                            <tr class = "head">
+                                <th>Department</th>
+                                <th>Category</th>
+                                <th>Goals</th>
+                                <th>Progress</th>
+                            </tr>
+                            
+                            <tr>
+                                <td>Marketing</td>
+                                <td>Business Financiality</td>
+                                <td>Increase sales</td>
+                                <td>75%</td>
+                            </tr>
+
+                            <tr>
+                                <td>HR</td>
+                                <td>Manpower management</td>
+                                <td>Complete appraisal</td>
+                                <td>35%</td>
+                            </tr>
+
+                            <tr>
+                                <td>Technician</td>
+                                <td>Spring project</td>
+                                <td>Finish coding 10 HTML templates today</td>
+                                <td>10%</td>
+                            </tr>
+                        </table>
+                    </div> 
+                    
+
+                    <div id="competencies" class="tabcontent">
+                    <h3>User Competencies</h3>
+                    <table>
+                        <tr class = "head">
+                            <th>Competency</th>
+                            <th>Category</th>
+                            <th>Due date</th>
+                        </tr>
+                        
+                        <tr>
+                            <td>Sound moral ethical principles during work</td>
+                            <td>Integrity</td>
+                            <td>20-05-2020</td>
+                        </tr>
+
+                        <tr>
+                            <td>Work with customer satisfaction team to drive customer's satisfaction</td>
+                            <td>Team-player</td>
+                            <td>20-05-2020</td>
+                        </tr> 
+                    </table>
+                    </div>
+                </div>
+
+                <div id="GnC_Company" class= "tabcontent_GnCmini" style="display:none">
+                    <br>
+                    <h3>Company Overview</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope = "col"> Name </th>
+                                <th scope = "col"> Department </th>
+                                <th scope = "col"> Goal count </th>
+                                <th scope = "col"> Competency count </th>
+                                <th scope = "col"> Action </th>
+                            </tr>
+        
+                            <tr>
+                                <td>Ben</td>
+                                <td>IT</td>
+                                <td>4</td>
+                                <td>3</td>
+                                <td><button type="button" onclick="alert('Pop up showing details of employee')">> See more!</button></td>
+                            </tr>
+                            <tr>
+                                <td>Singh</td>
+                                <td>IT</td>
+                                <td>7</td>
+                                <td>5</td>
+                                <td><button type="button" onclick="alert('Pop up showing details of employee')">> See more!</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>Qiao</td>
+                                <td>IT</td>
+                                <td>2</td>
+                                <td>4</td>
+                                <td><button type="button" onclick="alert('Pop up showing details of employee')">> See more!</button></td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+        </section>
+
+        <hr>
+        <!--Training metric miniview-->
+        <section class = "Training_metric_miniview">
+
+            <div class = "Training_metric">
+                <p>Training targetted vs Training met</p>
+            </div>
+            <div class = "Training_metric2">
+                <p>Effectiveness of training</p>
+            </div>
+            <div>
+                <p>Appraisal status</p>
+            </div>
+            <div>
+                <p>Performance ratings</p>
+            </div>
+        </section>       
+        
+        <hr>
+        <!--Employee Management miniview-->
+        <section class = "Appraisals miniview">
+            <div>
+                <h3>Team Member List</h3>
+                <form method="GET">
+                    <input type="text" name="search" placeholder="Search..." id = "search">
+                    <input type="submit" value="Submit">
+                </form>
+                <br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope = "col"> Name </th>
+                            <th scope = "col"> Department </th>
+                            <th scope = "col"> Employment type </th>
+                            <th scope = "col"> Position </th>
+                            <th scope = "col"> Contact </th>
+                            <th scope = "col"> Email </th>
+                            <th scope = "col"> Action </th>
+                        </tr>
+    
+                        <tr>
+                            <td>Ben</td>
+                            <td>IT</td>
+                            <td>Full-time intern</td>
+                            <td>Full-Stack developer</td>
+                            <td>84981234</td>
+                            <td>bennyteomh@hotmail.com</td>
+                            <td><button data-toggle="collapse" data-target="#demo1" class="accordion-toggle" type="button">> See more!</button></td>
+                        </tr>
+
+                        <!--fake data-->
+                        <tr class="p">
+				            <td colspan="7" class="hiddenRow">
+					            <div class="accordian-body collapse p-3" id="demo1" style="padding: 0 !important;">
+					            	<p style = "font-size: 16px; padding:10px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dapibus ultrices in iaculis nunc sed augue lacus. Quam nulla porttitor massa id neque aliquam. Ultrices mi tempus imperdiet nulla malesuada. Eros in cursus turpis massa tincidunt dui ut ornare lectus.
+					        	</div> 
+				        	</td> 
+                        </tr>
+
+                        <tr>
+                            <td>Balvinder</td>
+                            <td>IT</td>
+                            <td>Full-time</td>
+                            <td>Founder of HuNet</td>
+                            <td>84982314</td>
+                            <td>balvindersingh@gmail.com</td>
+                            <td><button data-toggle="collapse" data-target="#demo2" class="accordion-toggle" type="button" >> See more!</button></td>
+                        </tr>
+
+                       <!--fake data-->
+                        <tr class="p">
+                            <td colspan="7" class="hiddenRow">
+                                <div class="accordian-body collapse p-3" id="demo2" style="padding: 0 !important;">
+                                    <p style = "font-size: 16px; padding:10px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dapibus ultrices in iaculis nunc sed augue lacus. Quam nulla porttitor massa id neque aliquam. Ultrices mi tempus imperdiet nulla malesuada. Eros in cursus turpis massa tincidunt dui ut ornare lectus.
+                                </div> 
+                            </td> 
+                        </tr>    
+
+                        <tr>
+                            <td>Jek</td>
+                            <td>HR</td>
+                            <td>Full-time employee</td>
+                            <td>HR Manager</td>
+                            <td>84983124</td>
+                            <td>jek@gmail.com</td>
+                            <td><button type="button" data-toggle="collapse" data-target="#demo3" class="accordion-toggle">> See more!</button></td>
+                        </tr>
+
+                        <!--fake data-->
+                        <tr class="p">
+                            <td colspan="7" class="hiddenRow">
+                                <div class="accordian-body collapse p-3" id="demo3" style="padding: 0 !important;">
+                                    <p style = "font-size: 16px; padding:10px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dapibus ultrices in iaculis nunc sed augue lacus. Quam nulla porttitor massa id neque aliquam. Ultrices mi tempus imperdiet nulla malesuada. Eros in cursus turpis massa tincidunt dui ut ornare lectus.
+                                </div> 
+                            </td> 
+                        </tr> 
+
+                    </thead>
+                </table>
+            </div>
+
+        </section>
+
+        <hr>
+        <!--bootstrap-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        {%endblock%}
+        
+    </div><!--wrapper-->
+
+</body>
+</html>

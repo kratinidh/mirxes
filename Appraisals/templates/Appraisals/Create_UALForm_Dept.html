@@ -1,0 +1,25 @@
+{%extends 'Appraisals/Create_UALForm_Indiv.html'%}
+{%load static%}
+ 
+{%block checkbox%}
+<table id = "tableSelect" class = "table table-hover text-center fixed">
+    <thead>
+        <th class = "text-left">Name</th>
+        <th>Select:</th>
+    </thead>
+
+    <tbody>
+        {% for department in department_list %}                          
+        <tr onclick="selectRow(this)">       
+            <td class = "order_row text-left"><label for="{{department.id}}">{{department.name}}</label></td>
+            <td class = "order_row" style = "width: 200px;"><input type="checkbox" name="department_list" id="{{department.id}}" value="{{department.id}}"/></td>
+        </tr>                       
+        {%endfor%}
+    </tbody>
+    
+</table>
+{%endblock%}
+
+{%block text%}
+<span>Select department to include in appraisal:</span>
+{%endblock%}

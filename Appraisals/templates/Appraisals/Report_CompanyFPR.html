@@ -1,0 +1,423 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'homepage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header--> 
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Final Payout Report Details{%endblock%}</title>
+
+    {%block script1%}
+    <!--css-->
+    <link rel = "stylesheet" type="text/css" href = "{% static 'Appraisals/HuNet_DetailAppraisal.css' %}">
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/custom.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    
+    <!--font-->
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+    
+    <script>
+        /*tabs*/ 
+        function openCity(evt, cityName, classOfTabContent, classOfTabLink) {
+            var i, x, tablinks;
+
+            x = document.getElementsByClassName(classOfTabContent);
+            for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName(classOfTabLink);
+            for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", " ");
+            }
+
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        /*accordion table*/
+        $('.accordion-toggle').click(function(){
+            $('.hiddenRow').hide();
+            $(this).next('tr').find('.hiddenRow').show();
+        }); 
+
+        /*tooltips*/
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        /*dropdown menu*/
+        $(document).ready(function(){
+            $(".dropdown-toggle").dropdown();
+        });
+
+        /*alert*/
+        $(document).ready(function(){
+            $(".alert").alert('close');
+        });
+
+
+    </script>
+
+    <style>
+        table {
+            table-layout: fixed;
+        }
+    </style>
+    {%endblock%}
+</head>
+
+<body>
+    {%block content%}
+    <div class = "container">
+        <br>
+        <a href="{%url 'user_homepage'%}"><i class="fa fa-angle-double-left" style = "font-size: 30px" aria-hidden="true"></i></a>
+        
+        {%for user_appraisal in report_overall_appraisal_database.user_appraisal_list_set.all%}
+        {% with profile_database=user_appraisal.employee %}
+        <br><br>
+            <hr>
+            <h5>{{profile_database.name}}'s  Appraisal Report</h5><br>
+            <div class = "row">
+                <div class = "col">
+                    <div class = "card shadow-sm">
+                        <div class = "card-body py-0">
+                            <table class = "table mb-0 text-left">
+                                <tr>
+                                    <th style = "width: 210px; border-top: none">Name</th>
+                                    <th style = "width: 1px; border-top: none">:</th>
+                                    <td style = "border-top: none">{{profile_database.name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Department</th>
+                                    <th>:</th>
+                                    <td>{{profile_database.department.name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Job Title</th>
+                                    <th>:</th>
+                                    <td>{{profile_database.job_Title}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Manager/Supervisor's Name</th>
+                                    <th>:</th>
+                                    <td>{{profile_database.first_Reporting_Manager.name}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+           
+                <br><br>
+
+                <div class = "col">
+                    <div class = "card shadow-sm">
+                        <div class = "card-body py-0">
+                            <table class = "table mb-0 text-left">
+                                <tr>
+                                    <th style = "width: 245px; border-top: none">Goals Count</th>
+                                    <th style = "width: 1px; border-top: none">:</th>
+                                    <td style = "border-top: none">{{user_appraisal.goals_set.count}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Core Values Competencies Count</th>
+                                    <th>:</th>
+                                    <td>{{user_appraisal.competencies_set.count}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Skills Count</th>
+                                    <th>:</th>
+                                    <td>{{user_appraisal.skills_set.count}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        <br>
+            {%if overall_appraisal_database.status == 'Completed'%} 
+            <div class="alert alert-success" role="alert" style = "border-left: 3px solid green">
+                Appraisal <strong>Completed</strong>
+            </div>
+
+            {%else%} 
+            <div class="alert alert-secondary" role="alert" style = "border-left: 3px solid grey">
+                Appraisal <strong>Not Completed</strong>.
+            </div>
+
+        {%endif%}
+
+
+        <br>
+        <br>
+            
+
+
+        <div class = "card card-table">
+            <div class = "card-header border-0">
+                <h5 class = "mb-0">Goals</h5>
+            </div>
+
+            <div class = "card-body py-0">
+                <table class = "table fixed mb-0 pb-0">
+                    <thead> 
+                        <tr>
+                            <th style = "width: 20%">Goal Title</th>
+                            <th style = "width: 5%"></th>
+                            <th style = "width: 15%" >Progress</th>
+                            <th style = "width: 20%" class = "leftborder">Employee Rating</th>
+                            <th style = "width: 20%" class = "leftborder">Supervisor/Manager Rating</th>
+                            <th style = "width: 20%" class = "leftborder">Board Rating</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% if user_appraisal.goals_set.count == False %}
+                        <tr>
+                            <td colspan = "5">No existing goals.</td>
+                        </tr>
+                        {%else%} 
+
+                        {% for goals in user_appraisal.goals_set.all %}
+                        <tr>
+                            <td>{{goals.summary}}</td>
+                            <td><button id = "seeMore" data-toggle="collapse" data-target="#collapse{{goals.id}}" class="accordion-toggle" type="button"><i class="fa fa-chevron-down"  alt = "See More"></i></button></td>
+
+                            <td>
+                                {%if goals.get_kpi_percentage < 0 %}
+                                No KPIs
+                                {%elif goals.get_kpi_percentage <= 99 %}
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: {{goals.get_kpi_percentage}}%;" aria-valuenow="{{goals.get_kpi_filtered_completed.count}}" aria-valuemin="0" aria-valuemax="{{goals.kpi_set.count}}">{{goals.get_kpi_percentage}}%</div>
+                                </div>
+                                {%else%}
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{goals.get_kpi_percentage}}%;" aria-valuenow="{{goals.get_kpi_filtered_completed.count}}" aria-valuemin="0" aria-valuemax="{{goals.kpi_set.count}}">{{goals.get_kpi_percentage}}%</div>
+                                </div>
+                                {%endif%}
+                            </td>
+
+                            <td class = "leftborder">{{goals.user_rating}}</td>
+                            <td class = "leftborder">{{goals.manager_rating}}</td>
+                            <td class = "leftborder">{{goals.board_rating}}</td>
+                          
+                        </tr>
+
+                        
+                            <tr class="p">
+                                <td colspan="10" class="hiddenRow">
+                                    <div class="accordian-body collapse" id="collapse{{goals.id}}">
+                                        <br>
+                                        <table class = "KPItable">
+                                            <thead>
+                                                <tr>
+                                                    <th>KPI Description</th>
+                                                    <th>Due</th>
+                                                    <th>Progress</th>
+                                                    <th>Date Created</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {%if goals.kpi_set.all.count == False%}
+                                                <td colspan="4">Please add KPIs</td>
+                                                {%else%}
+                                                {%for kpi in goals.kpi_set.all%}
+                                                <tr>
+                                                    <td>{{kpi.description}}</td>
+                                                    <td>{{kpi.due}}</td>
+                                                    <td><form class="range-field my-4 w-50">
+                                                    <input type="range" min="0" max="100" />
+                                                    </form></td>
+                                                    <!--<td class="editable" data-id="{{kpi.id}}" data-type="progress">{{kpi.progress}}</td>-->
+                                                    <td>{{kpi.date_created}}</td>
+                                                </tr>
+                                                {%endfor%}
+                                                {%endif%}
+                                            </tbody>
+                                        </table>
+                                        <br>
+                                    </div> 
+                                </td> 
+                            </tr>
+                            {%endfor%}
+                            {%endif%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <br><br>
+
+        <div class = "card card-table">
+            <div class = "card-header border-0">
+                <h5 class = "mb-0">Core Values Competencies</h5>
+            </div>
+
+            <div class = "card-body py-0">
+                <table class = "table fixed mb-0 pb-0">    
+                    <thead>
+                        <tr>
+                            <th style = "width: 40%">Core Values Competency</th>
+                            <th style = "width: 20%" class = "leftborder">Employee Rating</th>
+                            <th style = "width: 20%" class = "leftborder">Supervisor/Manager Rating</th>
+                            <th style = "width: 20%" class = "leftborder">Board Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if user_appraisal.competencies_set.count == False %}
+                        <tr>
+                            <td colspan = "4">No existing competencies.</td>
+                        </tr>
+                        {%else%} 
+
+                        {% for competencies in user_appraisal.competencies_set.all %}
+                        <tr>
+                            <td>{{competencies.summary}}</td>
+                            <td class = "leftborder">{{competencies.user_rating}}</td>
+                            <td class = "leftborder">{{competencies.manager_rating}}</td>
+                            <td class = "leftborder">{{competencies.board_rating}}</td>
+                        </tr>
+                        {%endfor%}
+                        {%endif%}
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+            
+        <br><br>
+        
+        <div class = "card card-table">
+            <div class = "card-header border-0">
+                <h5 class = "mb-0">Skills</h5>
+            </div>
+
+            <div class = "card-body py-0">
+                <table class = "table fixed mb-0 pb-0">
+                    <tr>
+                            <th style = "width: 40%;">Skill </th>
+                            <th style = "width: 20%" class = "leftborder">Employee Rating</th>
+                            <th style = "width: 20%" class = "leftborder">Supervisor/Manager Rating</th>
+                            <th style = "width: 20%" class = "leftborder">Board Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if user_appraisal.skills_set.count == False %}
+                        <tr>
+                            <td colspan = "4">No existing skills.</td>
+                        </tr>
+                        {%else%} 
+
+                        {% for skills in user_appraisal.skills_set.all %}
+                        <tr>
+                            <td>{{skills.description}}</td>
+                            <td class = "leftborder">{{skills.user_rating}}</td>
+                            <td class = "leftborder">{{skills.manager_rating}}</td>
+                            <td class = "leftborder">{{skills.board_rating}}</td>
+                        </tr>
+                        {%endfor%}
+                        {%endif%}
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+
+        <br>
+        <div class = "card card-table">
+            <div class = "card-header border-0">
+                <h5 class = "mb-0">Summary</h5>
+            </div>
+
+            <div class = "card-body py-0">
+                <table class = "table fixed mb-0 pb-0">
+                <thead>
+                    <tr>
+                        <th colspan="2">Employee</th>
+                        <th colspan="2" class = "leftborder">Manager/Supervisor</th>
+                        <th colspan="2" class = "leftborder">Final</th>
+                    </tr>
+                    <tr>
+                        <th>Rating</th>
+                        <th>Grade</th>
+                        <th class = "leftborder">Rating</th>
+                        <th>Grade</th>
+                        <th class = "leftborder">Rating</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {%if user_appraisal.completion == 'null'%}
+                        <td>Not Available</td>
+                        <td>Not Available</td>
+                        {%else%}
+                        <td>{{user_appraisal.get_final_score_user}}</td>
+                        <td>{{user_appraisal.get_final_grade_user}}</td>
+                        {%endif%}
+
+                        {%if user_appraisal.completion == 'null' or user_appraisal.completion == 'ECompleted'%}
+                        <td>Not Available</td>
+                        <td>Not Available</td>
+                        {%else%}
+                        <td class = "leftborder">{{user_appraisal.get_final_score_manager}}</td>
+                        <td>{{user_appraisal.get_final_grade_manager}}</td>
+                        {%endif%}
+
+                        {%if user_appraisal.completion == 'null' or user_appraisal.completion == 'ECompleted' or user_appraisal.completion == 'MCompleted'%}
+                        <td>Not Available</td>
+                        <td>Not Available</td>
+                        {%else%}
+                        <td class = "leftborder">{{user_appraisal.get_final_score_board}}</td>
+                        <td>{{user_appraisal.get_final_grade_board}}</td>
+                        {%endif%}
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+
+        <div class = "card card-table"> 
+            <div class = "card-header border-0">
+                <h5 class = "mb-0">Rewards Recommended</h5>
+            </div>
+
+            <div class = "card-body py-0">
+                <table class = "table fixed mb-0 pb-0">
+                <tbody>
+                    <tr>
+                        <td>Bonuses: 
+                            {{user_appraisal.bonusRecommendation}}
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+        
+        <br>
+        {%endwith%}
+        {%endfor%}
+
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+    {%endblock%}
+
+</body>

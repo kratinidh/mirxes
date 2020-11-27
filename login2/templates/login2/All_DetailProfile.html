@@ -1,0 +1,338 @@
+{%extends 'homepage.html'%}
+{% load thumbnail %}
+<head>
+    {%block title%}Employee Profile{%endblock%}
+
+    {%block script1%}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script>
+        function toggleFunction() {
+          var x = document.getElementById("pw");
+          var y = document.getElementById("pw-dots");
+          if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "none";
+            document.getElementById("toggle-pw").innerHTML = "Hide Password";
+          } else {
+            x.style.display = "none";
+            y.style.display = "block";
+            document.getElementById("toggle-pw").innerHTML = "Show Password";
+          }
+        }
+    </script>
+
+    <style>
+        .card {
+            border: 0.2px solid #eee;
+        }
+
+        .displaypic {
+            font-size: 140px !important;
+            color: #eee; 
+        }
+
+        .display-card .card-header {
+            background: rgb(138, 179, 180);
+        }
+
+        .display-card .card-body {
+            font-size: 18px;
+        }
+
+        .display-card .card-body p{
+            color: rgb(80, 131, 133);
+        }
+
+        .name {
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 20px;
+            color: black !important;
+        }
+
+        .sec-info-card .table th, .sec-info-card table td,
+        .EM-card .table th, .EM-card table td {
+            border: none;
+        }
+
+
+
+
+    </style>
+    {%endblock%}
+
+</head>
+
+<body>
+    {%block content%}
+    <div class = "container">
+        <div class = "row col-12 justify-content-end" style = "margin:0; padding:0;">
+            <a href="{%url 'UpdateProfilepage' object.id%}"><button class = "btn btn-info" type = "button">Update Profile</button></a>
+        </div>
+
+        <br>
+
+        <div class = "row">
+            <div class = "col-5">
+                <div class = "card shadow h-100 text-center display-card">
+                    <div class = "card-header">
+                        {%if object.profile_Picture%}
+                        <img src="{{ object.profile_Picture.url }}" style="width:140px; height:140px; border-radius:50%">
+                        {%else%}
+                        <i class="displaypic fa fa-user-circle-o" aria-hidden="true"></i>
+                        {%endif%}
+                    </div>
+
+                    <div class = "card-body">
+                        <p class = "name">{{object.name}}</p>                
+                        <p>Employee ID: {{object.employee_ID}}{%if not object.employee_ID%}<strong>---</strong>{%endif%}</p>
+                        <p>NRIC/FIN: {{object.nric}}{%if object.employee_ID == ' '%}<strong>---</strong>{%endif%}</p>
+                        <p><i class="fa fa-user-o" aria-hidden="true"></i> {{object.gender}}</p>
+                        <p><i class="fa fa-envelope-o" aria-hidden="true"></i> {{object.email}}</p>
+                        <p><i class="fa fa-phone" aria-hidden="true"></i> {{object.phone}}</p>
+                        
+                        <hr>
+
+                        <div class = "text-left">
+                            <p>Username: {{object.user.username}}</p>
+                            <p>Password: 
+                                <span id = "pw-dots" style = "display: block;">••••••••••</span>
+                                <span id = "pw" style = "display: none;">{{object.user.password}}</span>
+                            </p>
+                            <button id = "toggle-pw" onclick = "toggleFunction()" class = "btn btn-secondary" type = "button">Show Password</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "col-7">
+                <div class = "card EM-card">
+                    <div class = "card-header">
+                        <h4>Employment Details</h4>
+                    </div>
+
+                    <div class = "card-body">
+                        <table class = "table" style="width:100%">
+                            <tr>
+                              <th>Department</th>
+                              <th>:</th>
+                              <td>{{object.department.name}}</td>
+                            </tr>
+                            <tr>
+                                <th>Section</th>
+                                <th>:</th>
+                                <td>{{object.division_Centre}}</td>
+                            </tr>
+                            <tr>
+                              <th>Date-Of-Hire</th>
+                              <th>:</th>
+                              <td>{{object.date_Of_Hire}}</td>
+                            </tr>
+                            <tr>
+                              <th>Job Title</th>
+                              <th>:</th>
+                              <td>{{object.employment_Type}} {{object.job_Title}}</td>
+                            </tr>
+                            
+                            <tr>
+                                <th>Direct Manager/Supervisor</th>
+                                <th>:</th>
+                                {%if object.first_Reporting_Manager == null%}
+                                <td><strong>---</strong></td>                            
+                                {%else%}
+                                <td>{{object.first_Reporting_Manager}}</td>                           
+                                {%endif%}
+                            </tr>
+                            <tr>
+                                <th>HOD</th>
+                                <th>:</th>
+                                <td>{{object.second_Reporting_Manager}}</td>
+                            </tr>
+                            
+                        </table>
+                    </div>
+                </div>
+                
+                <br>
+
+                <div class = "card">
+                    <div class = "card-header">
+                        <h4>Skills</h4>
+                        
+                    </div>
+                    
+                    <div class = "card-body">
+                        <table>
+                            <th style='width:33%'></th>
+                            <th style='width:33%'></th>
+                            <th style='width:33%'></th>
+                        </table>
+                        <tr>
+                            {%for skills in profile_skills_database1%}
+                            <td>{{skills.skill_category.name}}</td>
+                            {%endfor%}
+                        </tr>
+                        <tr>
+                            {%for skills in profile_skills_database2%}
+                            <td>{{skills.skill_category.name}}</td>
+                            {%endfor%}
+                        </tr>
+                        <tr>
+                            {%if object.skill1 %}
+                            <td>{{object.skill1}}</td>
+                            {%endif%}
+                            {%if object.skill2 %}
+                            <td>{{object.skill2}}</td>
+                            {%endif%}
+                            {%if object.skill3 %}
+                            <td>{{object.skill3}}</td>
+                            {%endif%}
+                        </tr>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br>
+
+        <div class = "row">
+            <div class = "col-5">
+                <div class = "card sec-info-card">
+                    <div class = "card-header">
+                        <h4>Secondary Information</h4>
+                    </div>
+
+                    <div class = "card-body">
+                        <table class = "table" style="width:100%">
+                            <tr>
+                              <th>Address 1</th>
+                              <th>:</th>
+                              <td>{{object.address_1}}</td>
+                            </tr>
+                            <tr>
+                              <th>Address 2</th>
+                              <th>:</th>
+                              {%if object.address_2 == null or object.address_2 == ''%}
+                              <td><strong>---</strong></td>
+                              {%else%}
+                              <td>{{object.address_2}}</td>
+                              {%endif%}
+                            </tr>
+                            <tr>
+                                <th>Date of Passport Expiry</th>
+                                <th>:</th>
+                                <td>{{object.date_Of_Passport_Expiry}}</td>
+                            </tr>
+                            <tr>
+                                <th>Citizenship Status</th>
+                                <th>:</th>
+                                <td>{{object.citizenship_Status}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class = "col-7">
+                <div class = "card">
+                    <div class = "card-header">
+                        <table><td style="width:100%;"><h4>Education Details</h4> </td> <td><div class = "row col-12 justify-content-end" style = "margin:0; padding:0;"><a href="{%url 'Create_Qualifications' object.id%}"><button class = "btn btn-info" type = "button">Add</button></a></div></td></table>
+                    </div>
+                    
+                    <div class = "card-body py-0">
+                        <table class = "table">
+                            <thead>
+                                <th style = "border-top: none;">Institution</th>
+                                <th style = "border-top: none;">Qualifications Attained</th>
+                                <th style = "border-top: none;">Graduation Year</th>
+                                <th style = "border-top: none;"></th>
+                            </thead>
+
+                            <tbody>
+                                {%if object.qualification_set.count == False %}
+                                <tr>              
+                                    <td colspan = "4"> User has not filled educational details. </td> 
+                                </tr>
+                                {%else%}
+                                {% for qualifications in qualifications_database%}
+                                <tr>
+                                    <td>{{qualifications.institution}}{%if qualifications.institution == ''%}<strong>---</strong>{%endif%}</td>
+                                    <td> {{qualifications.name}}</td>
+                                    <td>{{qualifications.graduation_year}}{%if qualifications.graduation_year == ''%}<strong>---</strong>{%endif%}</td>
+                                    <td><a href="{% url 'Delete_Qualifications' object.id qualifications.id%}">Delete</a></td>
+                                </tr>
+                                {%endfor%}
+                                {%endif%}
+                            </tbody>
+                        </table>
+
+                        <p></p> 
+                    </div>
+                </div>
+
+                <br>
+                <div class = "card training-records-card">
+                    <div class = "card-header">
+                        <h4>Training Records</h4>
+                    </div>
+
+                    <div class = "card-body py-0">
+                        <table class = "table">
+                            <thead>
+                                <th style = "border-top: none;">Training Course</th>
+                                <th style = "border-top: none;">Skill Category</th>
+                            </thead>
+
+                            <tbody> 
+                                <tr>
+                                    <td>Feature coming soon</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class = "card past-appraisal-records-card">
+                    <div class = "card-header">
+                        <h4>Past Appraisal Records</h4>
+                    </div>
+                    
+                    <div class = "card-body py-0">
+                        <table class = "table">
+                            <thead>
+                                <th style = "border-top: none;">Appraisal Name</th>
+                            </thead>
+
+                            <tbody>
+                                {%if comp_overall_appraisal_database.count == False%}
+                                <tr>
+                                    <td>There are no past appraisal records.</td>
+                                </tr>
+                                {%endif%}
+                                {%for appraisal in comp_overall_appraisal_database%}
+                                <tr>
+                                    <td><a href="{%url 'Appraisals:Detail_PersonalRecord_OverallApp' appraisal.overall_appraisal.id appraisal.id appraisal.employee.id%}">{{appraisal.overall_appraisal.name}}</a></td>
+                                <tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div> 
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+    {%endblock%}
+</body>

@@ -1,0 +1,45 @@
+{%extends 'utilitypage.html'%}
+{%load static%}
+<head>
+    <title>{%block title%}Ticketing{%endblock%}</title>
+</head>
+<body>
+    <div class="wrapper">
+        {%block content%}
+        <a href="{% url 'Ticketing:Create_User_Ticket'%}">Create Ticket</a>
+
+        <section class="View_ticketing">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Ticketing ID</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Comments count</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" colspan="4">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {%for ticket in ticketing_list%}
+                    <tr>
+                        <td>{{ticket.id}}</td>
+                        <td>{{ticket.category}}</td>
+                        <td>{{ticket.title}}</td>
+                        <td>{% with comments_count=ticket.Ticket_Comments_set.all%}{{comments_count|length}}{%endwith%}</td>
+                        <td>{{ticket.status}}</td>
+                        <td><a href="{% url 'Ticketing:Create_User_Comment' %}">Comment</a></td>
+                        <td><a href="{% url 'Ticketing:Delete_Ticket' ticket.id %}">X</a></td>
+                        <td><a href="{% url 'Ticketing:Detail_Ticket' ticket.id %}">See more</a></td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </section>
+        {%endblock%}
+    </div>
+
+
+</body>
+</html>

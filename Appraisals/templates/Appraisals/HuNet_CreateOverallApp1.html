@@ -1,0 +1,45 @@
+<!--Inherit HTML from parent class 'sidenav'-->
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML--> 
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Create Overall Apprasisal {%endblock%}</title>
+</head>
+<body>
+    {%block content%}
+    <!--HTML form, action on current page, use 'POST' method (secure)-->
+    <div class = "container col-6">
+        <div class = "card">
+            <div class = "card-header">
+                <h2>Create Overall Apprasisal</h2>
+            </div>
+
+            <div class = "card-body">
+                <form action= "" method = "POST">
+                    <div class="form-group">
+                        <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+                        {%csrf_token%}
+                        
+                        <!--Generate form organised in paragraphs based on query on CreateCompetencies in GnC/views.py-->
+                        {{form.as_p}}
+
+                        <a href = "{% url 'user_homepage'%}" class = "btn btn-danger mr-2" type = "button" value = "Cancel">Cancel</a>
+                        <input class = "btn btn-primary" type = 'submit' value = "Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {%endblock%}
+</body>
+</html>

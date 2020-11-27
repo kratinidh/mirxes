@@ -1,0 +1,175 @@
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML--> 
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Create Profile{%endblock%}</title>
+    <style>
+        /* .radio-row input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-row label {
+            font-weight: 500;
+            cursor: pointer;
+            height: 50px;
+            border: 2px solid #454451;
+            color: #454451;
+            padding: 10px;
+            position: relative;
+            transition: 0.5s;
+            border-radius: 4px;
+        }
+
+        input[type="radio"]:checked + label {
+            background-color: #454451;
+            color: white;
+        }
+
+        input[type="radio"]:checked + label i {
+            color: #454451;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        .checkmark i {
+            position: relative;
+            right: -4px;
+            color: #eee;
+        } */
+
+
+</style>
+</head>
+
+<body>
+    <!--HTML form, action on current page, use 'POST' method (secure)-->
+    <div class = "container col-6">
+        <br>
+        <div class = "card">
+            <div class = "card-header">
+                <h2>{%block header%}Create Employee Profile{%endblock%}</h2>
+            </div>
+            <div class = "card-body">
+                <form action= "" method = "POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+                        {%csrf_token%}
+                        <!--Generate form organised in paragraphs based on query on CreateCompetencies in GnC/views.py-->
+                        {%block form%}
+                        <h4>Personal Particulars</h4><hr>
+                        Name*:<br>
+                        {{form.name}}<br>
+                        Employee ID*:<br>
+                        {{form.employee_ID}}<br>
+                        NRIC/FIN*:<br>
+                        {{form.nric}}<br>
+                        Gender*:<br>
+                        {{form.gender}}<br>
+                        Email*:<br>
+                        {{form.email}}<br>
+                        Phone (+Country Code):<br>
+                        {{form.phone}}<br>
+                        Indirect/Direct*:<br>
+                        {{form.typeOfEmployee}}<br><br>
+                        
+                        <h4>Secondary Information</h4><hr>
+                        Home Address:<br>
+                        {{form.address_1}}<br>
+                        Alternate Home Address:<br>
+                        {{form.address_2}}<br>
+                        
+                        Date of Passport Expiry (DD/MM/YYYY):<br>
+                        {{form.date_Of_Passport_Expiry}}<br>
+                        Citizenship Status*:<br>
+                        {{form.citizenship_Status}}<br><br>
+
+                        <h4>Employment Details</h4><hr>
+                        Department*:<br>
+                        {{form.department}}<br>
+                        Section:<br>
+                        {{form.division_Centre}}<br>
+                        Date Of Hire (DD/MM/YYYY)*:<br>
+                        {{form.date_Of_Hire}}<br>
+
+                        Employment Type*:<br>
+                        {{form.employment_Type}}<br>
+
+                        Job Title*:<br>
+                        {{form.job_Title}}<br>
+                        Direct Manager/Supervisor*:<br>
+                        {{form.first_Reporting_Manager}}<br>
+                        HOD:<br>
+                        {{form.second_Reporting_Manager}}<br><br>
+
+                        <h4>Skills</h4><hr>
+                        Skill 1:<br>
+                        {{form.skill1}}<br>
+                        Skill 2:<br>
+                        {{form.skill2}}<br>
+                        Skill 3:<br>
+                        {{form.skill3}}<br><br>
+
+                        {%endblock%}
+
+                        <h4>Access</h4>
+                        
+                        <hr>
+
+                        <!--bootstrap radio-->
+                        <p>Choose the access rights of the employee*:</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="promotion" id="Employee" value="Employee">
+                            <label class="form-check-label" for="Employee">Employee</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="promotion" id="Manager" value="Manager">
+                            <label class="form-check-label" for="Manager">Supervisor/Manager</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="promotion" id="HR" value="HR">
+                            <label class="form-check-label" for="HR">HR Administrator</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="promotion" id="HR manager" value="HR manager">
+                            <label class="form-check-label" for="HR manager">HR Super User</label>
+                        </div>
+                        <!--end-->
+                        
+                        <br>
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{{ message.tags }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class = "row m-0 justify-content-end">
+                            <a href = "{% url 'user_homepage'%}" class = "btn btn-danger mr-2" type = "button" value = "Cancel">Cancel</a>
+                            <input class = "btn btn-primary" type = 'submit' value = "Submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

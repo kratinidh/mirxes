@@ -1,0 +1,223 @@
+{% extends 'utilitypage.html'%}
+{% load static %}
+<head>
+    <!--Page title-->
+    <title>{%block title%}Appraisal{%endblock%}</title>
+</head>
+<body>
+    <!--Page wrapper bg-->
+    <div class="wrapper">
+        {%block content%}
+        <!--Header of page-->
+        <h1>Appraisals</h1>
+
+        <!--Appraisals section-->
+        <section class="Appraisals">
+
+            <!--Incompleted vs completed tab-->
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'appraisals_incomplete', 'tabcontent_appraisals', 'tablinks')">Incomplete</button>
+                <button class="tablinks" onclick="openCity(event, 'appraisals_completed', 'tabcontent_appraisals', 'tablinks')">Completed</button>
+            </div>
+
+            <!--Sort button-->
+            <div class="sort">
+                <button type="button" onclick="alert('List sorted')">sort</button>
+            </div>
+
+            <!--Incomplete user appraisal-->
+            <div id="appraisals_incomplete" class="tabcontent_appraisals">
+                <div class ="tab">
+                    <button class="tablinks1" onclick="openCity(event, 'user_undergoing', 'appraisal_undergoing', 'tablinks1')">User</button>
+                    <button class="tablinks1" onclick="openCity(event, 'team_undergoing', 'appraisal_undergoing', 'tablinks1')">Team</button>
+                </div>
+                
+                <div id="user_undergoing" class="appraisal_undergoing">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Appraisal ID</th>
+                            <th></th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Due</th>
+                            <th scope="col">Rating Scale</th>
+                            <th scope ="col" colspan="3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AP2103</td>
+                            <td>You</td>
+                            <td>Finance</td>
+                            <td>2020/06/27</td>
+                            <td>Weighted Checklist</td>
+                            <td><button type="button" onclick="alert('Appraisal added')">+</button></td>
+                            <td><button type="button" onclick="alert('Appraisal editted')">Edit</button></td>
+                            <td><button type="button" onclick="alert('Pop up of full appraisal')">></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Appraisal ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Due</th>
+                            <th scope="col">Rating Scale</th>
+                            <th scope="col"colspan="3s">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AP2255</td>
+                            <td>XiaoTang</td>
+                            <td>Finance</td>
+                            <td>2020/06/27</td>
+                            <td>Weighted Checklist</td>
+                            <td><button type="button" onclick="alert('Appraisal added')">+</button></td>
+                            <td><button type="button" onclick="alert('Appraisal editted')">Edit</button></td>
+                            <td><button type="button" onclick="alert('Pop up of full appraisal')">></
+                        </tr>
+
+                        <tr>
+                            <td>AP2342</td>
+                            <td>KongXue</td>
+                            <td>Finance</td>
+                            <td>2020/06/27</td>
+                            <td>Weighted Checklist</td>
+                            <td><button type="button" onclick="alert('Appraisal added')">+</button></td>
+                            <td><button type="button" onclick="alert('Appraisal editted')">Edit</button></td>
+                            <td><button type="button" onclick="alert('Pop up of full appraisal')">></
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <div id="team_undergoing" class="appraisal_undergoing">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Appraisal ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Department</th>
+                                <th scope="col">Due</th>
+                                <th scope="col">Rating Scale</th>
+                                <th scope="col"colspan="3s">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>AP2104</td>
+                                <td>Shu Xin</td>
+                                <td>Finance</td>
+                                <td>2020/06/27</td>
+                                <td>Weighted Checklist</td>
+                                <td><button type="button" onclick="alert('Appraisal added')">+</button></td>
+                                <td><button type="button" onclick="alert('Appraisal editted')">Edit</button></td>
+                                <td><button type="button" onclick="alert('Pop up of full appraisal')">></button>
+                            </tr>
+    
+                            <tr>
+                                <td>AP2103</td>
+                                <td>Rongen</td>
+                                <td>Finance</td>
+                                <td>2020/06/27</td>
+                                <td>Weighted Checklist</td>
+                                <td><button type="button" onclick="alert('Appraisal added')">+</button></td>
+                                <td><button type="button" onclick="alert('Appraisal editted')">Edit</button></td>
+                                <td><button type="button" onclick="alert('Pop up of full appraisal')">></
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!--Completed user appraisal-->
+            <div id="appraisals_completed" class="tabcontent_appraisals">
+                <div class ="tab">
+                    <button class="tablinks2" onclick="openCity(event, 'user_completed', 'appraisal_completed', 'tablinks2')">User</button>
+                    <button class="tablinks2" onclick="openCity(event, 'team_completed', 'appraisal_completed', 'tablinks2')">Team</button>
+                </div>
+
+                <div id="user_completed" class="appraisal_completed">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Appraisal ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Department</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Rating Scale</th>
+                                <th scope="col"colspan="3s">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>AP2031</td>
+                                <td>Timothy</td>
+                                <td>Finance</td>
+                                <td>On-going</td>
+                                <td>Weighted Checklist</td>
+                                <td><button type="button" onclick="alert('Appraisal added')">+</button></td>
+                                <td><button type="button" onclick="alert('Appraisal editted')">Edit</button></td>
+                                <td><button type="button" onclick="alert('Pop up of full appraisal')">></
+                            </tr>
+
+                            <tr>
+                                <td>AP2000</td>
+                                <td>Esther</td>
+                                <td>Finance</td>
+                                <td>Expired</td>
+                                <td>Un-Weighted Checklist</td>
+                                <td><button type="button" onclick="alert('Appraisal added')">+</button></td>
+                                <td><button type="button" onclick="alert('Appraisal editted')">Edit</button></td>
+                                <td><button type="button" onclick="alert('Pop up of full appraisal')">></
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="team_completed" class="appraisal_completed">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Appraisal ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Department</th>
+                                <th scope="col">Due</th>
+                                <th scope="col">Rating Scale</th>
+                                <th scope="col"colspan="3s">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>AP1021</td>
+                                <td>Fan Wan</td>
+                                <td>Finance</td>
+                                <td>2020/06/27</td>
+                                <td>Weighted Checklist</td>
+                                <td><button type="button" onclick="alert('Appraisal added')">+</button></td>
+                                <td><button type="button" onclick="alert('Appraisal editted')">Edit</button></td>
+                                <td><button type="button" onclick="alert('Pop up of full appraisal')">></button>
+                            </tr>
+    
+                            <tr>
+                                <td>AP1042</td>
+                                <td>Roger</td>
+                                <td>Finance</td>
+                                <td>2020/06/27</td>
+                                <td>Weighted Checklist</td>
+                                <td><button type="button" onclick="alert('Appraisal added')">+</button></td>
+                                <td><button type="button" onclick="alert('Appraisal editted')">Edit</button></td>
+                                <td><button type="button" onclick="alert('Pop up of full appraisal')">></
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        {%endblock%}
+    </div>
+</body>
+</html>

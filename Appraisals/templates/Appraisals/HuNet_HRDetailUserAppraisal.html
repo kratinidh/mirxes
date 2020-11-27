@@ -1,0 +1,501 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'homepage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header--> 
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Appraisal Details{%endblock%}</title>
+
+    {%block script1%}
+    <!--css-->
+    <link rel = "stylesheet" type="text/css" href = "{% static 'Appraisals/HuNet_DetailAppraisal.css' %}">
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/custom.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    
+    <!--font-->
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+    
+    <script>
+        /*tabs*/
+        function openCity(evt, cityName, classOfTabContent, classOfTabLink) {
+            var i, x, tablinks;
+
+            x = document.getElementsByClassName(classOfTabContent);
+            for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName(classOfTabLink);
+            for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", " ");
+            }
+
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        /*accordion table*/
+        $('.accordion-toggle').click(function(){
+            $('.hiddenRow').hide();
+            $(this).next('tr').find('.hiddenRow').show();
+        }); 
+
+        /*tooltips*/
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        /*dropdown menu*/
+        $(document).ready(function(){
+            $(".dropdown-toggle").dropdown();
+        });
+
+        /*alert*/
+        $(document).ready(function(){
+            $(".alert").alert('close');
+        });
+
+    </script>
+
+    {%endblock%}
+
+    
+</head>
+
+<body>
+    {%block content%}
+    <div class = "container">
+        <br>
+        <a href="{%url 'user_homepage'%}"><i class="fa fa-angle-double-left" style = "font-size: 30px" aria-hidden="true"></i></a>
+        <br><br>
+
+        <!--test-->
+        <div class = "card-deck overview-card-row">
+
+            <div class = "card card-body bg-c-blue">
+                <h6 class="m-b-20">User</h6>
+                <p class="text-right"><i class="fa fa-user-o f-left"></i><span>{{object.employee.name}}</span></p>
+                <!--<p class="m-b-0">Completed Orders<span class="f-right">351</span></p>-->
+            </div>
+
+            <div class = "card card-body bg-c-green">
+                <h6 class="m-b-20">Appraisal</h6>
+                <p class = "m-0 p-0"></p>
+                <p class="text-right mb-0 pb-0"><i class="fa fa-list-alt f-left"></i><span>{{object.appraisal_category.name}}:</span></p>
+                <p class="text-right mt-0 pt-0"><span>{{object.overall_appraisal.name}}</span></p>
+            </div>
+
+            <div class = "card card-body bg-c-yellow">
+                <h6 class="m-b-20">Goals Count</h6>
+                <h2 class="text-right"><i class="fa fa-trophy f-left"></i><span>{{object.goals_set.count}}</span></h2>
+            </div>
+
+            <div class = "card card-body bg-c-pink">
+                <h6 class="m-b-20">Core Values Competencies Count</h6>
+                <h2 class="text-right"><i class="fa fa-certificate f-left"></i><span>{{object.competencies_set.count}}</span></h2>
+            </div>
+
+            <div class = "card card-body bg-c-pink">
+                <h6 class="m-b-20">Skills Count</h6>
+                <h2 class="text-right"><i class="fa fa-puzzle-piece f-left"></i><span>{{object.skills_set.count}}</span></h2>
+            </div>
+
+        </div>
+        <!--end of test-->
+
+        <br>
+
+            {%if object.status == 'S2Employee'%} 
+            <div class="alert alert-warning" role="alert" style = "border-left: 3px solid orange">
+                Employee has <strong>not completed</strong> rating.
+            </div>
+
+            {%elif object.status == 'S2Manager'%}
+            <div class="alert alert-warning" role="alert" style = "border-left: 3px solid orange">
+                Manager/Supervisor has not <strong>not completed</strong> rating.
+            </div>
+            
+            {%elif object.status == 'Approved'%} 
+            <div class="alert alert-success" role="alert" style = "border-left: 3px solid green">
+                Appraisal approved! 
+            </div>
+
+            {%else%}
+            <div class="alert alert-warning" role="alert" style = "border-left: 3px solid orange">
+                Appraisal still in <strong>Goals Setting Stage</strong>.
+            </div>
+        {%endif%}
+
+
+        <br>
+        <br>
+            
+
+
+        <div class = "card card-table">
+            <div class = "card-header border-0">
+                <h5 class = "mb-0">Goals</h5>
+            </div>
+
+            <div class = "card-body py-0">
+                <table class = "table fixed mb-0 pb-0">
+                    <thead>
+                        <tr>
+                            <th style = "width: 150px;">Category</th>
+                            <th colspan=2>Title</th>
+                            <th>Description</th>
+                            <th>Due</th>
+                            <th>Progress</th>
+                            <th style = "width: 100px;">Employee's Rating</th>
+                            <th style = "width: 100px;">Supervisor/Manager's Rating</th>
+                            <th style = "width: 100px;">Board's Rating</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% if object.goals_set.count == False %}
+                        <tr>
+                            <td colspan = "9">They do not have any Goals currently.</td>
+                        </tr>
+                        {%else%} 
+
+                        {% for goals in object.goals_set.all %}
+                        <tr>
+                            <td>{{goals.goal_category.name}}</td>
+                            <td>{{goals.summary}}</td>
+                            <td><button id = "seeMore" data-toggle="collapse" data-target="#collapse{{goals.id}}" class="accordion-toggle" type="button" alt = "See More"><i class="fa fa-chevron-down"></i></button></td>
+                            <td>{{goals.description}}</td>
+                            <td>{{goals.due}}</td>
+                            
+                            <td>
+                                {%if goals.get_kpi_percentage < 0 %}
+                                No KPIs
+                                {%elif goals.get_kpi_percentage <= 99 %}
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: {{goals.get_kpi_percentage}}%;" aria-valuenow="{{goals.get_kpi_filtered_completed.count}}" aria-valuemin="0" aria-valuemax="{{goals.kpi_set.count}}">{{goals.get_kpi_percentage}}%</div>
+                                </div>
+                                {%else%}
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{goals.get_kpi_percentage}}%;" aria-valuenow="{{goals.get_kpi_filtered_completed.count}}" aria-valuemin="0" aria-valuemax="{{goals.kpi_set.count}}">{{goals.get_kpi_percentage}}%</div>
+                                </div>
+                                {%endif%}</td>
+                                {%if object.completion == 'null'%}
+                                    <td>Not Completed</td>
+                                    {%else%}
+                                    <td class = "text-center">{{goals.user_rating}}</td>
+                                {%endif%}
+
+                                {%if object.completion == 'null' or object.completion == 'ECompleted'%}
+                                    <td>Not Completed</td>
+                                {%else%}
+                                    <td class = "text-center">{{goals.manager_rating}}</td>
+                                {%endif%}
+
+                                {%if object.overall_appraisal.status == 'Stage 4' or object.overall_appraisal.status == 'Completed'%}
+                                    <td class = "text-center">{{goals.board_rating}}</td>
+                                {%else%}
+                                    <td>Not Completed</td>
+                                {%endif%}
+                        </tr>
+
+                        
+                        <tr class="p">
+                                <td colspan="10" class="hiddenRow">
+                                    <div class="accordian-body collapse" id="collapse{{goals.id}}">
+                                        <br>
+                                        <span style = "margin-right: 5%; float: right; font-size:14px">Tracking Source/Documents: <strong>{{goals.metrics_Used}}</strong></span><br>
+                                        <br>
+                                        <table class = "KPItable">
+                                            <thead>
+                                                <tr>
+                                                    <th>KPI Description</th>
+                                                    <th>Due</th>
+                                                    <th>Progress</th>
+                                                    <th>Date Created</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {%if goals.kpi_set.all.count == False%}
+                                                <td colspan="4">Please add KPIs</td>
+                                                {%else%}
+                                                {%for kpi in goals.kpi_set.all%}
+                                                <tr>
+                                                    <td>{{kpi.description}}</td>
+                                                    <td>{{kpi.due}}</td>
+                                                    <td><form class="range-field my-4 w-50">
+                                                    <input type="range" min="0" max="100" />
+                                                    </form></td>
+                                                    <!--<td class="editable" data-id="{{kpi.id}}" data-type="progress">{{kpi.progress}}</td>-->
+                                                    <td>{{kpi.date_created}}</td>
+                                                </tr>
+                                                {%endfor%}
+                                                {%endif%}
+                                            </tbody>
+                                        </table>
+
+                                        <br>
+
+                                        <h6 class = "text-center">Comments</h6>
+
+                                        <!--testing comments in card-->
+                                        <div class = "commentsCards">
+                                            <div class = "card-deck">
+                                                <div class = "card card-body">
+                                                    <strong class = "card-title">
+                                                        Employee's Comments
+                                                    </strong>
+                                                    <div class = "card-text">
+                                                        {{goals.user_comments}}
+                                                    </div>
+                                                </div>
+                                                <div class = "card card-body">
+                                                    <strong class = "card-title">
+                                                        Supervisor/Manager's Comments
+                                                    </strong>
+                                                    <div class = "card-text">
+                                                        {{goals.manager_comments}}
+                                                    </div>
+                                                </div>
+                                                <div class = "card card-body">
+                                                    <strong class = "card-title">
+                                                        Board's Comments
+                                                    </strong>
+                                                    <div class = "card-text">
+                                                        {{goals.board_comments}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end of testing-->
+
+                                        <br>
+                                    </div> 
+                                </td> 
+                            </tr>
+                            {%endfor%}
+                            {%endif%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <br><br>
+
+        <div class = "card card-table">
+            <div class = "card-header border-0">
+                <h5 class = "mb-0">Core Values Competencies</h5>
+            </div>
+
+            <div class = "card-body py-0">
+                <table class = "table fixed mb-0 pb-0">    
+                    <thead>
+                        <tr>
+                            <th style = "width: 150px;">Category</th>
+                            <th colspan = "2">Core Values Competencies</th>
+                            <th>Description</th>
+                            <th style = "width: 100px;">Employee's Rating</th>
+                            <th style = "width: 100px;">Supervisor/Manager's Rating</th>
+                            <th style = "width: 100px;">Board's Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if object.competencies_set.count == False %}
+                        <tr>
+                            <td colspan = "7">They do not have any Core Values Competencies currently.</td>
+                        </tr>
+                        {%else%} 
+
+                        {% for competencies in object.competencies_set.all%}
+                        <tr>
+                            <td>{{competencies.competency_category.name}}</td>
+                            <td>{{competencies.summary}}</td>
+                            <td><button id = "seeMore" data-toggle="collapse" data-target="#collapse{{competencies.id}}" class="accordion-toggle" type="button" alt = "See More"><i class="fa fa-chevron-down"></i></button></td>
+                            <td>{{competencies.description}}</td>
+                            {%if object.completion == 'null'%}
+                                    <td>Not Completed</td>
+                                    {%else%}
+                                    <td class = "text-center">{{competencies.user_rating}}</td>
+                                {%endif%}
+
+                                {%if object.completion == 'null' or object.completion == 'ECompleted'%}
+                                    <td>Not Completed</td>
+                                {%else%}
+                                    <td class = "text-center">{{competencies.manager_rating}}</td>
+                                {%endif%}
+
+                                {%if object.overall_appraisal.status == 'Stage 4' or object.overall_appraisal.status == 'Completed'%}
+                                    <td class = "text-center">{{competencies.board_rating}}</td>
+                                {%else%}
+                                    <td>Not Completed</td>
+                            {%endif%}
+                        </tr>
+
+                        <tr class="p">
+                            <td colspan="10" class="hiddenRow">
+                                <div class="accordian-body collapse" id="collapse{{competencies.id}}">
+                                    <br>
+                                    <br>
+
+                                    <h6 class = "text-center">Comments</h6>
+
+                                    <!--testing comments in card-->
+                                    <div class = "commentsCards">
+                                        <div class = "card-deck">
+                                            <div class = "card card-body">
+                                                <strong class = "card-title">
+                                                    Employee's Comments
+                                                </strong>
+                                                <div class = "card-text">
+                                                    {{competencies.user_comments}}
+                                                </div>
+                                            </div>
+                                            <div class = "card card-body">
+                                                <strong class = "card-title">
+                                                    Supervisor/Manager's Comments
+                                                </strong>
+                                                <div class = "card-text">
+                                                    {{competencies.manager_comments}}
+                                                </div>
+                                            </div>
+                                            <div class = "card card-body">
+                                                <strong class = "card-title">
+                                                    Board's Comments
+                                                </strong>
+                                                <div class = "card-text">
+                                                    {{competencies.board_comments}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end of testing-->
+                                    <br>
+                                </div> 
+                            </td> 
+                        </tr>
+                        {%endfor%}
+                        {%endif%}
+    
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+            
+        <br><br>
+
+        <div class = "card card-table">
+            <div class = "card-header border-0">
+                <h5 class = "mb-0">Skills</h5>
+            </div>
+
+            <div class = "card-body py-0">
+                <table class = "table fixed mb-0 pb-0">
+                    <thead>
+                        <tr>
+                            <th style = "width: 150px;">Category</th>
+                            <th colspan = "2">Description</th>
+                            <th style = "width: 100px;">Employee's Rating</th>
+                            <th style = "width: 100px;">Supervisor/Manager's Rating</th>
+                            <th style = "width: 100px;">Board's Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if object.skills_set.count == False %}
+                        <tr>
+                            <td colspan = "6">They do not have any Skills currently.</td>
+                        </tr>
+                        {%else%} 
+
+                        {%for skills in object.skills_set.all%}
+                        <tr>
+                            <td>{{skills.skill_category.name}}</td>
+                            <td><button id = "seeMore" data-toggle="collapse" data-target="#collapse{{skills.id}}" class="accordion-toggle" type="button" alt = "See More"><i class="fa fa-chevron-down"></i></button></td>
+                            <td>{{skills.description}}</td>
+                            
+                            {%if object.completion == 'null'%}
+                                    <td>Not Completed</td>
+                                    {%else%}
+                                    <td class = "text-center">{{skills.user_rating}}</td>
+                                {%endif%}
+
+                                {%if object.completion == 'null' or object.completion == 'ECompleted'%}
+                                    <td>Not Completed</td>
+                                {%else%}
+                                    <td class = "text-center">{{skills.manager_rating}}</td>
+                                {%endif%}
+
+                                {%if object.overall_appraisal.status == 'Stage 4' or object.overall_appraisal.status == 'Completed'%}
+                                    <td class = "text-center">{{skills.board_rating}}</td>
+                                {%else%}
+                                    <td>Not Completed</td>
+                            {%endif%}
+                        </tr>
+                        <tr class="p">
+                            <td colspan="10" class="hiddenRow">
+                                <div class="accordian-body collapse" id="collapse{{skills.id}}">
+                                    <br>
+                                    <br>
+                                    <!--comments-->
+                                    <h6 class = "text-center">Comments</h6>
+
+                                    <!--testing comments in card-->
+                                    <div class = "commentsCards">
+                                        <div class = "card-deck">
+                                            <div class = "card card-body">
+                                                <strong class = "card-title">
+                                                    Employee's Comments
+                                                </strong>
+                                                <div class = "card-text">
+                                                    {{skills.user_comments}}
+                                                </div>
+                                            </div>
+                                            <div class = "card card-body">
+                                                <strong class = "card-title">
+                                                    Supervisor/Manager's Comments
+                                                </strong>
+                                                <div class = "card-text">
+                                                    {{skills.manager_comments}}
+                                                </div>
+                                            </div>
+                                            <div class = "card card-body">
+                                                <strong class = "card-title">
+                                                    Board's Comments
+                                                </strong>
+                                                <div class = "card-text">
+                                                    {{skills.board_comments}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end of testing-->
+                                    <br>
+                                </div> 
+                            </td> 
+                        </tr>
+                        {%endfor%}
+                        {%endif%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br><hr><br>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+    {%endblock%}
+
+</body>

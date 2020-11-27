@@ -1,0 +1,37 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'utilitypage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Ticket Details{%endblock%}</title>
+</head>
+<body>
+    <!--HTML inheritance: overriding parent class content block(Django exclusive)-->
+    {%block content%}
+
+    <a href="{%url 'Ticketing:Create_User_Comment'%}">Comment</a>
+    <!--Things within double braces are object instances within a queryset.-->
+    <!--Accessing ticket category-->
+    <p>Ticket category: {{object.category}}</p>
+    <!--Accessing ticket title-->
+    <p>Ticket Title: {{object.title}}</p>
+    <!--Accessing ticket description-->
+    <p>Ticket description: {{object.description}}</p>
+    <!--Accessing ticket status-->
+    <p>Ticket Status: {{object.status}}</p>
+    <!--Accessing ticket creator-->
+    <p>Created by: {{object.created_by.name}}</p>
+    
+    {%for comments in object.Ticket_Comments_set.all%}
+    <p>{{comments.user.name}}: {{comments.comment}}, created on {{comments.created_on}}</p>
+    {%endfor%}
+    {%endblock%}
+</body>

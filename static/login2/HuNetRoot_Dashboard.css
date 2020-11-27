@@ -1,0 +1,267 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    background-color: #F8FAF9;
+}
+ 
+h1, h2, h3, h4, h5, h6, .tab .tablinks, .tablinks1{
+    font-family: 'Hind', sans-serif !important;
+} 
+
+/*table*/
+table {
+    border-collapse: collapse;
+    width: 90% !important;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+ 
+td, th {
+    border: 1px solid #dfdfdf;
+    text-align: left;
+    padding: 8px;
+}
+  
+tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+tr:nth-child(odd){
+    background-color: white;
+}
+
+/*tabbing*/
+.tablinks { 
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 20px;
+    width: 25%;
+
+    position: relative;
+    display: block;
+    height: 55px; 
+    background: #c4bbac; 
+    border-right: 2.5px solid #a79677; 
+
+    color: #555; 
+    top: 0;
+    transition: all 0.45s;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.tablinks:hover {
+    outline: none !important;
+    top: -0.25rem;
+    transition: top 0.45s;
+}
+
+.tabcontent_GnCmini {
+    color: black;
+    text-align: center;
+    background-color: rgb(228, 221, 209);
+    padding-bottom: 10px; 
+    border-radius: 5px; 
+    z-index:1;
+    position: relative;
+    box-shadow: 4px 4px 3px 0px rgb(211, 211, 211);
+}
+
+.active {
+    outline: none !important;
+    background-color: rgb(228, 221, 209);
+    color: black;
+    top: -0.25rem;
+}
+
+h3 {
+    font-size: 20px;
+    text-align: left;
+    margin-left: 10%;
+}
+
+.GnC_miniview {
+    margin: 0 auto;
+    width: 1000px;
+}
+
+/*inner tabbing*/
+.slide-toggle{
+    display: none;
+}
+  
+.innertab{
+    font-size: 18px;
+    font-weight: lighter;
+    max-width: 400px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+  
+.innertab button {
+    outline: none !important;
+    border: none;
+    border-radius: 50px;
+    height: 30px;
+}
+  
+.innertab .tablinks1{
+    width: 49%;
+    color: #444;
+    opacity: 0.4;
+    background-color: rgb(228, 221, 209);
+}
+  
+.innertab .tablinks1:hover{
+    cursor: pointer;
+    color: #444;
+    background-color: none; /*#7e99c7*/
+}
+  
+.innertab .tablinks1.active{
+    cursor: pointer;
+    color: #444;
+    background-color: none; /*#5d79a8*/ /*#6980a7*/
+}
+  
+/*bar Style*/
+.slider{
+    width: 100%;
+    height: 5px;
+    display: block;
+    background: #ccc;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+  
+.slider .bar{
+    width: 50%;
+    height: 5px;
+    background: #555; /*#555*/
+    border-radius: 5px;
+}
+  
+/*animations for innertab*/
+.innertab .tablinks1, .slider .bar {
+    transition: all 500ms ease-in-out;
+    -webkit-transition: all 500ms ease-in-out;
+    -moz-transition: all 500ms ease-in-out;
+}
+  
+#slide-item-1.active ~ .slider .bar{ margin-left: 0; }
+#slide-item-2.active ~ .slider .bar{ margin-left: 50%; }
+  
+.tablinks1.active {
+    opacity: 1;
+}
+
+/*accordion table*/
+.accordian-body p {
+    display: inline-block;
+}
+
+.accordion {
+    color: black;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.5s;
+}
+
+/*shortcuts*/
+.shortcut {
+    margin: 30px auto 100px 23%;
+    position:relative; 
+    width: 50%;
+}
+  
+#line {
+    height: 1px;
+    width: 100%;
+    background-color:black;
+    position:relative;
+    top: 25px;
+    z-index: -1;
+}
+
+.btn {
+    z-index: 1;
+    vertical-align: top;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    overflow:hidden;
+    background-color:#57836b; /*3E5C91*/
+    border: none;
+    outline: none;
+    box-shadow: 2px 2px 4px 0px rgba(161, 161, 161, 1) !important;
+    position: absolute;
+    font-size: 26px;
+    color: white;
+}
+
+.btn:focus,.btn:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+
+.btn1 {
+    left: 0% !important;
+}
+
+.btn2 {
+    left: 25% !important;
+}
+
+.btn3 {
+    left: 50% !important;
+}
+
+.btn4 {
+    left: 75% !important;
+}
+
+.btn5 {
+    left: 100% !important;
+}
+
+.btn:hover{
+    color: white;
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    transition: all 300ms ease;
+}
+
+/*appraisals miniview*/
+#search {
+    margin-left: 10%;
+}
+
+/*tooltip*/
+.tooltip {
+    font-size: 16px;
+    margin-top:10px;
+}
+
+.tooltip-inner {
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px 0px rgba(161, 161, 161, 1);
+}
+
+

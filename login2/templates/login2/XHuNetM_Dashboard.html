@@ -1,0 +1,189 @@
+{% extends 'homepage.html'%}
+{% load static %}
+
+<head>
+    <title>{%block title%}Dashboard{%endblock%}</title>
+</head>
+
+<body>
+    <div>
+        {%block content%}
+        <h1>Welcome {{request.user.profile}}!</h1>
+        <section class = "shortcuts">
+            <a href = ''><img src="images/shortcut-arrow.png" alt = "Click to add departmental goals" title = "Add departmental goals"></a> <!--Pop up: goal-->
+            <a href = ''><img src="images/shortcut-arrow.png" alt = "Click to add competencies category" title = "Add user competencies"></a> <!--Pop up: competencies -->
+            <a href = ''><img src="images/shortcut-arrow.png" alt = "Click to recommend training" title = "Apply training"></a> <!--Pop up: training-->
+            <a href = ''><img src="images/shortcut-arrow.png" alt = "Click to view appraisals" title = "View user appraisals"></a> <!--Pop up: appraisals-->
+            <a href = ''><img src="images/shortcut-arrow.png" alt = "Click to view training metrics" title = "View training metrics"></a> <!--Pop up: training metrics-->
+        </section> 
+
+        <section class = "GnC miniview">
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'goals', 'tabcontent', 'tablinks')">Goals</button>
+                <button class="tablinks" onclick="openCity(event, 'competencies', 'tabcontent', 'tablinks')">Competencies</button>
+            </div>
+
+            <div id="goals" class="tabcontent">  
+                <table>
+                    <tr class = "team">
+                        <th>Department</th>
+                        <th>Category</th>
+                        <th>Goals</th>
+                        <th>Progress</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Marketing</td>
+                        <td>Business Financiality</td>
+                        <td>Increase sales</td>
+                        <td>75%</td>
+                    </tr>
+
+                    <tr>
+                        <td>HR</td>
+                        <td>Manpower management</td>
+                        <td>Complete appraisal</td>
+                        <td>35%</td>
+                    </tr>
+
+                    <tr>
+                        <td>Technician</td>
+                        <td>Spring project</td>
+                        <td>Finish coding 10 HTML templates today</td>
+                        <td>10%</td>
+                    </tr>
+                    
+                </table>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Category</th>
+                            <th scope="col">Goals</th>
+                            <th scope="col">
+                                Due Date
+                            </th>
+                            <th scope="col">Progress</th>
+                        </tr>                        
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Business and Financial</td>
+                            <td>Grow customers</td>
+                            <td>2024-04-29</td>
+                            <td>50%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="competencies" class="tabcontent">
+                <table>
+                    <tr class = "head">
+                        <th>Competency</th>
+                        <th>Category</th>
+                        <th>Due date</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Marketing</td>
+                        <td>Business Financiality</td>
+                        <td>Increase sales</td>
+                    </tr>
+
+                    <tr>
+                        <td>HR</td>
+                        <td>Manpower management</td>
+                        <td>Complete appraisal</td>
+                    </tr>
+
+                    <tr>
+                        <td>Technician</td>
+                        <td>Spring project</td>
+                        <td>Finish coding 10 HTML templates today</td>
+                    </tr>
+                    
+                </table>
+            </div>
+            
+        </section>
+        
+        <hr>
+        <section class = "Appraisals miniview">
+            <div class="tab">
+                <button class="tablinks1" onclick="openCity(event, 'incomplete_appraisal_miniview', 'tabcontent2', 'tablinks1')">Incomplete</button>
+                <button class="tablinks1" onclick="openCity(event, 'completed_appraisal_miniview', 'tabcontent2', 'tablinks1')">Completed</button>
+            </div>
+
+            <div id="incomplete_appraisal_miniview" class="tabcontent2">
+                <table>
+                    <tr class = "head">
+                        <th>Career aspirations</th>
+                        <th>Actions</th>
+                        <th>Add comments</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Be a manager</td>
+                        <td>Attended CS1010 course, leadership management course</td>
+                        <td>As a prerequisite, attend CS1010, leadership management course, get an average rating of 4.75</td>
+                    </tr>
+
+                    <tr>
+                        <td>Get best salesman award</td>
+                        <td>Won most well-liked employee of the year 2019</td>
+                        <td>Multiple notable accolades</td>
+                    </tr>
+
+                    <tr>
+                        <td>Get 30% salary increment</td>
+                        <td>Responsible for the influx of customers</td>
+                        <td>Notable achievements</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="completed_appraisal_miniview" class="tabcontent2">
+                <table>
+                    <tr class = "head">
+                        <th>Career aspirations</th>
+                        <th>Actions</th>
+                        <th>Add comments</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Be a manager</td>
+                        <td>Attended CS1010 course, leadership management course</td>
+                        <td>As a prerequisite, attend CS1010, leadership management course, get an average rating of 4.75</td>
+                    </tr>
+
+                    <tr>
+                        <td>Get best salesman award</td>
+                        <td>Won most well-liked employee of the year 2019</td>
+                        <td>Multiple notable accolades</td>
+                    </tr>
+
+                    <tr>
+                        <td>Get 30% salary increment</td>
+                        <td>Responsible for the influx of customers</td>
+                        <td>Notable achievements</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <hr>
+
+        <section class = "Training_metric_miniview">
+            <div class = "Training_metric">
+                <p>Training targetted vs Training met</p>
+            </div>
+            <div class = "Training_metric2">
+                <p>Effectiveness of training</p>
+            </div>
+        </section>
+
+        <hr>
+        {%endblock%}
+    </div><!--wrapper-->
+</body>

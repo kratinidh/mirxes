@@ -1,0 +1,238 @@
+{%extends 'homepage.html'%}
+{% load static %}
+ 
+<head>
+    <title>{%block title%}Dashboard{%endblock%}</title>
+
+    {%block script1%}  
+    <!--css-->
+    <link rel = "stylesheet" type="text/css" href = "{% static 'login2/HuNet_Dashboard.css' %}">
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/custom.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    
+    <!--font-->
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+    
+    <script>
+        /*tabs*/
+        function openCity(evt, cityName, classOfTabContent, classOfTabLink) {
+            var i, x, tablinks;
+
+            x = document.getElementsByClassName(classOfTabContent);
+            for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName(classOfTabLink);
+            for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", " ");
+            }
+
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        /*accordion table*/
+        $('.accordion-toggle').click(function(){
+            $('.hiddenRow').hide();
+            $(this).next('tr').find('.hiddenRow').show();
+        }); 
+
+        /*tooltips*/
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+    </script>
+    {%endblock%}
+</head>
+
+<body>
+    {%block content%}  
+        <h1>Welcome, {{request.user}}!</h1>
+        <section class = "shortcut">
+            <div id="line"></div>
+            <a href = ''><button class = "btn btn1" data-toggle = "tooltip" data-placement = "bottom" title = "Add Departmental Goals"><i class="fa fa-users" aria-hidden="true"></i></button></a> <!--Pop up: goal-->                                  
+                
+            <a href = ''><button class = "btn btn2" data-toggle = "tooltip" data-placement = "bottom" title = "Add User Competencies"><i class="fa fa-bullseye" aria-hidden="true"></i></button></a> <!--Pop up: competencies -->                            
+
+            <a href = ''><button class = "btn btn3" data-toggle = "tooltip" data-placement = "bottom" title = "Apply Training"><i class="fa fa-line-chart" aria-hidden="true"></i></button></a><!--Pop up: training-->                                              
+
+            <a href = ''><button class = "btn btn4" data-toggle = "tooltip" data-placement = "bottom" title = "View User Appraisals"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a> <!--Pop up: appraisals-->                            
+    
+            <a href = ''><button class = "btn btn5" data-toggle = "tooltip" data-placement = "bottom" title = "View Training Metrics"><i class="fa fa-bar-chart" aria-hidden="true"></i></button></a> <!--Pop up: training metrics-->        
+        </section> 
+
+        <br>
+
+        <section class = "GnC_miniview">
+            <div class="tab">
+                <button class=" active tablinks" onclick="openCity(event, 'goals', 'tabcontent', 'tablinks')">Goals</button>
+                <button class="tablinks" onclick="openCity(event, 'competencies', 'tabcontent', 'tablinks')">Competencies</button>
+            </div>
+
+            <div id="goals" class="tabcontent" style ="display:block">
+                <table>
+                    <tr class = "head">
+                        <th>Department</th>
+                        <th>Category</th>
+                        <th>Goals</th>
+                        <th>Progress</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Marketing</td>
+                        <td>Business Financiality</td>
+                        <td>Increase sales</td>
+                        <td>75%</td>
+                    </tr>
+
+                    <tr>
+                        <td>HR</td>
+                        <td>Manpower management</td>
+                        <td>Complete appraisal</td>
+                        <td>35%</td>
+                    </tr>
+
+                    <tr>
+                        <td>Technician</td>
+                        <td>Spring project</td>
+                        <td>Finish coding 10 HTML templates today</td>
+                        <td>10%</td>
+                    </tr>
+                    
+                </table>
+            </div>
+
+            <div id="competencies" class="tabcontent" style ="display:none">
+                <table>
+                    <tr class = "head">
+                        <th>Competency</th>
+                        <th>Category</th>
+                        <th>Due date</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Marketing</td>
+                        <td>Business Financiality</td>
+                        <td>Increase sales</td>
+                    </tr>
+
+                    <tr>
+                        <td>HR</td>
+                        <td>Manpower management</td>
+                        <td>Complete appraisal</td>
+                    </tr>
+
+                    <tr>
+                        <td>Technician</td>
+                        <td>Spring project</td>
+                        <td>Finish coding 10 HTML templates today</td>
+                    </tr>
+                    
+                </table>
+            </div>
+            
+        </section>
+
+        <hr>
+        <section class = "Careers miniview">
+            <div>
+                <table>
+                    <tr class = "head">
+                        <th>Career Aspirations</th>
+                        <th>Actions</th>
+                        <th>Add comments</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Be a manager</td>
+                        <td>Attended CS1010 course, leadership management course</td>
+                        <td>As a prerequisite, attend CS1010, leadership management course, get an average rating of 4.75</td>
+                    </tr>
+
+                    <tr>
+                        <td>Get best salesman award</td>
+                        <td>Won most well-liked employee of the year 2019</td>
+                        <td>Multiple notable accolades</td>
+                    </tr>
+
+                    <tr>
+                        <td>Get 30% salary increment</td>
+                        <td>Responsible for the influx of customers</td>
+                        <td>Notable achievements</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        
+        <hr>
+        <section class = "Appraisals miniview">
+            <div class="tab">
+                <button class="tablinks1" onclick="openCity(event, 'incomplete_appraisal_miniview', 'tabcontent2', 'tablinks1')">Incomplete</button>
+                <button class="tablinks1" onclick="openCity(event, 'completed_appraisal_miniview', 'tabcontent2', 'tablinks1')">Completed</button>
+            </div>
+
+            <div id="incomplete_appraisal_miniview" class="tabcontent2">
+                <table>
+                    <tr class = "head">
+                        <th>Career Aspirations</th>
+                        <th>Actions</th>
+                        <th>Add comments</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Be a manager</td>
+                        <td>Attended CS1010 course, leadership management course</td>
+                        <td>As a prerequisite, attend CS1010, leadership management course, get an average rating of 4.75</td>
+                    </tr>
+
+                    <tr>
+                        <td>Get best salesman award</td>
+                        <td>Won most well-liked employee of the year 2019</td>
+                        <td>Multiple notable accolades</td>
+                    </tr>
+
+                    <tr>
+                        <td>Get 30% salary increment</td>
+                        <td>Responsible for the influx of customers</td>
+                        <td>Notable achievements</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="completed_appraisal_miniview" class="tabcontent2">
+                <table>
+                    <tr class = "head">
+                        <th>Career Aspirations</th>
+                        <th>Actions</th>
+                        <th>Add comments</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Be a manager</td>
+                        <td>Attended CS1010 course, leadership management course</td>
+                        <td>As a prerequisite, attend CS1010, leadership management course, get an average rating of 4.75</td>
+                    </tr>
+
+                    <tr>
+                        <td>Get best salesman award</td>
+                        <td>Won most well-liked employee of the year 2019</td>
+                        <td>Multiple notable accolades</td>
+                    </tr>
+
+                    <tr>
+                        <td>Get 30% salary increment</td>
+                        <td>Responsible for the influx of customers</td>
+                        <td>Notable achievements</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    {%endblock%}
+</body>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    content="width=device-width, initial-scale=1.0">
+    
+    <!--Importing CSS-->
+    <link href="HuNet.css" rel="stylesheet" type="text/css" >
+
+    <!--Importing Javascript-->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="script.js"></script>
+    <meta charset="UTF-8">
+
+    <!--Page name-->
+    <title>Trainings</title>
+</head>
+<body>
+
+    <!--Wrapper for background image-->
+    <div class="wrapper">
+        <header>
+            <!--Header of Page-->
+            <h1>Trainings</h1>
+            <!--Nav-->
+            <nav>
+                <ul>
+                    <li><a href = ''>Goals and competencies</a></li><!--Link to GnC-->
+                    <li><a href = ''>Trainings</a></li> <!--Link to Training-->
+                    <li><a href = ''>Appraisals</a></li><!--Link to Appraisals-->
+                    <li><a href = ''>Careers</a></li><!--Link to Careers-->
+                    <li><a href = ''>Ticketing</a></li><!--Link to Ticketing-->
+                    <li><a href = ''>Guide</a></li><!--Link to Guide-->
+                    <li><a href = ''>Profile</a></li><!--Link to Profile-->
+                </ul>
+            </nav>
+
+            <!--Page icons-->
+            <ul class = "align-right" >
+                <li><a href=''><img src="images/home_button.png" alt="Click to go back to home page" title="Home icon"></a> <!--Press to go back to homepage-->
+                </li>
+
+                <li>
+                    <button class="dropbtn"><i class="fa fa-bars"><img src="images/Bell_icon2.png"></i></button>
+                </li> <!--Press to activate popup of notifications-->
+
+                <li>
+                    
+                    <div class = "dropdown">
+                        <button class="dropbtn"><i class="fa fa-bars"><img src="images/Avatar_icon.png"></i></button>
+                        <div class = "dropdown-content">
+                            <a href="">Edit profile</a>
+                            <a href="">Setting</a>
+                        </div>
+                    </div>
+                </li><!--Press to activate dropdown of profiles-->
+            </ul>
+        </header> <!--End of header-->
+
+        <!--Main contents-->
+
+         <!--Home Buttons feature-->
+        <section class="Home_buttons">
+            <button type ="button" onclick="alert('Pop up to self apply training')">Apply</button>
+            <button type ="button" onclick="alert('Pop up to assign training')">Assign training</button>
+            <button type ="button" onclick="alert('Pop up that shows dual matrix')">View Matrix</button>
+        </section>
+        
+         <!--Calendar feature-->
+        <section class="Trainings_calendar">
+            <div>
+                <p>Calendar feature: Coming soon!</p>
+            </div>
+        </section>
+
+        <!--Training matrixes-->
+        <section class="Matrix">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Reminders:
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <ol>
+                                <li>Congratulations in finishing Financial Planning Part 3, do remember to complete the final survey</li>
+
+                                <li>Congratulations in finishing Financial Planning Part 2, do remember to complete the final survey</li>
+
+                                <li>Congratulations in finishing Financial Planning Part 1, do remember to complete the final survey
+                                </li>
+                            </ol>
+                        <td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="Trainings_list">
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'trainings_undergoing', 'tabcontent_trainings', 'tablinks')">Undergoing</button>
+                <button class="tablinks" onclick="openCity(event, 'trainings_completed', 'tabcontent_trainings', 'tablinks')">Completed</button>
+                <button class="tablinks" onclick="openCity(event, 'trainings_recommended', 'tabcontent_trainings', 'tablinks')">Recommended</button>
+            </div>
+
+            <hr>
+
+            <div>
+                <div id="trainings_undergoing" class="tabcontent_trainings">
+                    <div class="tab">
+                        <button class="tablinks1" onclick="openCity(event, 'user_undergoing', 'training_undergoing2', 'tablinks1')">User</button>
+                        <button class="tablinks1" onclick="openCity(event, 'team_undergoing', 'training_undergoing2', 'tablinks1')">Team</button>
+                    </div>
+
+                    <div id="user_undergoing" class ="training_undergoing2">   
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Trainings
+                                </th>
+                                <th scope="col">
+                                    Start date
+                                </th>
+                                <th scope="col">
+                                    End date
+                                </th>
+                                <th scope="col">
+                                    Completion status
+                                </th>
+                                <th scope="col" colspan="3">Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Financial Planning Part 3</td>
+                                <td>2020/05/27</td>
+                                <td>2020/05/30</td>
+                                <td>Completed</td>
+                                <td><button type="reset" onclick="alert('The training has officially been deleted')">X</button></td>
+                                <td><button type="submit" onclick="alert('Pop up of survey questions')">Survey</button></td>
+                                <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                            </tr>
+
+                            <tr>
+                                <td>Financial Exhibition Part 1</td>
+                                <td>2020/05/30</td>
+                                <td>2020/06/02</td>
+                                <td>Approved</td>
+                                <td><button type="reset" onclick="alert('The training has officially been deleted')">X</button></td>
+                                <td><button type="submit" onclick="alert('Pop up of survey questions')">Survey</button></td>
+                                <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                            </tr>
+                            <tr>
+                                <td>Financial Exhibition Part 2</td>
+                                <td>2020/06/02</td>
+                                <td>2020/06/05</td>
+                                <td>Pending</td>
+                                <td><button type="reset" onclick="alert('The training has officially been deleted')">X</button></td>
+                                <td><button type="submit" onclick="alert('Pop up of survey questions')">Survey</button></td>
+                                <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+
+                    <div id="team_undergoing" class="training_undergoing2">
+                        <table><thead>
+                            <tr>
+                                <th scope="col">
+                                        Name
+                                </th>
+                                <th scope="col">
+                                        Department
+                                </th>
+                                <th scope="col">
+                                        Training
+                                </th>
+                                <th scope="col">
+                                        Start date
+                                </th>
+
+                                <th scope="col">
+                                    End date
+                                </th>
+
+                                <th scope="col">
+                                    Status
+                                </th>
+
+                                <th scope="col" colspan="3">Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ben</td>
+                                <td>Finance</td>
+                                <td>Financial Literacy Part 3</td>
+                                <td>2020/06/31</td>
+                                <td>2020/07/31</td>	
+                                <td>Completed</td>	
+                                <td><button type="submit" onclick="alert('Training approved')">&#10004;</button></td>
+                                <td><button type="reset" onclick="alert('The training has been rejected / deleted')">X</button></td>
+                                <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                            </tr>
+    
+                            <tr>
+                                <td>Esther</td>
+                                <td>Finance</td>
+                                <td>Financial Literacy Part 3</td>
+                                <td>2020/06/31</td>
+                                <td>2020/07/31</td>	
+                                <td>Completed</td>	
+                                <td><button type="submit" onclick="alert('Training approved')">&#10004;</button></td>
+                                <td><button type="reset" onclick="alert('The training has been rejected / deleted')">X</button></td>
+                                <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+
+                            </tr>
+                            <tr>
+                                <td>Lance</td>
+                                <td>Finance</td>
+                                <td>Financial Literacy Part 3</td>
+                                <td>2020/06/31</td>
+                                <td>2020/07/31</td>	
+                                <td>Completed</td>	
+                                <td><button type="submit" onclick="alert('Training approved')">&#10004;</button></td>
+                                <td><button type="reset" onclick="alert('The training has been rejected / deleted')">X</button></td>
+                                <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                
+                </div>
+
+                <div id="trainings_completed" class="tabcontent_trainings">
+                    <div class="tab">
+                        <button class="tablinks2" onclick="openCity(event, 'user_completed', 'training_completed2', 'tablinks2')">User</button>
+                        <button class="tablinks2" onclick="openCity(event, 'team_completed', 'training_completed2', 'tablinks2')">Team</button>
+                    </div>
+
+                    <div id="user_completed" class ="training_completed2">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                            Trainings
+                                    </th>
+                                        <th scope="col">
+                                            Start date
+                                    </th>
+                                    <th scope="col">
+                                            End date
+                                    </th>
+                                    <th scope="col">
+                                            Skills
+                                    </th>
+                                    <th scope="col">
+                                            Completion status
+                                    </th>
+                                    <th scope="col" colspan="3">Action
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Financial Planning Part 2</td>
+                                    <td>2020/05/22</td>
+                                    <td>2020/05/27</td>
+                                    <td>Financial Planning</td>
+                                    <td>Completed</td>
+                                    <td><button type="submit" onclick="alert('Pop up of survey questions')">Survey</button></td>
+                                    <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Financial Planning Part 1</td>
+                                    <td>2020/05/18</td>
+                                    <td>2020/05/22</td>
+                                    <td>Financial Planning</td>
+                                    <td>Completed</td>
+                                    <td><button type="submit" onclick="alert('Pop up of survey questions')">Survey</button></td>
+                                    <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="team_completed" class="training_completed2">
+                        <table><thead>
+                            <tr>
+                                <th scope="col">
+                                        Name
+                                </th>
+                                <th scope="col">
+                                        Department
+                                </th>
+                                <th scope="col">
+                                        Training
+                                </th>
+                                <th scope="col">
+                                        Start date
+                                </th>
+
+                                <th scope="col">
+                                    End date
+                                </th>
+
+                                <th scope="col">
+                                    Status
+                                </th>
+
+                                <th scope="col" colspan="3">Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ben</td>
+                                <td>Finance</td>
+                                <td>Financial Literacy Part 2</td>
+                                <td>2020/04/31</td>
+                                <td>2020/05/31</td>	
+                                <td>Completed</td>	
+                                <td><button type="submit" onclick="alert('Training approved')">&#10004;</button></td>
+                                <td><button type="reset" onclick="alert('The training has been rejected / deleted')">X</button></td>
+                                <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                            </tr>
+    
+                            <tr>
+                                <td>Esther</td>
+                                <td>Finance</td>
+                                <td>Financial Literacy Part 2</td>
+                                <td>2020/04/31</td>
+                                <td>2020/05/31</td>	
+                                <td>Completed</td>	
+                                <td><button type="submit" onclick="alert('Training approved')">&#10004;</button></td>
+                                <td><button type="reset" onclick="alert('The training has been rejected / deleted')">X</button></td>
+                                <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+
+                            </tr>
+                            <tr>
+                                <td>Lance</td>
+                                <td>Finance</td>
+                                <td>Financial Literacy Part 2</td>
+                                <td>2020/04/31</td>
+                                <td>2020/05/31</td>	
+                                <td>Completed</td>	
+                                <td><button type="submit" onclick="alert('Training approved')">&#10004;</button></td>
+                                <td><button type="reset" onclick="alert('The training has been rejected / deleted')">X</button></td>
+                                <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div id="trainings_recommended" class="tabcontent_trainings">
+                    <div class="tab">
+                        <button class="tablinks3" onclick="openCity(event, 'user_completed', 'training_completed2', 'tablinks3')">User</button>
+                        <button class="tablinks3" onclick="openCity(event, 'team_completed', 'training_completed2', 'tablinks3')">Team</button>
+                    </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        Training
+                                    </th>
+                                    <th scope ="col">
+                                        Skills
+                                    </th>
+                                    <th scope="col">
+                                        Intended audience
+                                    </th>
+                                    <th scope="col" colspan="2">Actions</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr>
+                                    <td>Financial literacy Part 1</td>
+                                    <td>Finance</td>
+                                    <td>Full-time employees</td>
+                                    <td><button type="submit" onclick="alert('Pop up to confirm application of training')">&#10004;</button></td>
+                                    <td><button type="button" onclick="alert('Pop up showing more information')">></button></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Leadership Management</td>
+                                    <td>Character building</td>
+                                    <td>Managers</td>
+                                    <td><button type="submit" onclick="alert('Pop up to confirm application of training')">&#10004;</button></td>
+                                    <td><button type="button" onclick="alert('Pop up showing more information')">></button></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Resume writing</td>
+                                    <td>Personal skills</td>
+                                    <td>Full-time interns</td>
+                                    <td><button type="submit" onclick="alert('Pop up to confirm application of training')">&#10004;</button></td>
+                                    <td><button type="button" onclick="alert('Pop up showing more information')">></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy;:HuNet Pte.Ltd 2020</p>
+    </footer>
+</body>
+</html>

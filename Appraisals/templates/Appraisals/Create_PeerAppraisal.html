@@ -1,0 +1,187 @@
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+{% load crispy_forms_tags %}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Create Peer Appraisal{%endblock%}</title>
+
+    <!--jquery-->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/custom.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <script type="text/javascript">
+        function selectRow(row)
+        {
+            var firstInput = row.getElementsByTagName('input')[0];
+            firstInput.checked = !firstInput.checked;
+        }
+    </script>
+
+    <style>
+    /* #tableTab .nav-item a:hover, a:focus{
+        outline: none;
+        text-decoration: none;
+    }
+
+    #tableTab .nav-tabs{
+        background: #fff;
+    }
+
+    #tableTab.nav-tabs li{
+        text-align: center;
+    }
+
+    #tableTab.nav-tabs li a{
+        font-weight: 600;
+        color: #22272c;
+        padding: 10px 15px;
+        background: #eee;
+        border-radius: 0;
+        border: none;
+        text-transform: uppercase;
+        position: relative;
+        transition: all 0.5s ease 0s;
+    }
+
+    #tableTab.nav-tabs > li > a.active, 
+    #tableTab.nav-tabs li a:hover {
+        background: #4A6CA4 !important;
+        color: #fff;
+        border: none;
+    }
+
+    #tableTabContent {
+        background-color: whitesmoke;
+    }
+
+    #tableTabContent table {
+        width: 100% !important;
+        margin: 0;
+    } */
+    </style>
+
+
+</head>
+
+<body>
+    {%block content%}
+    <!--HTML form, action on current page, use 'POST' method (secure)-->
+    <div class = "container col-6">
+        <br>
+        <div class = "card">
+            <div class = "card-header">
+                <h2>Invite Employees for Peer Appraisal</h2>
+            </div>
+            
+            <div class = "card-body">
+                <form action= "" method = "POST">
+                {%csrf_token%}
+                {%block text%}
+
+                {%endblock%}
+
+                Select Employee's Appraisal for Peer Appraisal:
+                    {{form.appraisal}}<br>
+
+                <h4>Peers</h4>
+
+                {%block checkbox%} 
+                <!--bootstrap tabs-->
+                <ul class="appraialViewers nav nav-tabs" id="tableTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="included-tab" data-toggle="tab" href="#dept_included_tab" role="tab" aria-controls="included-tab" aria-selected="true">Subordinates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="excluded-tab" data-toggle="tab" href="#dept_excluded_tab" role="tab" aria-controls="excluded-tab" aria-selected="false">Others</a>
+                    </li>
+
+                </ul>
+                <!--end of bootstrap tabs-->
+
+                <div class = "tab-content" id = "tableTabContent">
+                    <div class="tab-pane fade show active" id="dept_included_tab" role="tabpanel" aria-labelledby="dept_included_tab">
+                        <table id = "tableSelect" class = "table table-hover text-center fixed">
+                            <thead>
+                                <th class = "text-left">Name</th>
+                                <th>Included in Appraisal</th>
+                            </thead>
+
+                            <tbody> <!--tab-->
+                            {% for profile in subordinate_profile_database %}                          
+                                <tr onclick="selectRow(this)">       
+                                    <td class = "order_row text-left"><label for="{{profile.id}}">{{profile.name}}</label></td>
+                                    <td class = "order_row" style = "width: 200px;"><input type="checkbox" name="profile_list" id="{{profile.id}}" value="{{profile.id}}"/></td>
+                                </tr>                       
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="dept_excluded_tab" role="tabpanel" aria-labelledby="dept_excluded_tab">
+                        <table id = "tableSelect" class = "table table-hover text-center fixed">
+                            <thead>
+                                <th class = "text-left">Name</th>
+                                <th>Included in Appraisal</th>
+                            </thead>
+
+                            <tbody> <!--tab--> 
+                            {% for profile in subordinate_exclusion_database %}                         
+                                <tr onclick="selectRow(this)">       
+                                    <td class = "order_row text-left"><label for="{{profile.id}}">{{profile.name}}</label></td>
+                                    <td class = "order_row" style = "width: 200px;"><input type="checkbox" name="profile_list2" id="{{profile.id}}" value="{{profile.id}}"/></td>
+                                </tr>                       
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+                {%endblock%}
+                    
+                    <h4>Peer Appraisal Questions</h4><hr>
+                    Question 1:
+                    {{form.title1}}<br>
+                    {% comment %} Strength/Weakness:
+                    {{form.strengthweakness1}}<br>
+                    Development:
+                    {{form.development1}}<br> {% endcomment %}
+                    Question 2:
+                    {{form.title2}}<br>
+                    {% comment %} Strength/Weakness:
+                    {{form.strengthweakness2}}<br>
+                    Development:
+                    {{form.development2}}<br> {% endcomment %}
+                    Question 3:
+                    {{form.title3}}<br>
+                    {% comment %} Strength/Weakness:
+                    {{form.strengthweakness3}}<br>
+                    Development:
+                    {{form.development3}}<br> {% endcomment %}
+                    <div class="form-group">
+                        <div class = "row justify-content-end m-0">
+                            <a href = "{%url 'user_homepage'%}" class = "btn btn-danger mr-1" type = "button">Cancel</a>
+                            <input class = "btn btn-primary ml-1" type = 'submit' value = "Submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>   
+
+    {%endblock%}
+</body>
+</html>

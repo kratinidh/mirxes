@@ -1,0 +1,195 @@
+{%extends 'utilitypage.html'%}
+{%load static%}
+
+<head>
+    <title>{%content title%}Trainings{%endblock%}</title>
+</head>
+
+{%block content%}
+    <section class="Trainings_calendar">
+            <div>
+                <p>Calendar feature: Coming soon!</p>
+            </div>
+    </section>
+
+    <section class="Matrix"></section>
+    <button type ="button" onclick="alert('Pop up that shows dual matrix')">View Matrix</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Reminders:
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>
+                        <ol>
+                            <li>Congratulations in finishing Financial Planning Part 3, do remember to complete the final survey</li>
+
+                            <li>Congratulations in finishing Financial Planning Part 2, doremember to complete the finalsurvey</li>
+
+                            <li>Congratulations in finishing Financial Planning Part 1, doremember to complete the finalsurvey</li>
+                        </ol>
+                     <td>
+                 </tr>
+             </tbody>
+        </table>
+    </section>
+    <section class="Trainings_list">
+        <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'trainings_undergoing', 'tabcontent_trainings', 'tablinks')">Undergoing</button>
+            <button class="tablinks" onclick="openCity(event, 'trainings_completed', 'tabcontent_trainings', 'tablinks')">Completed</button>
+            <button class="tablinks" onclick="openCity(event, 'trainings_recommended', 'tabcontent_trainings', 'tablinks')">Recommended</button>
+        </div>
+
+        <div id="trainings_undergoing" class="tabcontent_trainings">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Trainings
+                        </th>
+                        <th scope="col">
+                            Start date
+                        </th>
+                        <th scope="col">
+                            End date
+                        </th>
+                        <th scope="col">
+                            Completion status
+                        </th>
+                        <th scope="col" colspan="3">Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Financial Planning Part 3</td>
+                        <td>2020/05/27</td>
+                        <td>2020/05/30</td>
+                        <td>Completed</td>
+                        <td><button type="reset" onclick="alert('The training has officially been deleted')">X</button></td>
+                        <td><button type="submit" onclick="alert('Pop up of survey questions')">Survey</button></td>
+                        <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                    </tr>
+
+                    <tr>
+                        <td>Financial Exhibition Part 1</td>
+                        <td>2020/05/30</td>
+                        <td>2020/06/02</td>
+                        <td>Approved</td>
+                        <td><button type="reset" onclick="alert('The training has officially been deleted')">X</button></td>
+                        <td><button type="submit" onclick="alert('Pop up of survey questions')">Survey</button></td>
+                        <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                    </tr>
+                    <tr>
+                        <td>Financial Exhibition Part 2</td>
+                        <td>2020/06/02</td>
+                        <td>2020/06/05</td>
+                        <td>Pending</td>
+                        <td><button type="reset" onclick="alert('The training has officially been deleted')">X</button></td>
+                        <td><button type="submit" onclick="alert('Pop up of survey questions')">Survey</button></td>
+                        <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div id="trainings_completed" class="tabcontent_trainings">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">
+                                Trainings
+                        </th>
+                            <th scope="col">
+                                Start date
+                        </th>
+                        <th scope="col">
+                                End date
+                        </th>
+                        <th scope="col">
+                                Skills
+                        </th>
+                        <th scope="col">
+                                Completion status
+                        </th>
+                        <th scope="col" colspan="3">Action
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Financial Planning Part 2</td>
+                        <td>2020/05/22</td>
+                        <td>2020/05/27</td>
+                        <td>Financial Planning</td>
+                        <td>Completed</td>
+                        <td><button type="submit" onclick="alert('Pop up of survey questions')">Survey</button></td>
+                        <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                    </tr>
+
+                    <tr>
+                        <td>Financial Planning Part 1</td>
+                        <td>2020/05/18</td>
+                        <td>2020/05/22</td>
+                        <td>Financial Planning</td>
+                        <td>Completed</td>
+                        <td><button type="submit" onclick="alert('Pop up of survey questions')">Survey</button></td>
+                        <td><button type="button" onclick="('Pop up showing more information')">></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="trainings_recommended"class="tabcontent_trainings">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Training
+                        </th>
+                        <th scope ="col">
+                            Skills
+                        </th>
+                        <th scope="col">
+                            Intended audience
+                        </th>
+                        <th scope="col" colspan="2">Actions<th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr>
+                        <td>Financial literacy Part 1</td>
+                        <td>Finance</td>
+                        <td>Full-time employees</td>
+                        <td><button type="submit" onclick="alert('Pop up to confirm application of training')">&#10004;</button></td>
+                        <td><button type="button" onclick="alert('Pop up showing more information')">></button></td>
+                    </tr>
+
+                    <tr>
+                        <td>Leadership Management</td>
+                        <td>Character building</td>
+                        <td>Managers</td>
+                        <td><button type="submit" onclick="alert('Pop up to confirm application of training')">&#10004;</button></td>
+                        <td><button type="button" onclick="alert('Pop up showing more information')">></button></td>
+                    </tr>
+
+                    <tr>
+                        <td>Resume writing</td>
+                        <td>Personal skills</td>
+                        <td>Full-time interns</td>
+                        <td><button type="submit" onclick="alert('Pop up to confirm application of training')">&#10004;</button></td>
+                        <td><button type="button" onclick="alert('Pop up showing more information')">></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+{%endblock%}

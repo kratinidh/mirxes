@@ -1,0 +1,51 @@
+<!--Inherit HTML from parent class 'sidenav'-->
+{%extends 'sidenav.html'%}
+{% load static %} 
+
+<!--HTML inheritance: overriding parent class home_icon block(Django exclusive)-->
+{%block home_icons%} 
+
+<div class = "container home_icons" > 
+
+    <a href = "{%url 'user_homepage'%}"><img src = "{% static 'login2/denselightLOGO1.svg'%}"><!--<span style= "font-size:50px;">MiRXES</span>--></a>
+    <ul>
+        <li>
+            <!--Images are not added to static files yet-->
+            <button class="dropbtn"><i class="fa fa-bell" style="font-size:26px; color: #555;"></i></button>              <!--<img src="images/Bell_icon2.png">-->
+        </li> <!--Press to activate popup of notifications-->
+
+        <!--Images are not added to static files yet-->
+        <!--Dropdown feature to show editting of profile, settings and loging out.-->
+        <li>
+            <div class = "dropdown">
+                {%if request.user.profile.profile_Picture %}
+                <button class="dropbtn"><a href="{%url 'Detail_Profile' request.user.profile.id%}"><img src="{{request.user.profile.profile_Picture.url}}" style="width: 45px; height: 45px; border-radius:50%; position: relative; top: -11px; right: 6px;"></a></button> 
+                {%else%}
+                <button class="dropbtn"><a href="{%url 'Detail_Profile' request.user.profile.id%}"><i class="fa fa-user-circle-o" style="font-size:26px; color: #555;"></i></a></button> <!--<img src="images/Avatar_icon.png">-->
+                {%endif%}
+
+                <div class = "dropdown-content">
+                    <a href="{%url 'UpdateProfilepage' request.user.profile.id %}">Edit profile</a>
+                    <a href="">Settings</a>
+                    <a href="{% url 'logout'%}">Log out</a>
+                </div>
+            </div>
+        </li><!--Press to activate dropdown of profiles-->
+    </ul>
+</div> 
+{%endblock%}
+
+<!--HTML inheritance: overriding parent class notifications block(Django exclusive)-->
+{%block notification%}
+<div class = "chat">
+    <!--<button onclick = "openChat()">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+    </button>
+
+    <div id = "chatBot1">
+        <p>Chatbot feature coming soon!</p>
+    </div>-->
+
+</div>
+{%endblock%} 
+ 

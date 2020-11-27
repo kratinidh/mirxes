@@ -1,0 +1,54 @@
+<!--Inherit HTML from parent class 'sidenav'-->
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{% load static %}
+{% load crispy_forms_tags %}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+    <!--Header-->
+<head>
+    <!--Meta to improve SEO-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Create Department Goals{%endblock%}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    {%block content%}
+    <!--HTML form, action on current page, use 'POST' method (secure)-->
+    <div class = "container col-6">
+        <br>
+        <div class = "card">
+            <div class = "card-header">
+                <h2>Create Departmental Goals</h2>
+            </div>
+
+            <div class = "card-body">
+                <form action="" method ="POST">
+                    <div class="form-group">
+                        <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+                        {%csrf_token%}
+
+                        <!--Generate form organised in paragraphs(as_p) based on queryset (data to work on) on CreateDepartmentalGoals in GnC/views.py-->
+                        {{form.as_p}}
+                        <div class = "row justify-content-end m-0">
+                            <a type = "button" class = "btn btn-danger mr-2" href="{%url 'user_homepage'%}">Cancel</a>
+                            <input class = "btn btn-primary" type = "submit" value = "Submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    {%endblock%}
+</body>
+</html>

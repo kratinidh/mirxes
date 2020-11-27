@@ -1,0 +1,121 @@
+<!--Inherit HTML from parent class 'sidenav'-->
+{%extends 'homepage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%} 
+{% load crispy_forms_tags %}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Create Career Discussion{%endblock%}</title>
+
+    {%block script1%}
+    <link rel = "stylesheet" type="text/css" href = "{% static 'Appraisals/HuNet_UpdateGCS.css' %}">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--font--> 
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+    
+    {%endblock%}
+</head>
+
+<body>
+    {%block content%}
+    <!--HTML form, action on current page, use 'POST' method (secure)-->
+    <div class = "container col-10">
+        <br>
+        <div class = "card">
+            <form action= "" method = "POST">
+                <div class="form-group">
+            
+                    <div class = "card-body">
+                        {%block bubbleurl%}
+                        <div id="line"></div>
+                        <div class = "row button-row"  style = "margin: 0">
+                            <a href="{% url 'Appraisals:Update_AppraisalG' user_app.id %}"><button type = "button" class = "btn">1</button></a>
+                            <a href="{% url 'Appraisals:Update_AppraisalC' user_app.id %}"><button type = "button" class = "btn">2</button></a>
+                            <a href="{% url 'Appraisals:Update_AppraisalS' user_app.id %}"><button type = "button" class = "btn">3</button></a>
+                            <a href="{% url 'Appraisals:Update_AppraisalCareer' user_app.id %}"><button type = "button" class = "btn activebtn">4</button></a>
+                            <a href="{% url 'Appraisals:Update_Appraisal' user_app.id %}"><button type = "button" class = "btn">5</button></a>
+                        </div> 
+                        <div class = "row button-name-row justify-content-between m-0">
+                            <span>Goals Rating</span>
+                            <span>Core Values Competencies Rating</span>
+                            <span>Skills Rating</span>
+                            <span>Career Discussion</span>
+                            <span>Summary</span>
+                        </div>
+                        {%endblock%}
+                        <br>
+                        {%block heading%}<h4 class = "heading"> Employee's Career Discussion </h4>{%endblock%}
+
+                        <div class = "alert alert-warning" style = "border-left: 3px solid orange;">Please submit at least one Career Discussion Form<br>
+                        <strong>Warning</strong>: Only the last submitted Career Discussion form will be taken into account.</div>
+                        
+                        
+                        
+                        <br>
+                        <p>Designation: <strong>{{request.user.profile.job_Title}}</strong></p>
+                            <!-- {{grade}} -->
+
+
+
+                        <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+                        {%csrf_token%}
+
+                        <!--<h4> Confirm Complete Ratings</h4>-->
+                        <!--Generate form organised in paragraphs based on query on CreateCompetencies in GnC/views.py-->
+                        {%block careerquestions%}
+                        <div class = "card card-body form-card">
+                            <div class = "row m-1">
+                                <div class = "col">
+                                    Where do I want to be in the next 1-3 years?
+                                    {{form.Q1}} 
+                                </div>
+                            </div>
+                            <br>
+                            <div class = "row m-1">
+                                <div class = "col">
+                                    What are my strengths?
+                                    {{form.Q2}} 
+                                </div>
+                            </div>
+                            <br>
+                            <div class = "row m-1">
+                                <div class = "col">
+                                    What are the areas I should develop?
+                                    {{form.Q3}} 
+                                </div>
+                            </div>
+                            <br>
+                            <div class = "row m-1">
+                                <div class = "col">
+                                    What are some of the development activities?
+                                    {{form.Q4}} 
+                                </div>
+                            </div>
+                        </div>
+                        {%endblock%}
+
+                        <br>
+                        <div class = "row justify-content-end" style = "margin:0">
+                            <a href="{% url 'user_homepage'%}" type = "button" class = "btn btn-danger mr-1">Cancel</a>
+                            <input class = "btn btn-primary ml-1" type = 'submit' value = "Confirm">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class = "row" style = "height: 250px"></div>
+    </div>
+    {%endblock%}
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'homepage.html'%}
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+      <!--Meta to improve SEO-->
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Goal Detail{%endblock%}</title>
+
+    {%block script1%}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel = "stylesheet" type="text/css" href = "{% static 'GnC/HuNet_DetailGoals.css' %}">
+    {%endblock%}
+</head>
+<body>
+    <!--HTML inheritance: overriding parent class content block(Django exclusive)-->
+    {%block content%}
+    <div class = "container">
+    
+        <!--Things within double braces are object instances within a queryset, so in this case I am accessing goal's employee-->
+        <!-- original layout
+        <p>Name: {{object.employee.name}}</p>
+        <p>Appraisal ID:</p>
+        <p>Goal Due: {{object.due}}</p>
+        {%with KPI_counter=object.kpi_set.all%}<p> Number of KPIs: {{KPI_counter.count}}</p>{%endwith%}
+        -->
+
+        <br>
+        
+        <div class = "row">
+            <div class = "col-12">
+                <div class = "card-deck d-flex justify-content-around">
+                    <div class = "card shadow-sm">
+                        <div class = "card-header">
+                            Name:
+                        </div>
+
+                        <div class = "card-body">
+                            {{object.employee.name}}
+                        </div>
+                    </div>
+
+                    <div class = "card shadow-sm">
+                        <div class = "card-header">
+                            Appraisal ID:
+                        </div>
+
+                        <div class = "card-body">
+                            NIL
+                        </div>
+                    </div>
+                    
+                    <div class = "card shadow-sm">
+                        <div class = "card-header">
+                            Goal Due: 
+                        </div>
+
+                        <div class = "card-body">
+                            {{object.due}}
+                        </div>
+                    </div>
+
+                    {%with KPI_counter=object.kpi_set.all%}
+                    <div class = "card shadow-sm"> 
+                        <div class = "card-header">
+                            Number of KPIs: 
+                        </div>
+
+                        <div class = "card-body">
+                            {{KPI_counter.count}}
+                        </div>
+                    </div>
+                    {%endwith%}
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class = "row justify-content-center">
+            <div class = "col-12">
+                <div class = "card shadow-sm">
+                    <table class = "table mb-0 pb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID </th>
+                                <th scope="col">Summary</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Due</th>
+                                <th scope="col">Date Created</th>
+                                <th scope="col" colspan="2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Goal {{object.id}}</td>
+                                <td>{{object.summary}}</td>
+                                <td>{{object.description}}</td>
+                                <td>NA</td>
+                                <td>NA</td>
+                                <td></td>
+                                <td></td>
+                            </tr>   
+                            {% for kpi in object.kpi_set.all %}
+                            <tr>
+                                <td>KPI {{kpi.id}}</td>
+                                <td colspan="2">{{kpi.description}}</td>
+                                <td>{{kpi.due}}</td>
+                                <td>{{kpi.date_created}}</td>
+                                {% if kpi.goal.status != 'Approved'%}
+                                <td><a href="{% url 'GnC:Update_KPI' kpi.id %}">Update</a></td>
+                                <td><a href="{% url 'GnC:Delete_User_KPI' kpi.id %}">Delete</a></td>
+                                {%else%}
+                                <td><a href="{%url 'GnC:Update_KPI_POST' kpi.id %}">Update</a></td>
+                                <td></td>
+                                
+                                {%endif%}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <h4>Comments</h4>
+        <a href="{%url 'GnC:Create_User_Goals_Comments' object.id%}">Create Comments</a>
+        <table>
+            <thead>
+                <tr>
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {%for comments in object.goal_comment_set.all|dictsort:"created_on"%}
+                {% if comments.created_by == comments.goal.employee %}
+                <tr>
+                    <td rowspan="2" colspan="4">{{comments.created_by.name}}: {{comments.comments}}</td>
+                    <td colspan="3"></td>
+                </tr>
+                <tr>
+                    <td>{{comments.created_on}}</td>
+                    <td colspan="2"></td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="3"></td>
+                    <td rowspan="2" colspan="4">{{comments.created_by.name}}: {{comments.comments}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td>{{comments.created_on}}</td>
+                </tr>
+                {%endif%}
+                {%endfor%}
+            </tbody>
+        </table>
+
+    </div>
+    {%endblock%}
+</body>

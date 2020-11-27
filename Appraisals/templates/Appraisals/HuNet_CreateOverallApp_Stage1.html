@@ -1,0 +1,147 @@
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML--> 
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+    <!--jquery-->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/custom.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel = "stylesheet" type="text/css" href = "{% static 'Appraisals/HuNet_UpdateGCS.css' %}">
+
+    <!--font--> 
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+    
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>Create Overall Aprpaisal</title>
+    <style>
+        .radio-row input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-row label {
+            font-weight: 500;
+            cursor: pointer;
+            height: 50px;
+            border: 1px solid #2952A4;
+            color: #2952A4;
+            padding: 10px;
+            position: relative;
+            transition: 0.3s;
+            border-radius: 4px;
+        }
+
+        input[type="radio"]:checked + label {
+            background-color: #2952A4;
+            color: white;
+        }
+
+        input[type="radio"]:checked + label i {
+            color: #2952A4;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        .checkmark i {
+            position: relative;
+            right: -4px;
+            color: #eee;
+        }
+
+
+</style>
+</head>
+
+<body>
+    <!--HTML form, action on current page, use 'POST' method (secure)-->
+    <div class = "container col-6">
+        <br>
+        <div class = "card">
+            <div class = "card-header">
+                <h2>Create Overall Appraisal</h2>
+            </div>
+            <div class = "card-body">
+                <form action= "" method = "POST">
+                    <div class="form-group">
+                        <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+                        {%csrf_token%}
+                        {%block instructions%}
+                        <div class = "card card-body pb-0">
+                            <ol>
+                                <strong>Instructions:</strong>
+                                <li>Name the Performance Appraisal Cycle</li>
+                                <li>Select the Appraisal Category</li>
+                                <li>Select the Employees to be included</li>
+                                <li>Click "Submit"</li>
+                            </ol>
+                        </div>
+                        <br>
+                        {%endblock%}
+                        <!--Generate form organised in paragraphs based on query on CreateCompetencies in GnC/views.py-->
+                        {%block form%}
+                        {{form.as_p}}
+                        {%endblock%}
+
+                        {%block selectemployee%}
+                        <p>Select:</p>
+                        
+                        <div class = "row radio-row">
+                            <div class = "col">
+                                <input type="radio" name="employee_selection_list" id="Company" value="Company" />
+                                <label for="Company" class = "col radio-option"> 
+                                    <span class="checkmark"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                    Company
+                                </label>
+                            </div>
+                            <div class = "col">
+                                <input type="radio" name="employee_selection_list" id="Department" value="Department" />
+                                <label for="Department" class = "col radio-option">
+                                    <span class="checkmark"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                    Department
+                                </label>
+                            </div>
+                            <div class = "col">
+                                <input type="radio" name="employee_selection_list" id="Individual" value="Individual" />
+                                <label for="Individual" class = "col radio-option"> 
+                                    <span class="checkmark"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                    Individual
+                                </label>
+                            </div>
+                        </div>
+                        {%endblock%}
+
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{{ message.tags }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class = "row m-0 justify-content-end">
+                            <a class = "btn btn-danger mr-2" type = "button" value = "Cancel" href ="{% url 'user_homepage'%}">Cancel</a>
+                            <input class = "btn btn-primary" type = 'submit' value = "Submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

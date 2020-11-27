@@ -1,0 +1,42 @@
+{%extends 'Appraisals/HuNet_UpdateCD.html'%}
+{%block bubbleurl%}
+    <div id="line"></div>
+    <div class = "row button-row"  style = "margin: 0">
+    <a href="{% url 'Appraisals:Update_AppraisalG_B' user_app.id %}"><button type = "button" class = "btn">1</button></a>
+    <a href="{% url 'Appraisals:Update_AppraisalC_B' user_app.id %}"><button type = "button" class = "btn">2</button></a>
+    <a href="{% url 'Appraisals:Update_AppraisalS_B' user_app.id %}"><button type = "button" class = "btn">3</button></a>
+    <a href="{% url 'Appraisals:Update_AppraisalCareer_B' user_app.id %}"><button type = "button" class = "btn activebtn">4</button></a>
+    <a href="{% url 'Appraisals:Update_Appraisal_B' user_app.id %}"><button type = "button" class = "btn">5</button></a>
+    </div> 
+    <div class = "row button-name-row justify-content-between m-0">
+        <span>Goals Rating</span>
+        <span>Core Values Competencies Rating</span>
+        <span>Skills Rating</span>
+        <span>Career Discussion</span>
+        <span>Summary</span>
+    </div>
+{%endblock%}
+
+
+{%block careerquestions%}
+Where do I want to be in the next 1-3 years?<br>
+<div class = "card card-body col-10">
+{{user_career_discussion.Q1}} <br><br>
+</div><br>
+What are my strengths?<br>
+<div class = "card card-body col-10">
+{{user_career_discussion.Q2}} <br><br>
+</div><br>
+What are the areas I should develop?<br>
+<div class = "card card-body col-10">
+{{user_career_discussion.Q3}} <br><br>
+</div><br>
+What are some of the development activities?<br>
+<div class = "card card-body col-10">
+{{user_career_discussion.Q4}} <br><br>
+</div><br>
+Supervisor/Manager's Comments<br>
+<div class = "card card-body col-10">
+{{user_career_discussion.Q5}} <br><br>
+</div><br>
+{%endblock%}

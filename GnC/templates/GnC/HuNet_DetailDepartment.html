@@ -1,0 +1,118 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'utilitypage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+      <!--Meta to improve SEO-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Employee's Details{%endblock%}</title>
+</head>
+<body>
+    <!--HTML inheritance: overriding parent class content block(Django exclusive)-->
+    {%block content%}
+
+    <!--Things within double braces are object instances within a queryset, so in this case I am accessing object's name-->
+    <p>{{object.name}}</p>
+    <!--Accessing object's email-->
+    <p>{{object.email}}</p>
+
+    <!--Accessig all departments of objects-->
+    {{object.department.all.count}} Departments:
+    {%for x in object.department.all%}
+    <ul>
+        <li>{{x.name}}</li>
+    </ul>
+    {%endfor%}
+
+    <!--Accessing and looping over all goals created by object(user)-->
+    
+    <h4>Goals</h4>
+    <table>
+        <thead>
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Category
+                    </th>
+                    <th scope="col">Summary</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Due</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" colspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for goals in object.goals_set.filter%}
+                
+                <tr>
+                    <td>{{goals.id}}</td>
+                    <td>{{goals.goal_category.name}}</td>
+                    <td>{{goals.summary}}</td>
+                    <td>{{goals.description}}</td>
+                    <td>{{goals.due}}</td>
+                    <td>{{goals.status}}</td>
+                    {% if goals.status == 'Manager'%}
+                    <td><a href="{% url 'GnC:Update_User_GoalsM' goals.id %}">Update</a></td>
+                    <td><a href="">Add comments</a></td>
+                    {%else%}
+                    <td></td>
+                    <td><a href="">Add comments</a></td>
+                    {%endif%}
+                </tr>
+                
+                {%for kpi in goals.kpi_set.all%}
+                <tr>
+                    <td>{{kpi.id}}</td>
+                    <td> KPI </td>
+                    <td colspan="2">{{kpi.description}}</td>
+                    <td>{{kpi.due}}</td>
+                    <td></td>
+                    <td></td>
+                    <td> </td>
+                </tr>
+                {%endfor%}
+                {%endfor%}
+            </tbody>
+        </thead>
+    </table>
+
+    <h4>Competencies</h4>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Category</th>
+                <th scope="col">Summary</th>
+                <th scope="col">Status</th>
+                <th scope="col" colspan="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for competencies in object.competencies_set.all%}
+            <tr>
+                <td>{{competencies.id}}</td>
+                <td>{{competencies.competency_category.name}}</td>
+                <td>{{competencies.summary}}</td>
+                <td>{{competencies.status}}</td>
+                {% if competencies.status == 'Manager'%}
+                <td><a href="{% url 'GnC:Update_User_CompetenciesM' competencies.id %}">Update</a></td>
+                <td><a href="">Add comments</a></td>
+                {% else %}
+                <td></td>
+                <td><a href="">Add comments</a></td>
+                {%endif%}
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    {%endblock%}
+</body>

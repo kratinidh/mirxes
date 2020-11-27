@@ -1,0 +1,40 @@
+<!--Inherit HTML from parent class 'sidenav'-->
+{%extends 'sidenav.html'%}  
+
+<!--HTML inheritance: overriding parent class home_icon block(Django exclusive)-->
+{%block home_icons%}
+
+<div class = "home_icons">
+    <h1 class = "logo">HuNet</h1>   
+
+    <ul>
+        <!--Images are not added to static files yet-->
+        <!--**Dynamic routing to 'dashboard' template -->
+        <li>
+            <button class="dropbtn"><a href="{%url 'user_homepage'%}"><i class="fa fa-home"></i></a></button>
+        </li> 
+
+        <!--Images are not added to static files yet-->
+        <li>
+            <button class="dropbtn"><i class="fa fa-bell"></i></button>
+        </li> <!--Press to activate popup of notifications-->
+
+        <!--Images are not added to static files yet-->
+        <!--Dropdown feature to show editting of profile, settings and loging out.-->
+        <li>
+            <div class = "dropdown"> 
+                {%if request.user.profile.profile_Picture %}
+                <button class="dropbtn"><a href="{%url 'Detail_Profile' request.user.profile.id%}"><img src="{{request.user.profile.profile_Picture.url}}" style="width:35px; height:35px; border-radius:50%"></a></button> 
+                {%else%}
+                <button class="dropbtn"><a href="{%url 'Detail_Profile' request.user.profile.id%}"><i class="fa fa-user-circle-o" style="font-size:26px; color: #555;"></i></a></button> <!--<img src="images/Avatar_icon.png">-->
+                {%endif%}
+                <div class = "dropdown-content">
+                    <a href="{%url 'UpdateProfilepage' request.user.profile.id %}">Edit profile</a>
+                    <a href="">Settings</a>
+                    <a href="{% url 'logout'%}">Log out</a>
+                </div>
+            </div>
+        </li><!--Press to activate dropdown of profiles-->
+    </ul>
+</div>
+{%endblock%}

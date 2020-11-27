@@ -1,0 +1,156 @@
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML--> 
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>Update Profile</title>
+    <style>
+        /* .radio-row input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-row label {
+            font-weight: 500;
+            cursor: pointer;
+            height: 50px;
+            border: 2px solid #454451;
+            color: #454451;
+            padding: 10px;
+            position: relative;
+            transition: 0.5s;
+            border-radius: 4px;
+        }
+
+        input[type="radio"]:checked + label {
+            background-color: #454451;
+            color: white;
+        }
+
+        input[type="radio"]:checked + label i {
+            color: #454451;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        .checkmark i {
+            position: relative;
+            right: -4px;
+            color: #eee;
+        } */
+
+
+</style>
+</head>
+
+<body>
+    <!--HTML form, action on current page, use 'POST' method (secure)-->
+    <div class = "container col-6">
+        <br>
+        <div class = "card">
+            <div class = "card-header">
+                <h2>Update Employee Profile</h2>
+            </div>
+            <div class = "card-body">
+                <form action= "" method = "POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+                        {%csrf_token%}
+                        <!--Generate form organised in paragraphs based on query on CreateCompetencies in GnC/views.py-->
+                        {%block form%}
+                        <h4>Personal Particulars</h4><hr>
+                        Name*:<br>
+                        {{object.name}}<br><br>
+                        Employee ID*:<br>
+                        {{object.employee_ID}}<br><br>
+                        NRIC/FIN*:<br>
+                        {{object.nric}}<br><br>
+                        Gender*:<br>
+                        {{object.gender}}<br><br>
+                        Email*:<br>
+                        {{object.email}}<br><br>
+                        Phone (+Country Code):<br>
+                        {{form.phone}}<br>
+                        Indirect/Direct*:<br>
+                        {{object.typeOfEmployee}}<br><br><br>
+                        
+                        <h4>Secondary Information</h4><hr>
+                        Home Address:<br>
+                        {{object.address_1}}<br><br>
+                        Alternate Home Address:<br>
+                        {{object.address_2}}<br><br>
+                        
+                        Date of Passport Expiry (DD/MM/YYYY):<br>
+                        {{object.date_Of_Passport_Expiry}}<br><br>
+                        Citizenship Status*:<br>
+                        {{form.citizenship_Status}}<br><br><br>
+
+                        <h4>Employment Details</h4><hr>
+                        Department*:<br>
+                        {{object.department}}<br><br>
+                        Section:<br>
+                        {{form.division_Centre}}<br><br>
+                        Date Of Hire (DD/MM/YYYY)*:<br>
+                        {{object.date_Of_Hire}}<br><br>
+
+                        Employment Type:<br>
+                        {{object.employment_Type}}<br><br>
+
+                        Job Title*:<br>
+                        {{object.job_Title}}<br><br>
+                        Direct Manager/Supervisor*:<br>
+                        {{form.first_Reporting_Manager}}<br><br>
+                        HOD:<br>
+                        {{form.second_Reporting_Manager}}<br><br><br>
+
+                        <h4>Skills</h4><hr>
+                        Skill 1:<br>
+                        {{form.skill1}}<br><br>
+                        Skill 2:<br>
+                        {{form.skill2}}<br><br>
+                        Skill 3:<br>
+                        {{form.skill3}}<br><br><br>
+
+                        {%endblock%}
+
+                        <h4>Access</h4>
+                        <hr>
+                        Only available for HR users.
+                    
+                        <br>
+                        <br>
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{{ message.tags }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class = "row m-0 justify-content-end">
+                            <a href = "{% url 'user_homepage'%}" class = "btn btn-danger mr-2" type = "button" value = "Cancel">Cancel</a>
+                            <input class = "btn btn-primary" type = 'submit' value = "Submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+{%extends 'utilitypage.html'%}
+{%load static%}
+<head>
+    <!--Page title-->
+    <title>{%block title%}Appraisals{%endblock%}</title>
+</head>
+<body>
+    <!--Page wrapper bg-->
+    <div class="wrapper">
+        {%block content%}
+        <!--Header of page-->
+        <h1>HuNet</h1>
+
+        <!--Home page local buttons-->
+        <section class="home icons">
+            <div class="buttons">
+                <a href = "{% url 'Appraisals:Create_Overall_Appraisal' %}">Initialise Performance Management System</a>
+
+                <button type="button" onclick="alert('Appraisal Cycle completed. Locked Appraisals')">Complete cycle</button>
+            </div>
+        </section>
+
+        <!--Box showing piechart of appraisal-->
+        <section class="Appraisal_status">
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'Current_Status', 'Appraisal_graphtab', 'tablinks')">Current</button>
+                <button class="tablinks" onclick="openCity(event, 'Previous_Status', 'Appraisal_graphtab', 'tablinks')">Previous</button>
+            </div>
+            
+            <div id="Current_Status" class="Appraisal_graphtab">
+                <button type="button" onclick="alert('Pop Up of appraisal cycle')">Edit Appraisal cycle</button>
+
+                <p>45 Appraisals completed</p>
+                <p>20 Appraisals left</p>
+                <p>Start date: 25 May 2020</p>
+                <p>End date: 5 June 2020</p>
+            </div>
+
+            <div id="Previous_Status" class="Appraisal_graphtab">
+                <button type="button" onclick="alert('Pop Up of appraisal cycle')">Edit Appraisal cycle</button>
+
+                <p>100% Completed</p>
+                <p>63 Appraisals completed</p>
+                <p>0 Appraisals left</p>
+                <p>Start date: 5 Jan 2020</p>
+                <p>End date: 5 Feb 2020</p>
+            </div>
+
+        </section>
+        
+        <hr>
+
+        <!--Box showing weightage assignment-->
+        <section class="weightage assignment">
+            <button type="button" onclick="alert('Pop Up of weightage assignment')">Weightage management</button>
+
+            <p>Pie Chart of weightage(TBC)</p>
+        </section>
+        
+        <hr>
+
+        <!--Appraisal list-->
+        <section class="Appraisal_list">
+            <!--Appraisal list buttons-->
+            <form method="GET">
+                <input type="text" placeholder="Search..." name="search">
+                <input type="submit" value="Submit">
+                <button type="button" onclick="alert('Dropdown to sort by')">Sort</button>
+            </form>
+
+            <!--Appraisal list table-->
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Appraisal ID</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Start date</th>
+                            <th scope="col">End date</th>
+                            <th scope="col">Completion</th>
+                            <th scope="col" colspan="4">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for appraisal in Overall_Appraisal_list%}
+                        <tr>
+                            <td>{{appraisal.id}}</td>
+                            <td>{{appraisal.appraisal_category.name}}: {{appraisal.name}}</td>
+                            <td>{{appraisal.start_date}}</td>
+                            <td>{{appraisal.end_date}}</td>
+                            <td></td>
+                            <td><button type="button" onclick="alert('Send notification to all appraisal users')"> Mail </button></td>
+                            <td><a href="{%url 'Appraisals:Update_Overall_Appraisal' appraisal.id %}"> Edit </a></td>
+                            <td><button type="button" onclick="alert('Add supporting comments')"> Add supporting comments </button></td>
+                            <td><button type="button" onclick="alert('Appraisal have been completed')">&#10004;</button></td>
+                            <td><a href="{%url 'Appraisals:Detail_Overall_Appraisal' appraisal.id%}">Detail</button></td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        {%endblock%}
+    </div>
+
+</body>

@@ -1,0 +1,36 @@
+{%extends 'utilitypage.html' %}
+<head>
+    <title>{%block title%}Profile{%endblock%}</title>
+</head>
+<body>
+    {%block content%}
+    <a href="{% url 'HRM_UpdateProfilepage'%}">Update</a>
+    <a href="{% url 'Detail_HRM'%}">See More</a>
+    <section>
+        <h3>Personal Information</h3>
+        <p>Profile Picture</p>
+        <p>Profile: {{user_p.email}}</p>
+        <p>Name: {{user_p.name}}</p>
+        <p>Contact: {{user_p.phone}}</p>
+        <p>Position: {{user_p.employment_Type}} {{user_p.job_Title}}</p>
+    </section>
+
+    <section>
+        <h3>Department</h3>
+        {%for departments in user_p.department.all%}
+        <p>Department: {{departments.name}},</p>
+        {%endfor%}
+        <p>1st Reporting Manager: {{user_p.first_Reporting_Manager}}</p>
+        <p>2nd Reporting Manager: {{user_p.second_Reporting_Manager}}</p>
+        <p>Division Centre: {{user_p.division_Centre}}</p>
+    </section>
+
+    <section>
+        <h3>Skills</h3>
+        
+        <p>Skills:{%for skills in user_p.skills.all%} {{skills.name}},{%endfor%}</p>
+        
+        <p>Qualifications:{%for qualifications in user_p.qualifications.all%} {{qualifications.name}},{%endfor%}</p>
+    </section>
+    {%endblock%}
+</body>

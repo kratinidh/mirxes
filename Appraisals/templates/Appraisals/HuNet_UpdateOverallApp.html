@@ -1,0 +1,48 @@
+{%extends 'Appraisals/HuNet_CreateOverallApp_Stage1.html'%}
+{%block instructions%}
+{%endblock%}
+{%block form %}
+    <h4>Appraisal Stage</h4>
+    <hr>
+    {{form.status}}
+    <br><br>
+    <h4>Goals Launching</h4>
+    <hr>
+    Start Date (DD/MM/YYYY):
+    {{form.start_date}}<br>
+    End Date (DD/MM/YYYY):
+    {{form.goals_setting_end_date}}<br><br>
+    <h4>Mid-Year Review</h4>
+    <hr>
+    Start Date (DD/MM/YYYY):
+    {{form.mid_year_start_date}}<br>
+    End Date (DD/MM/YYYY):
+    {{form.mid_year_end_date}}<br><br>
+    <h4>Year-End Review</h4>
+    <hr>
+    Start Date (DD/MM/YYYY):
+    {{form.end_year_start_date}}<br>
+    Review End Date (DD/MM/YYYY):
+    {{form.appraisal_end_date}}<br>
+    Moderation By Management End Date (DD/MM/YYYY):
+    {{form.reports_end_date}}<br>
+    Calibration End Date (DD/MM/YYYY):
+    {{form.calibration_end_date}}<br><br>
+
+    <h4>New Hire Performance Review Launch</h4>
+    <hr>
+    The New Hire Performance Review Launch will be done on a separate appraisal
+
+    <hr><hr>
+
+    <h4>Weightage (%)</h4>
+    Goals:
+    {{form.goal_weightage}}<br>
+    Core Values Competencies:
+    {{form.competency_weightage}}<br>
+    Skills:
+    {{form.skill_weightage}}<br>
+
+{%endblock%}
+{%block selectemployee %}
+{%endblock%}

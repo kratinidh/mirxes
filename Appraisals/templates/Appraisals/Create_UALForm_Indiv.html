@@ -1,0 +1,109 @@
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+{% load crispy_forms_tags %}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Invite Users for Appraisal{%endblock%}</title>
+
+    <!--jquery-->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/custom.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel = "stylesheet" type="text/css" href = "{% static 'Appraisals/HuNet_UpdateGCS.css' %}">
+
+    <!--font--> 
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+    
+    <script type="text/javascript">
+        function selectRow(row)
+        {
+            var firstInput = row.getElementsByTagName('input')[0];
+            firstInput.checked = !firstInput.checked;
+        }
+    </script>
+
+
+</head>
+
+<body>
+    {%block content%}
+    <!--HTML form, action on current page, use 'POST' method (secure)-->
+    <div class = "container col-6">
+
+        <br>
+        <div class = "card">
+            <div class = "card-header">
+                <h2>Create Overall Appraisal</h2>
+            </div>
+            <div class = "card-body">
+                <!--bubble url-->
+                <div id="line"></div>
+                <div class = "row button-row m-0">
+                    <a href=""><button type = "button" class = "btn activebtn">1</button></a>
+                    <a href=""><button type = "button" class = "btn">2</button></a>
+                    <a href=""><button type = "button" class = "btn">3</button></a>
+                    <a href=""><button type = "button" class = "btn">4</button></a>
+                </div>
+                <div class = "row button-name-row justify-content-between m-0">
+                    <span>Add User to Appraisal</span>
+                    <span>Initialise Appraisal Dates</span>
+                    <span>Initialise Appraisal Weightages</span>
+                    <span>Summary</span>
+                </div>
+                <!--end of bubble url-->
+
+                <form action= "" method = "POST">
+                {%csrf_token%}
+                <br>
+                <h4 class = "heading">Add User to Appraisal</h4>
+
+                {%block text%}
+                <span>Select employee(s) to include in appraisal:</span>
+                {%endblock%}
+
+                {%block checkbox%} 
+                    <table id = "tableSelect" class = "table table-hover text-center fixed">
+                        <thead>
+                            <th class = "text-left">Name</th>
+                            <th>Included in Appraisal</th>
+                        </thead>
+
+                        <tbody>
+                        {% for profile in profile_list %}                          
+                            <tr onclick="selectRow(this)">       
+                                <td class = "order_row text-left"><label for="{{profile.id}}">{{profile.name}}</label></td>
+                                <td class = "order_row" style = "width: 200px;"><input type="checkbox" name="profile_list" id="{{profile.id}}" value="{{profile.id}}"/></td>
+                            </tr>                       
+                        {%endfor%}
+                        </tbody>
+                        
+                    </table>
+                {%endblock%}
+
+                    <div class="form-group">
+                        <div class = "row justify-content-end m-0">
+                            <a href = "{%url 'user_homepage'%}" class = "btn btn-danger mr-1" type = "button">Cancel</a>
+                            <input class = "btn btn-primary ml-1" type = 'submit' value = "Submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>   
+
+    {%endblock%}
+</body>
+</html>

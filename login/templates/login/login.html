@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<link rel = "stylesheet" type="text/css" href ="{%static 'login/loginstyle.css' %}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+    <form action = "login" method = "POST">
+        {% csrf_token %}
+        <input type = 'text' name = "username" placeholder = "username"><br>
+        <input type = 'password' name = "password" placeholder="password"><br>
+        <input type = 'Submit' value = 'Login'>
+        
+        <div class="popup" onclick="myFunction()">Click me for a popup
+            <span class="popuptext" id="myPopup">Contact HR for assistance</span>
+        </div>
+
+        <script>
+            // When the user clicks on div, open the popup
+            function myFunction() {
+              var popup = document.getElementById("myPopup");
+              popup.classList.toggle("show");
+            }
+        </script>
+    </form>
+</body>
+</html>

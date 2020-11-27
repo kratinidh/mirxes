@@ -1,0 +1,50 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'utilitypage.html'%}
+
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%} Employee Management {%endblock%}</title>
+</head>
+
+<body>
+    <!--HTML inheritance: overriding parent class content block(Django exclusive)-->
+    {%block content%}
+        <section>
+            <!--**Dynamic routing to 'EM/CreateProfile.html' template -->
+            <a href="{%url 'EM:Create_Profile' %}">Add Profile</a>
+            <table>
+                <!--Table for employee management-->
+                <thead>
+                    <th scope = "col">Name </th>
+                    <th scope = "col">Dept </th>
+                    <th scope = "col">Position </th>
+                    <th scope = "col">1st Approving Manager </th>
+                    <th scope = "col">Date of Hire </th>
+                    <th scope = "col" colspan = "3">Action </th>
+                </thead>
+                <tbody>
+                    {% for profile in profile_list%}
+                    <tr>
+                        <!--Employee name-->
+                        <td>{{profile.name}}</td>
+                        <!--Employee department--> 
+                        <td>{%for department in profile.department.all%}    <ul><li>{{department.name}}</li></ul>{%endfor%}</td>
+                        <!--Employee job title-->
+                        <td>{{profile.job_Title}}</td>
+                        <!--Employee reporting manager--> 
+                        <td>{{profile.first_Reporting_Manager}}</td> 
+                        <!--Employee date of hire-->
+                        <td>{{profile.date_Of_Hire}}</td> 
+                        <!--**Dynamic routing to 'EM/CreateProfile' template (Update and Create profile share same html)-->  
+                        <td><a href="{% url 'EM:Update_Profile' profile.id %}">+</a></td>
+                        <!--**Dynamic routing to 'EM/CreateProfile.html' template-->  
+                        <td><a href="{% url 'EM:Delete_Profile' profile.id %}">-</a></td>
+                        <!--**Dynamic routing to 'EM/DetailProfile.html' template-->  
+                        <td><a href="{% url 'EM:Detail_Profile' profile.id %}">Detail</a></td>               
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </section>
+    {%endblock%}
+</body>

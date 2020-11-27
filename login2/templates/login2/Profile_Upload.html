@@ -1,0 +1,78 @@
+{%load static%}
+<head>
+	<title>Bulk Upload Profile</title>
+    <!--jquery-->
+    <script src="js/jquery-3.4.1.min.js"></script> 
+    <script src="js/custom.js"></script>
+    
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+	<!--font--> 
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+
+    <style>
+		.container {
+			font-family: 'Open Sans', sans-serif;
+			font-size: 14px;
+        }
+
+        h1, h2 {
+            font-family: 'Hind', sans-serif;
+        }
+
+    </style>
+</head>
+
+
+<body>
+    <div class = "container col-6">
+        <br>
+        <div class = "card">
+            <h2 class = "card-header">
+                Bulk Upload
+            </h2>
+
+            <div class = "card-body">
+                <div class = "card card-body pb-0 mb-0">
+ 
+                    <ol>
+                        <strong>Instructions:</strong>
+                        <li>Enter the following information: </li>
+                        <li>Save as CSV and upload</li>
+                    </ol>
+                </div>
+
+                <br>
+
+                
+                <form method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+
+                    <div class = "custom-file col-8">
+                        <input type="file" name="file">
+                    </div>
+                    <br>
+                    {% if messages %} 
+                        {%for message in messages%}
+                            <div>
+                                <strong>{{message|safe}}</strong>
+                            </div>
+                        {%endfor%}
+                    {%else%}
+                    {%endif%}  
+                    <br>
+                    <div class = "row m-0 justify-content-end">
+
+                        <a class = "btn btn-danger mr-2" href = "{% url 'user_homepage'%}" type = "button">Cancel</a>
+                        <button type="submit" class = "btn btn-primary"> Submit </button>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</body>

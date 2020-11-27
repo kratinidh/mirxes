@@ -1,0 +1,32 @@
+{%extends 'Appraisals/HuNet_UpdateCD.html' %}
+
+{%block bubbleurl%}
+    <div id="line"></div>
+    <div class = "row button-row"  style = "margin: 0">
+    <a href="{% url 'Appraisals:Update_AppraisalG_M' user_app.id %}"><button type = "button" class = "btn">1</button></a>
+    <a href="{% url 'Appraisals:Update_AppraisalC_M' user_app.id %}"><button type = "button" class = "btn">2</button></a>
+    <a href="{% url 'Appraisals:Update_AppraisalS_M' user_app.id %}"><button type = "button" class = "btn">3</button></a>
+    <a href="{% url 'Appraisals:Update_AppraisalCareer_M' user_app.id %}"><button type = "button" class = "btn activebtn">4</button></a>
+    <a href="{% url 'Appraisals:Update_Appraisal_M' user_app.id %}"><button type = "button" class = "btn">5</button></a>
+    </div> 
+    <div class = "row button-name-row justify-content-between m-0">
+        <span>Goals Rating</span>
+        <span>Core Values Competencies Rating</span>
+        <span>Skills Rating</span>
+        <span>Career Discussion</span>
+        <span>Summary</span>
+    </div>
+{%endblock%}
+
+{%block careerquestions%}
+Where do I want to be in the next 1-3 years?
+{{form.Q1}} <br><br>
+What are my strengths?
+{{form.Q2}} <br><br>
+What are the areas I should develop?
+{{form.Q3}} <br><br>
+What are some of the development activities?
+{{form.Q4}} <br><br>
+Supervisor's Comments:
+{{form.Q5}}<br><br>
+{%endblock%}

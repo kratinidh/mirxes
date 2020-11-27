@@ -1,0 +1,60 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'homepage.html'%}
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+      <!--Meta to improve SEO-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Competencies Detail{%endblock%}</title>
+
+    {%block script1%}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel = "stylesheet" type="text/css" href = "{% static 'GnC/HuNet_DetailGoals.css' %}">
+    {%endblock%}
+</head>
+<body> 
+    <!--HTML inheritance: overriding parent class content block(Django exclusive)-->
+    {%block content%}
+    <div class = "container">
+
+        <h2>Departmental Goals Detail</h2>
+
+        <div class = "card shadow-sm">
+            <div class = "card-body">
+                Manager: {{object.manager.name}}
+            </div>
+        </div>
+
+        <div class = "card shadow-sm">
+            <div class = "card-body p-0">
+                <table class = "table mb-0 pb-0">
+                    <tr>
+                        <th>Department</th>
+                        <th>Category</th>
+                        <th>Objective</th>
+                        <th>Description</th>
+                        <th>Due</th>
+                    </tr>
+
+                    <tr>
+                        <td>{{object.department.name}}</td>
+                        <td>{{object.goal_category.name}}</td>
+                        <td>{{object.summary}}</td>
+                        <td>{{object.description}}</td>
+                        <td>{{object.due}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    {%endblock%}
+</body>

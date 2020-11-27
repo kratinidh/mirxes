@@ -1,0 +1,639 @@
+
+.wrapper {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    background-color: #e8eef3; 
+}
+ 
+h1, h2, h3, h4, h5, h6, .tablinks2{
+    font-family: 'Hind', sans-serif !important;
+}
+ 
+.tablinks2 {
+    font-size: 17px !important;
+}
+
+/*kpi table*/
+.KPItable {
+    width: 90% !important ;
+    margin: auto;
+}
+
+.KPItable thead th {
+    background-color: whitesmoke;
+    border-bottom: 4px solid white;
+    border-top: 1px solid white;
+}
+
+.KPItable tbody td {
+    border-bottom: 4px solid white;
+    background-color: whitesmoke;
+}
+
+
+/*table header*/
+tbody > tr { 
+    background-color: white ;
+}
+
+table {
+    width: 100% !important;
+    table-layout: fixed;
+    line-height: 1.3em;
+}
+
+td, th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+tr  {
+    border-bottom: 1px solid #cecece;
+    border-collapse: collapse;
+}​
+
+
+
+/*tabbing*/
+.tab_dashboard {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.tablinks2 { 
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 20px;
+    width: 20%;
+    padding-bottom: 8px;
+
+    position: relative;
+    display: block;
+    height: 55px; 
+    border-right: 2.5px solid lightgrey;
+    border-top: 1px solid lightgrey;
+
+    color: #555; 
+    top: 0;
+    transition: all 0.45s;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+}
+
+#dashboard4 .tablinks2 {
+    width: 16%;
+}
+
+
+.tablinks2:hover {
+    outline: none !important;
+    top: -0.25rem;
+    transition: top 0.45s;
+}
+
+#subAppraisalTab .nav {
+    border: 1px black solid;
+}
+
+#subAppraisalTab .nav-link {
+    border: none;
+    color: black;
+}
+
+.tablinks2.active {
+    outline: none !important;
+    background-color: white;
+    color: black;
+    top: -0.25rem;
+}
+
+/*tab appraisal*/
+.tab_appraisal, .GCStab {
+    text-align: left;
+}
+
+.dashboardcontent {
+    color: black;
+    text-align: center;
+    background-color: white; 
+    border-radius: 5px; 
+    z-index:1;
+    position: relative;
+
+    width: 100%;
+    margin: 0 auto;
+    top: -25px;
+    padding: 20px 50px 50px 50px;
+    overflow: auto;
+    min-height: 350px;
+
+    border-top: none;
+}
+
+
+/*inner tabbing*/
+.slide-toggle{
+    display: none;
+}
+  
+.innertab, .innertab1{
+    font-size: 17px;
+    max-width: 850px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+  
+.innertab button, .innertab1 button {
+    outline: none !important;
+    border: none;
+    border-radius: 50px;
+    height: 30px;
+}
+  
+.innertab .tablinks {
+    width: 24%;
+    color: #444;
+    opacity: 0.4;
+    background: none;
+}
+
+.innertab1 .tablinks5, .innertab1 .tablinks6 {
+    width: 32.5%;
+    color: #444;
+    opacity: 0.4;
+    background: none;
+}
+  
+.innertab .tablinks:hover, .innertab1 .tablinks5:hover, .innertab1 .tablinks6:hover {
+    cursor: pointer;
+    color: #444;
+    background-color: none; 
+}
+  
+.innertab .tablinks.active, .innertab1 .tablinks5.active, .innertab1 .tablinks6.active{
+    cursor: pointer;
+    color: #444;
+    background-color: none; 
+}
+  
+.slider{
+    width: 100%;
+    height: 5px;
+    display: block;
+    background: #ccc;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+  
+.slider .bar {
+    width: 25%;
+    height: 5px;
+    background: #555; 
+    border-radius: 5px;
+}
+
+.slider .bar1 {
+    width: 33%;
+    height: 5px;
+    background: #555; 
+    border-radius: 5px; 
+}
+
+.innertab .tablinks, .slider .bar,
+.innertab1 .tablinks5, .slider .bar1,
+.innertab1 .tablinks6 {
+    transition: all 500ms ease-in-out;
+    -webkit-transition: all 500ms ease-in-out;
+    -moz-transition: all 500ms ease-in-out;
+}
+  
+#slide-item-1.active ~ .slider .bar{ margin-left: 0; }
+#slide-item-2.active ~ .slider .bar{ margin-left: 25%; }
+#slide-item-3.active ~ .slider .bar{ margin-left: 50%; }
+#slide-item-4.active ~ .slider .bar{ margin-left: 75%; }
+
+#slide-item-4.active ~ .slider .bar1{ margin-left: 0; }
+#slide-item-5.active ~ .slider .bar1{ margin-left: 33%; }
+#slide-item-6.active ~ .slider .bar1{ margin-left: 67%; }
+
+  
+.tablinks.active, .tablinks5.active, .tablinks6.active {
+    opacity: 1;
+}
+
+
+/*open accordian table button*/
+#seeMore {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    outline: none;
+    border: none;
+}
+
+/*accordion table*/
+.hiddenRow .accordian-body {
+    background-color: white !important;
+}
+
+.accordian-body, .hiddenRow {
+    padding: 0px !important;
+}
+
+.accordian-body p {
+    font-size: 14px;
+    display: inline-block;
+    margin: 12px;
+}
+
+
+/*main add button*/
+.btn-group {
+    float: right; 
+}
+
+/*initialise pms button*/
+.initialisePMS.btn {
+    float: right;
+}
+
+/*remove caret from dropdown*/
+.dropdown-toggle:after { 
+    content: none !important; 
+}
+
+.dropdown-menu {
+    cursor: pointer !important;
+}
+
+
+/*manager homepage*/
+
+/*testing*/
+a:hover,a:focus{
+    outline: none;
+    text-decoration: none;
+}
+.departmentInfo.nav-tabs{
+    background: #dde2e0;
+    padding: 5px 0;
+    text-align: center;
+}
+.departmentInfo.nav-tabs li{
+    margin-bottom: 0;
+    margin-right: 0;
+    float: none;
+    display: inline-block;
+}
+.departmentInfo.nav-tabs li a{
+    font-weight: 600;
+    color: #406d57;
+    background: #fafbfb;
+    margin-right: 5px;
+    padding: 10px 15px;
+    border-radius: 0;
+    text-transform: uppercase;
+}
+.departmentInfo.nav-tabs li a:hover{
+    color: #406d57;
+    border-color: transparent;
+}
+.departmentInfo.nav-tabs li a i{
+    margin-right: 10px;
+}
+
+.departmentInfo.nav-tabs > li > a.active, 
+.departmentInfo.nav-tabs li a:hover {
+    background: #406d57;
+    color: #fff;
+    border: 1px solid transparent;
+}
+/*end of testing*/
+/*HR*/
+a:hover,a:focus{
+    outline: none;
+    text-decoration: none;
+}
+.companyInfo.nav-tabs{
+    background: #dde2e0;
+    padding: 5px 0;
+    text-align: center;
+}
+.companyInfo.nav-tabs li{
+    margin-bottom: 0;
+    margin-right: 0;
+    float: none;
+    display: inline-block;
+}
+.companyInfo.nav-tabs li a{
+    font-weight: 600;
+    color: #406d57;
+    background: #fafbfb;
+    margin-right: 5px;
+    padding: 10px 15px;
+    border-radius: 0;
+    text-transform: uppercase;
+}
+.companyInfo.nav-tabs li a:hover{
+    color: #406d57;
+    border-color: transparent;
+}
+.companyInfo.nav-tabs li a i{
+    margin-right: 10px;
+}
+
+.companyInfo.nav-tabs > li > a.active, 
+.companyInfo.nav-tabs li a:hover {
+    background: #406d57;
+    color: #fff;
+    border: 1px solid transparent;
+}
+
+#OverallLogs {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+#OverallLogs thead th{
+    position: sticky;
+    top: 0;
+}
+
+
+/*disabled links*/
+a.disabled {
+    color: lightgrey !important;
+}
+
+.btn {
+    font-size: 14px !important;
+    background-color: #F8A400 !important;
+
+}
+
+.btn:hover {
+    background-color: #e09600 !important;
+}
+
+.btn:focus {
+    outline: none !important;
+    box-shadow: none !important;  
+}
+
+/*table icons*/
+
+i.fa {
+    font-size: 18px;
+}
+
+.disabled-icon {
+    color: lightgrey;
+}
+
+.remove{
+    padding: 0 !important;
+    margin: 0 !important;
+} 
+
+/*appraisal overview dropdown*/
+.appraisalOverview {
+    float: left;
+}
+
+
+/*HRHOME*/
+.companyappraisalstats {
+    min-height: 250px;
+    overflow: hidden;
+
+    position: relative;
+}
+
+.companyappraisalstats .card {
+    border-radius: 10px;
+
+}
+
+.companyappraisalstats .card .col-md-4 {
+    border-radius: 10px 0 0 10px;
+    background-color: #4A6CA4;  
+    color: white;
+}
+
+/*appraisal info*/
+.appraisalInfo .row.col-11 {
+    padding: 10px;
+}
+
+.appraisalInfo.card {
+    background: none;
+    border-radius: 8px;
+    margin: auto !important;
+}
+
+.appraisalInfo .list-group {
+    max-height: 200px;
+    min-height: 200px;
+    overflow-y: scroll;
+    background: white;
+    margin: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.appraisalInfo .list-group li{
+    cursor: pointer;
+}
+
+.card .col-md-4, .card .col-md-8 {
+    height: 240px;
+}
+
+
+/*bootstrap tabs styling*/
+#companyAppraisalInfo .nav-item a:hover, a:focus{
+    outline: none;
+    text-decoration: none;
+}
+
+#companyAppraisalInfo .nav-tabs{
+    background: #fff;
+}
+
+#companyAppraisalInfo.nav-tabs li{
+    text-align: center;
+}
+
+#companyAppraisalInfo.nav-tabs li a{
+    font-weight: 600;
+    color: #22272c;
+    padding: 10px 15px;
+    background: #eee;
+    border-radius: 0;
+    border: none;
+    text-transform: uppercase;
+    position: relative;
+    transition: all 0.5s ease 0s;
+}
+
+#companyAppraisalInfo.nav-tabs > li > a.active, 
+#companyAppraisalInfo.nav-tabs li a:hover {
+    background: #4A6CA4 !important;
+    color: #fff;
+    border: none;
+}
+
+#companyAppraisalInfoTabContent {
+    background-color: whitesmoke;
+}
+
+#companyAppraisalInfoTabContent table {
+    width: 100% !important;
+    margin: 0;
+}
+/*END OF HR HOME*/
+
+/*MANAGER*/
+
+/*bootstrap tabs styling*/
+#subAppraisalTab .nav-item a:hover, a:focus{
+    outline: none;
+    text-decoration: none;
+}
+
+#subAppraisalTab .nav-tabs{
+    background: #fff;
+}
+
+#subAppraisalTab.nav-tabs li{
+    text-align: center;
+    border-right: lightgrey 1px solid;
+}
+
+#subAppraisalTab.nav-tabs li a{
+    font-weight: 600;
+    color: #22272c;
+    padding: 10px 15px;
+    background: #eee;
+    border-radius: 0;
+    border: none;
+    text-transform: uppercase;
+    position: relative;
+    transition: all 0.5s ease 0s;
+}
+
+
+#subAppraisalTab.nav-tabs > li > a.active, 
+#subAppraisalTab.nav-tabs li a:hover {
+    background: #4A6CA4 !important;
+    color: #fff;
+    border: none;
+}
+
+#subAppraisalTabContent {
+    color: #3d3537;
+    background-color: whitesmoke;
+}
+
+#subAppraisalTabContent table {
+    width: 100% !important;
+    margin: 0;
+}
+/*END OF MANAGER HOME*/
+
+
+
+
+/*all tables within cards*/
+.card-table .card-header {
+    color: #2952A4;
+    background: none;
+}
+
+.card-table table tr {
+    border: none;
+}
+
+.leftborder {
+    border-left: 1.9px solid #dee2e6 !important;
+
+}
+
+
+/*TOP OVERVIEW CARDS*/
+.f-left {
+    float: left;
+}
+
+.f-right {
+    float: right;
+}
+
+.bg-c-blue, .bg-c-green, .bg-c-yellow, .bg-c-pink{
+    background: white;
+    border-left: 3.5px solid #2952A4 !important;
+    color: #555;
+
+}
+
+.overview-card-row .card {
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    border: none;
+    margin-bottom: 30px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    padding-bottom: 0;
+}
+
+.overview-card-row i {
+    font-size: 30px;
+}
+
+/*grade card*/
+.card.grade-card .card-header {
+    background: #4A6CA4; 
+    color: white;
+}
+
+.card.grade-card .card-header span {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.card.grade-card .card-body{
+    color: #555;
+}
+
+/*adding outer border to tables*/
+table.table.table-condensed {
+    border: 1.9px solid #dee2e6 !important;
+}
+
+
+/*badge pills*/
+.badge {
+    background-color:  white!important;
+    color: #2952A4 !important;
+    font-size: 15px !important;
+}
+
+/*choose appraisal button*/
+.choose-appraisal button {
+    font-weight: 500 !important;
+}
+
+.choose-appraisal h3 {
+    text-shadow: black 1px 1px 2px;
+}
+
+/*comment card */
+.card.comment-card {
+    color: #555;
+    border-left: orange solid 4px;
+
+}

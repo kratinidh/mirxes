@@ -1,0 +1,151 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'utilitypage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%} 
+<head>
+<!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+<title>{%block title%} Goals and Competencies{%endblock%}</title>    <!--bootstrap and jquery-->
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/custom.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!--font-->
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+
+
+</head>
+
+<body>
+    <div class = "wrapper">
+        <!--HTML inheritance: overriding parent class content block(Django exclusive)-->
+        {%block content%}
+        <section class = "Goals">
+            <!--Tab section within goals-->
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'goals_team', 'tabcontent_goals', 'tablinks')">Departmental Goals</button>
+                <button class="tablinks" onclick="openCity(event, 'goals_self', 'tabcontent_goals', 'tablinks')">Personal goals</button>
+            </div>
+
+            <!--**Dynamic routing to 'GnC:CreateGoals.html' template -->
+            <a href="{%url 'GnC:Create_User_Goals'%}">Add Goals</a> 
+            <!--**Dynamic routing to 'GnC:CreateCompetencies.html' template -->
+            <a href="{%url 'GnC:Create_User_Competencies' %}">Add Competencies</a>
+
+            <!--Departmental Goals table-->
+            <div id="goals_team" class="tabcontent_goals">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Description</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Due date</th>
+                            <th scope="col">Progress</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for goals in departmental_goals_list %}
+                        <tr>
+                            <td>{{goals.summary}}</td>
+                            <td>{{goals.goal_category.name}}</td>
+                            <td>{{goals.due}}</td>
+                            <td>50%</td>
+                            <td><a href = "{%url 'GnC:Detail_Departmental_Goals' goals.id %}">Details</a></td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                    
+                </table>
+                <!--<div id="accordion">
+                    <h3>Section 1</h3>
+                    <div>
+                      <p>
+                      Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                      ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                      amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                      odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                      </p>
+                </div>-->
+            </div>
+
+            <!--User goals table-->
+            <div id="goals_self" class="tabcontent_goals">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Description</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Due date</th>
+                            <th scope="col">Progress</th>
+                            <th scope="col" colspan="3">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for goals in goals_list %}
+                        <tr>
+                            <td>{{goals.summary}}</td>
+                            <td>{{goals.goal_category.name}}</td>
+                            <td>{{goals.due}}</td>
+                            <td>70%</td>
+                            <!--**Dynamic routing to 'GnC:CreateKPIs.html' template -->    
+                            {% if goals.status == 'Employee' %}        
+                            <td><a href="{%url 'GnC:Create_User_KPIs' goals.id %}">Add KPIs</a></td>
+                            <td><a href="{% url 'GnC:Update_User_Goals' goals.id %}">Edit</a></td>
+                            <td><a href="{% url 'GnC:Delete_User_Goals' goals.id %}">Delete</a></td>
+                            {% elif goals.status == 'Manager' %}
+                            <td><a href="{%url 'GnC:Create_User_KPIs' goals.id %}">Add KPIs</a></td>
+                            <td></td>
+                            <td><a href="{% url 'GnC:Delete_User_Goals' goals.id %}">Delete</a></td>
+                            {% else %}
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            {%endif%}
+                            <td><a href = "{%url 'GnC:Detail_Goals' goals.id %}">Details</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr>
+
+        <!--User competencies table-->
+        <section class="Competencies">
+            <div id="competencies_self">
+                <table>
+                    <tr>
+                        <th scope="col">Competencies</th>
+                        <th scope="col">Category</th>
+                        <th scope="col" colspan="3">Action</th>
+                    </tr>
+
+                    {% for competencies in competencies_list %}
+                    <tr>
+                        <td>{{competencies.summary}}</td>
+                        <td>{{competencies.competency_category.name}}</td>
+                        {% if competencies.status == 'Employee' %}
+                        <td><a href="{% url 'GnC:Update_User_Competencies' competencies.id %}">Edit</a></td>
+                        <td><a href = "{%url 'GnC:Delete_User_Competencies' competencies.id %}">Delete</a></td>
+                        {% elif competencies.status == 'Manager' %}
+                        <td></td>
+                        <td><a href = "{%url 'GnC:Delete_User_Competencies' competencies.id %}">Delete</a></td>
+                        {% else %}
+                        <td></td>
+                        <td></td>
+                        {% endif %}
+                        <td><a href = "{%url 'GnC:Detail_Competencies' competencies.id %}">Details</a></td>
+                    </tr>
+                    {%endfor%}
+                </table>
+            </div>
+        </section>
+        {%endblock%}
+    </div>
+</body>

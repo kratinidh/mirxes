@@ -1,0 +1,193 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'utilitypage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{% load static %}
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Goals and Competencies{%endblock%}</title>
+</head>
+<body>
+    <!--Page wrapper bg-->
+    <div class = "wrapper">
+        <!--HTML inheritance: overriding parent class content block(Django exclusive)-->
+        {%block content%}
+
+        <!--User vs Department tab-->
+        <section class="main">
+            <!--Tab section within goals-->
+            <div class="tab_main">
+                <button class="tablinks" onclick="openCity(event, 'self', 'General_Scope', 'tablinks')">User</button>
+                <button class="tablinks" onclick="openCity(event, 'department', 'General_Scope', 'tablinks')">Department</button>
+            </div>
+
+            <!--User's Personal vs user's departmental goal tab-->
+            <div class='General_Scope' id="self">
+                <section class = "Goals">
+                    <div class="tab_self">
+                        <button class="tablinks1" onclick="openCity(event, 'goals_team', 'tabcontent_goals', 'tablinks1')">Departmental Goals and Competencies</button>
+                        <button class="tablinks1" onclick="openCity(event, 'goals_self', 'tabcontent_goals', 'tablinks1')">Personal Goals and Competencies</button>
+                    </div>
+
+                    <!--**Dynamic routing to 'GnC/CreateDepartmentalGoals.html' template -->
+                    <a href="{%url 'GnC:Create_Manager_Competencies'%}">Add Departmental Competencies</a>
+                    <a href="{%url 'GnC:Create_Manager_Goals' %}">Add Departmental Goals</a>
+                    <!--**Dynamic routing to 'GnC/CreateGoals.html' template -->
+                    <a href="{%url 'GnC:Create_User_Goals' %}">Add User Goals</a>
+                    <!--**Dynamic routing to 'GnC/CreateCompetencies.html' template -->
+                    <a href="{% url 'GnC:Create_User_Competencies' %}">Add Competencies</a>
+
+                    <!--Departmental goal table-->
+                    <div id="goals_team" class="tabcontent_goals">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Department</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Due date</th>
+                                    <th scope="col" colspan=3>Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {%for goals in departmental_goals_list%}
+                                <tr>
+                                    <td>{{goals.manager.name}}</td>
+                                    <td>{{goals.summary}}</td>
+                                    <td>{{goals.goal_category.name}}</td>
+                                    <td>{{goals.due}}</td>
+                                    <td>50%</td>
+                                    <td><a href="{%url 'GnC:Update_Departmental_Goals' goals.id %}">+</a></td>
+                                    <td><a href="{%url 'GnC:Delete_Departmental_Goals' goals.id %}">-</a></td>
+                                    <td><a href ="{% url 'GnC:Detail_Departmental_Goals' goals.id %}">Details</a></td>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+
+                        <!--Competency table (no tabs)-->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Department</th>
+                                    <th scope="col">Competencies</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Due date</th>
+                                    <th scope="col" colspan="2">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {%for competencies in departmental_competencies_list%}
+                                <tr>
+                                    <td>{{competencies.department}}</td>
+                                    <td>{{competencies.summary}}</td>
+                                    <td>{{competencies.competency_category}}</td>
+                                    <td><a href = "{% url 'GnC:Detail_Competencies' competencies.id %}">Details</a></td>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!--User goal table-->
+                    <div id="goals_self" class="tabcontent_goals">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Due date</th>
+                                    <th scope="col">Progress</th>
+                                    <th scope="col" colspan="4">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {%for goals in goals_list%}
+                                <tr>
+                                    <td>{{goals.summary}}</td>
+                                    <td>{{goals.goal_category.name}}</td>
+                                    <td>{{goals.due}}</td>
+                                    <td>75%</td>
+                                    <td><a href="{%url 'GnC:Create_User_KPIs' goals.id %}">KPI</a></td>
+                                    <td><a href="{% url 'GnC:Update_User_Goals' goals.id %}">+</a></td>
+                                    <td><a href = "{% url 'GnC:Delete_User_Goals' goals.id %}">-</a></td>
+                                    <td><a href = "{% url 'GnC:Detail_Goals' goals.id %}">Details</a></td>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+
+                        <!--Competency table (no tabs)-->
+                        <table>
+                            <tr>
+                                <th scope="col">Competencies</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Due date</th>
+                                <th scope="col" colspan="2">Action</th>
+                            </tr>
+
+                            {%for competencies in competencies_list%}
+                            <tr>
+                                <td>{{competencies.summary}}</td>
+                                <td>{{competencies.competency_category.name}}</td>
+                                <td>{{competencies.due}}</td>
+                                <td><a href="{% url 'GnC:Update_Competencies' competencies.id %}">+</a></td>
+                                <td><a href = "{% url 'GnC:Delete_User_Competencies' competencies.id %}">-</a></td>
+                                <td><a href = "{% url 'GnC:Detail_Competencies' competencies.id %}">Details</a></td>
+                            </tr>
+                            {%endfor%}
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+
+            <hr><!--Horizontal rule-->
+
+            <!--Employee Departmental Tab & table-->
+            <div class="General_Scope" id="department">
+                <section class = "Goals_search team_view">
+
+                    <!--Search form with submit button-->
+                    <form class="example">
+                        <input type="text" placeholder="Search.." name="search">
+                        <button type="submit"><i class="fa fa-search">Submit</i></button>
+                    </form>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th 
+                                scope="col">Department</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Goal count</th>
+                                <th scope="col">Competencies count</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {%for profile in department_detailed_view%}
+                            <tr>
+                                <td>{{profile.name}}</td>
+                                <td>{%for x in profile.department.all%}:{{x.name}}: {%endfor%}</td>
+                                <td>{{profile.email}}</td>
+                                <td>{{profile.goals_set.all.count}}</td>
+                                <td>{%with competency_count=profile.competencies_set.all%}{{competency_count|length}}{%endwith%}</td>
+                                <td>Locked</td>
+                                <td><a href = "{% url 'GnC:Detail_Users' profile.id %}">Details</a></td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+
+        </section>
+        {%endblock%}
+    </div>
+</body>

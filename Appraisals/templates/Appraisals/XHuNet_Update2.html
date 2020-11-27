@@ -1,0 +1,20 @@
+{%extends 'utilitiespage.html'}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}Document{%endblock%}</title>
+</head>
+<body>
+    {%block content%}
+    <form method="POST">
+        {% csrf_token %}
+        {% for form in forms %}
+            {{ form.as_p }}
+        {% endfor %}
+            <input type="submit" value="Submit" />
+    </form>
+    {%endblock%}
+</body>
+</html>

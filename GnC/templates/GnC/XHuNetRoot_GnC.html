@@ -1,0 +1,264 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'utilitypage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{% load static %}
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Goals and Competencies{%endblock%}</title>
+
+    {%block script2%}  
+    <!--css-->
+    <link href="{% static 'GnC/HuNetRoot_GnC.css' %}" rel="stylesheet" type="text/css">
+
+    <!--bootstrap and jquery-->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/custom.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
+    <!--font-->
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+
+
+    <script>
+    /*tabs*/
+    function openCity(evt, cityName, classOfTabContent, classOfTabLink) {
+        var i, x, tablinks;
+
+        x = document.getElementsByClassName(classOfTabContent);
+        for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+        }
+
+        tablinks = document.getElementsByClassName(classOfTabLink);
+        for (i = 0; i < x.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", " ");
+        }
+
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    $(document).ready(function(){
+        $(".dropdown-toggle").dropdown();
+    });
+    </script>
+    {%endblock%}
+
+</head>
+
+<body>
+    <!--Page wrapper bg-->
+    <div class = "wrapper">
+        <!--HTML inheritance: overriding parent class content block(Django exclusive)-->
+        {%block content%}
+        <br>
+        <!--User-Department tab-->
+        <section class="main">
+            <!--Tab section-->
+            <div class="tab_main">
+                <button class="tablinks active" onclick="openCity(event, 'self', 'General_Scope', 'tablinks')">User</button>
+                <button class="tablinks" onclick="openCity(event, 'department', 'General_Scope', 'tablinks')">Department List</button>
+                <button class="tablinks" onclick="openCity(event, 'company', 'General_Scope', 'tablinks')">Employee List</button>
+            </div>
+
+        
+                    <!--Departmental goal tab-->
+                    <!--Departmental goal table-->
+            
+                    <div id="goals_team" class="tabcontent_goals">
+                        <br>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Department</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Due date</th>
+                                    <th scope="col">Progress</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for goals in Personal_departmental_goals_list %}
+                                <tr>
+                                    <td>{{goals.department.name}}</td>
+                                    <td>{{goals.summary}}</td>
+                                    <td>{{goals.goal_category.name}}</td>
+                                    <td>{{goals.due}}</td>
+                                    <td>50%</td>
+                                    <td><a href = "{% url 'GnC:Detail_Departmental_Goals' goals.id %}"><i class="fa fa-ellipsis-h" title = "Details"></i></a></td>
+                                {%endfor%}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!--User goal tab-->
+                    <!--User goal table-->
+                    <div id="goals_self" class="tabcontent_goals">
+                        <table>
+                            <thead>
+                                <tr>
+    
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Due date</th>
+                                    <th scope="col">Progress</th>
+                                    <th scope="col" colspan="4">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {%for goals in Personal_goals_list%}
+                                <tr>
+                                    <td>{{goals.summary}}</td>
+                                    <td>{{goals.goal_category.name}}</td>
+                                    <td>{{goals.due}}</td>
+                                    <td>50%</td>
+                                    {%if goals.status == 'Employee'%}
+                                    <!--**Dynamic routing to 'GnC/CreateKPI.html' template -->
+                                    <td><a href = "{% url 'GnC:Create_User_KPIs' goals.id %}"><i class="fa fa-plus-square-o" title="Add KPIs"></i></a></td>
+                                    <td><a href="{% url 'GnC:Update_User_Goals' goals.id %}"><i class="fa fa-pencil-square-o" title="Update"></i></a></td>
+                                    <td><a href = "{% url 'GnC:Delete_User_Goals' pk=goals.id %}"><i class="fa fa-trash-o" title="Delete"></i></a></td>
+                                    {%elif goals.status == 'Manager'%}
+                                    <td><a href = "{% url 'GnC:Create_User_KPIs' goals.id %}"><i class="fa fa-plus-square-o" title="Add KPIs"></i></a></td>
+                                    <td></td>
+                                    <td><a href = "{% url 'GnC:Delete_User_Goals' pk=goals.id %}"><i class="fa fa-trash-o" title="Delete"></i></a></td>
+                                    <td></td>
+                                    {%else%}
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    {%endif%}
+                                    <td><a href ="{% url 'GnC:Detail_Goals' goals.id %}"><i class="fa fa-ellipsis-h" title = "Details"></i></a></td>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!--Competency table (no tabs)-->
+                <section class="Competencies">
+                    <div id="competencies_self">
+                        <table>
+                            <tr>
+                                <th scope="col">Competencies</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Due date</th>
+                                <th scope="col" colspan="3">Action</th>
+                            </tr>
+
+                            {%for competencies in Personal_competencies_list%}
+                            <tr>
+                                <td>{{competencies.summary}}</td>
+                                <td>{{competencies.competency_category.name}}</td>
+                                <td>{{competencies.due}}</td>
+                                {%if competencies.status == 'Employee'%}
+                                <td><a href="{% url 'GnC:Update_User_Competencies' pk=competencies.id %}"><i class="fa fa-pencil-square-o" title="Update"></i></a></td>
+                                <td><a href = "{% url 'GnC:Delete_User_Competencies' competencies.id %}'"><i class="fa fa-trash-o" title="Delete"></i></a></td>
+                                {%elif competencies.status == 'Manager'%}
+                                <td></td>
+                                <td><a href = "{% url 'GnC:Delete_User_Competencies' competencies.id %}'"><i class="fa fa-trash-o" title="Delete"></i></a></td>
+                                {%else%}
+                                <td></td>
+                                <td></td>
+                                {%endif%}
+                                <td><a href="{% url 'GnC:Detail_Competencies' competencies.id %}"><i class="fa fa-ellipsis-h" title = "Details"></i></a></td>
+                            </tr>
+                            {%endfor%}
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!--Department Tab-->
+            <!--Individual Departmental goals table-->
+            <div class="General_Scope" id="department" style="display:none">
+                <div class = "tabcontent_department">
+                    <!--Search form with submit button-->
+                    <form class="example">
+                        <input type="text" placeholder="Search.." name="search">
+                        <button type="submit"><i class="fa fa-search"> Submit</i></button>
+                    </form>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Department</th>
+                                <th scope="col">Department Head</th>
+                                <th scope="col">Department counter</th>
+                                <th scope="col" colspan="2">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {%for department in Company_department_list%}
+                            <tr>
+                                <td>{{department.name}}</td>
+                                <td>{{department.manager.name}}</td>
+                                {%with counter=department.profile_set.all%}
+                                <td>{{counter.count}}</td>
+                                {%endwith%}
+                                <td><a href="{%url 'GnC:Update_Department' department.id %}"><i class="fa fa-pencil-square-o" title="Update"></i></a></td>
+                                <td><a href = "{%url 'GnC:Detail_Departments' department.id%}"><i class="fa fa-ellipsis-h" title = "Details"></i></a></td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!--Company Tab-->
+            <!--Individual employee GnC table-->
+            <div class ="General_Scope" id="company" style="display:none">
+                <div class = "tabcontent_employee">
+                    <!--Search form with submit button-->
+                    <form class="example">
+                        <input type="text" placeholder="Search.." name="search">
+                        <button type="submit"><i class="fa fa-search"> Submit</i></button>
+                    </form>
+
+                    <section>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th 
+                                    scope="col">Department</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Goals count</th>
+                                    <th scope="col">Competencies count</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {%for profile in Company_user_list%}
+                                <tr>
+                                    <td>{{profile.name}}</td>
+                                    <td>{%for x in profile.department.all%}:{{x.name}}: {%endfor%}</td>
+                                    <td>{{profile.email}}</td>
+                                    <td>{{profile.goals_set.all.count}}</td>
+                                    <td>{%with competency_count=profile.competencies_set.all%}{{competency_count|length}}{%endwith%}</td>
+                                    <td>Locked</td>
+                                    <td><a href = '../allusers/{{profile.id}}/UserGnC'><i class="fa fa-ellipsis-h" title = "Details"></i></a></td>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </section>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        {%endblock%}
+    </div>
+</body>

@@ -1,0 +1,43 @@
+<!--Inherit HTML from parent class 'utiltiypage'-->
+{%extends 'utilitypage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header-->
+<head>
+      <!--Meta to improve SEO-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Delete Appraisal Category{%endblock%}</title>
+</head>
+<body>
+    {%block content%}
+    <div class = "container col-6">
+        <br>
+        <!--HTML form, action on current page, use 'POST' method (secure)-->
+        <div class = "card card-body">
+            <form action="" method='POST'>
+            <div class="form-group">
+                    <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+                    {%csrf_token%}
+
+                    <!--Things within double braces are object instances within a queryset, so in this case I am accessing object's summary-->
+                    <h5>Delete appraisal category: "{{object.name}}"?</h5>
+
+                    <div class = "row justify-content-end m-0">
+                        <a class = "btn btn-danger mr-2" type = "button" href="{% url 'user_homepage'%}">Cancel</a>
+                        <input type ="submit" value = "Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {%endblock%}
+</body>

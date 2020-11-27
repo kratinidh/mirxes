@@ -1,0 +1,91 @@
+<!--Inherit HTML from parent class 'sidenav'-->
+{%extends 'homepage.html'%}
+
+<!--Load static is to load static files (HTML/CSS/Js)-->
+{%load static%} 
+{% load crispy_forms_tags %}
+<!--To inform website version of HTML-->
+<!DOCTYPE html>
+<!--Inform website of language of HTML-->
+<html lang="en">
+<!--Header--> 
+<head>
+    <!--HTML inheritance: overriding parent class title block(Django exclusive)-->
+    <title>{%block title%}Rating - Skills{%endblock%}</title>
+
+    {%block script1%}
+    <link rel = "stylesheet" type="text/css" href = "{% static 'Appraisals/HuNet_UpdateGCS.css' %}">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--font--> 
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&display=swap" rel="stylesheet"> <!--hind-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> <!--open sans-->
+    
+    {%endblock%}
+</head>
+
+<body>
+    {%block content%}
+    <div class = "container col-10">
+        <br>
+        <div class = "card">
+
+            <div class = "card-body">
+                {%block bubbleurl%}
+                <div id="line"></div>
+                <div class = "row button-row"  style = "margin: 0">
+                    <a href="{% url 'Appraisals:Update_AppraisalG' employee_appraisal.id %}"><button type = "button" class = "btn">1</button></a>
+                    <a href="{% url 'Appraisals:Update_AppraisalC' employee_appraisal.id %}"><button type = "button" class = "btn">2</button></a>
+                    <a href="{% url 'Appraisals:Update_AppraisalS' employee_appraisal.id %}"><button type = "button" class = "btn activebtn">3</button></a>
+                    <a href="{% url 'Appraisals:Update_AppraisalCareer' employee_appraisal.id %}"><button type = "button" class = "btn">4</button></a>
+                    <a href="{% url 'Appraisals:Update_Appraisal' employee_appraisal.id %}"><button type = "button" class = "btn">5</button></a>
+                </div>
+                <div class = "row button-name-row justify-content-between m-0">
+                    <span>Goals Rating</span>
+                    <span>Core Values Competencies Rating</span>
+                    <span>Skills Rating</span>
+                    <span>Career Discussion</span>
+                    <span>Summary</span>
+                </div>
+                {%endblock%}
+
+                <br>
+                <form action='' method = "POST" enctype= "multipart/form-data">
+                    <!--Django Exclusive: CSRF token is a random, hard-to-guess string, prevent CSRF atk-->
+
+                    {%csrf_token%}
+                    {%block heading%}<h4 class = "heading"> Employee's Rating: Skills</h4>{%endblock%}
+
+                    {%if skills_count >= 1 %}
+                    <a href="{% url 'Trainings:hyperlink_training_list'%}" target="_blank" class = "btn btn-sm btn-info" role = "button">List of Available Trainings &nbsp; <i class="fa fa-external-link" aria-hidden="true"></i></button></a>
+                    {%endif%}
+                    {%block rejectioncomments%}
+                    {%endblock%}
+                    
+                    {{ skills_formset.management_form }}
+                        {% for form in skills_formset %}
+
+                        <div class = "card card-body form-card">
+                            {{form|crispy}}
+                        </div>
+
+                        <br><br>
+                        {%endfor%}
+
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    <div class = "row m-0 justify-content-end">
+                    <input class = "btn btn-warning mr-2" type = 'submit' value = "Calculate" name= 'calculate'>
+                    <input class = "btn btn-primary" type = 'submit' value = "Next" name='send'>
+                </form>
+            </div>
+        </div>
+    </div>
+    {%endblock%}
+</body>
+</html>

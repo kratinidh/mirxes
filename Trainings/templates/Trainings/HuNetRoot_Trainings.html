@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--CSS stylesheet import-->
+    <link href="HuNet.css" rel="stylesheet" type="text/css" >
+
+    <!--Js script import-->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script></script>
+
+    <!--Page title-->
+    <title>Trainings</title>
+</head>
+<body>
+    <!--Page wrapper bg-->
+    <div class="wrapper">
+        <header>
+            <!--Header of page-->
+            <h1>HuNet</h1>
+
+            <!--Nav-->
+            <!--Nav bar title-->
+            <nav>
+                <ul>
+                    <!--Nav bar-->
+                    <li><a href = ''>Goals and competencies</a></li><!--Link to GnC-->
+                    <li><a href = ''>Trainings</a></li> <!--Link to Training-->
+                    <li><a href = ''>Appraisals</a></li><!--Link to Appraisals-->
+                    <li><a href = ''>Careers</a></li><!--Link to Careers-->
+                    <li><a href = ''>Ticketing</a></li><!--Link to Ticketing-->
+                    <li><a href = ''>Guide</a></li><!--Link to Guide-->
+                    <li><a href = ''>Profile</a></li><!--Link to Profile-->
+                </ul>
+            </nav>
+
+            <!--Page icons-->
+            <ul class = "align-right">
+                <li>
+                    <button class="dropbtn"><i class="fa fa-bars"><img src="images/Bell_icon2.png"></i></button>
+                </li> <!--Press to activate popup of notifications-->
+                <li>
+                    <div class = "dropdown">
+                        <button class="dropbtn"><i class="fa fa-bars"><img src="images/Avatar_icon.png"></i></button>
+                        <div class = "dropdown-content">
+                            <a href="">Edit profile</a>
+                            <a href="">Setting</a>
+                        </div>
+                    </div>
+                </li><!--Press to activate dropdown of profiles-->
+            </ul>
+        </header> <!--End of header-->
+
+        <body>
+            <!--Recommendation section-->
+            <section class="Recommendation">
+            <p>This portion will be replaced</p>
+            </section>
+
+            <!--Training matrix section-->
+            <section class="training_matrix">
+                <p>Completed vs Targetted</p>
+                <p>Effectivness of trainings</p>
+            </section>
+
+            <section class="Trainings and Skills list">
+                <div class="tab">
+                    <button class="training_tab" onclick="openCity(event, 'trainings', 'training_tabs', 'training_tablinks')">Trainings</button>
+                    <button class="training_tab"  onclick="openCity(event, 'skills', 'training_tabs', 'training_tablinks')">Skills</button>
+                </div>
+
+                <div id="trainings" class="training_tabs">   
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope ="col">Name</th>
+                                <th scope ="col">Department</th>
+                                <th scope ="col">Training</th>
+                                <th scope ="col">Date duration</th>
+                                <th scope ="col">Duration</th>
+                                <th scope ="col">Skills</th>
+                                <th scope ="col">Status</th>
+                                <th scope ="col" colspan="2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ben</td>
+                                <td>IT</td>
+                                <td>Cyber Security</td>
+                                <td>12 Dec 2020 - 21 Dec 2020</td>
+                                <td>9 days</td>
+                                <td>IT, Cyber</td>
+                                <td>Confirmed</td>
+                                <td><button type="button" onclick="alert('Training for Ben has been postponed')">X</button></td>
+                                <td><button type="button" onclick="alert('Pop up of more details for course')">></td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Ben</td>
+                                <td>IT</td>
+                                <td>Data Algorithm</td>
+                                <td>12 Nov 2020 - 21 Dec 2020</td>
+                                <td>9 days</td>
+                                <td>IT, Cyber</td>
+                                <td>Confirmed</td>
+                                <td><button type="button" onclick="alert('Training for Ben has been postponed')">X</button></td>
+                                <td><button type="button" onclick="alert('Pop up of more details for course')">></td>
+                            </tr>
+
+                            <tr>
+                                <td>Lingling</td>
+                                <td>Finance</td>
+                                <td>E-Commerce marketing</td>
+                                <td>12 Dec 2020 - 21 Dec 2020</td>
+                                <td>9 days</td>
+                                <td>Business Acumen</td>
+                                <td>Confirmed</td>
+                                <td><button type="button" onclick="alert('Training for Lingling has been postponed')">X</button></td>
+                                <td><button type="button" onclick="alert('Pop up of more details for course')">></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="skills" class="training_tabs">   
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope ="col">Name</th>
+                                <th scope ="col">Department</th>
+                                <th scope ="col">Email</th>
+                                <th scope ="col">Skill 1</th>
+                                <th scope ="col">Skill 2</th>
+                                <th scope ="col">Skill 3</th>
+                                <th scope ="col">Skill 4</th>
+                                <th scope ="col">Skill 5</th>
+                                <th scope ="col" colspan="2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ben</td>
+                                <td>IT</td>
+                                <td>bennyteomh@hotmail.com</td>
+                                <td>Business Acumen</td>
+                                <td>Financial Literacy</td>
+                                <td>Leadership Management</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><button type="button" onclick="alert('Message individual')">Mail</button></td>
+                                <td><button type="button" onclick="alert('Pop up of more details for course')">></td>
+                            </tr>
+
+                            <tr>
+                                <td>Ling Ling</td>
+                                <td>Finance</td>
+                                <td>Lingling@hotmail.com</td>
+                                <td>Financial Literacy</td>
+                                <td>Business Acumen</td>
+                                <td>Leadership Delegation</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><button type="button" onclick="alert('Message individual')">Mail</button></td>
+                                <td><button type="button" onclick="alert('Pop up of more details for course')">></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+        </body>
+    </div>
+
+    <footer>
+        &copy;:HuNet Pte.Ltd 2020
+    </footer>
+</body>
